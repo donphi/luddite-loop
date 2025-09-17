@@ -1,0 +1,48 @@
+# =======================
+# Project-specific ignores
+# =======================
+
+# Ignore all input and output folders recursively
+**/input/**
+**/output/**
+
+# =======================
+# Environment files
+# =======================
+
+# Ignore all .env files everywhere
+**/.env
+**/.env.*
+
+# =======================
+# General Python ignores
+# =======================
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.sqlite3
+*.log
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# =======================
+# OS / Editor ignores
+# =======================
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/

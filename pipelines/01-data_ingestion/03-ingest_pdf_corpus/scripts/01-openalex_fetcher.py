@@ -1,0 +1,582 @@
+#!/usr/bin/env python3
+"""
+Stage 1: OpenAlex PDF Fetcher
+Simple script to download PDFs from OpenAlex API
+"""
+
+import os
+import csv
+import requests
+import time
+import logging
+import re
+from pathlib import Path
+
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+class OpenAlexFetcher:
+    def __init__(self):
+        self.input_file = os.getenv("PUBLICATIONS_FILE", "/app/data/publications.txt")
+        self.output_dir = Path("/app/output/openalex")
+        self.openalex_token = os.getenv("OPENALEX_TOKEN", "")
+        self.email = os.getenv("EMAIL", "researcher@example.com")
+        
+        # Create output directory
+        Path(self.output_dir).mkdir(parents=True, exist_ok=True)
+        
+        # API setup
+        self.headers = {
+            'User-Agent': f'PDFDownloader/1.0 (mailto:{self.email})',
+        }
+        if self.openalex_token:
+            self.headers['Authorization'] = f'Bearer {self.openalex_token}'
+            logger.info("Using OpenAlex API token")
+        
+        self.stats = {'processed': 0, 'found': 0, 'downloaded': 0, 'skipped': 0, 'failed': 0}
+
+    def init_tracking_file(self, publications):
+        """Initialize the tracking file with header from original file"""
+        self.tracking_file = Path(self.output_dir) / "publications" / "publications_openalex.txt"
+        self.tracking_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        # Copy header from original file
+        with open(self.input_file, 'r', encoding='utf-8') as f:
+            header = f.readline()
+        
+        with open(self.tracking_file, 'w', encoding='utf-8') as f:
+            f.write(header)
+        
+        logger.info(f"Initialized tracking file: {self.tracking_file}")
+
+    def update_tracking_file(self, pub_data, status, error_msg=None):
+        """Update tracking file with download status"""
+        # Get the original line
+        original_line = '\t'.join([pub_data.get(key, '') for key in pub_data.keys()])
+        
+        if status == 'success':
+            # Just copy the line as-is for successful downloads
+            line_to_write = original_line
+        else:
+            # Append error message for failed downloads
+            line_to_write = f"{original_line}\t[Error - Not downloaded - {error_msg}]"
+        
+        with open(self.tracking_file, 'a', encoding='utf-8') as f:
+            f.write(line_to_write + '\n')
+
+    def normalize_text(self, text):
+        """Normalize text for consistent naming"""
+        if not text:
+            return ""
+        # Remove special characters, convert to lowercase, remove extra spaces
+        text = re.sub(r'[^\w\s-]', '', text.lower())
+        text = re.sub(r'\s+', '_', text.strip())
+        return text
+
+    def create_filename(self, pub_data, openalex_id):
+        """Create consistent filename format: {doi}_{title_words}_{year}.pdf"""
+        # Normalize DOI
+        doi = pub_data.get('doi', '').lower()
+        doi = doi.replace('https://doi.org/', '').replace('http://dx.doi.org/', '')
+        doi = doi.replace('doi:', '').strip('/')
+        doi = self.normalize_text(doi) if doi else 'no_doi'
+        
+        # Get first 5 words of title
+        title = pub_data.get('title', '')
+        title_words = self.normalize_text(title).split('_')[:5]
+        title_part = '_'.join(title_words) if title_words else 'no_title'
+        
+        # Get year
+        year = pub_data.get('year_pub', '').strip() or 'no_year'
+        
+        # Create filename
+        filename = f"{doi}_{title_part}_{year}.pdf"
+        # Ensure filename isn't too long
+        if len(filename) > 200:
+            filename = filename[:200] + ".pdf"
+        
+        return filename
+
+    def load_publications(self):
+        """Load publications from input file"""
+        publications = []
+        try:
+            with open(self.input_file, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f, delimiter='\t')
+                for row in reader:
+                    publications.append(row)
+            logger.info(f"Loaded {len(publications)} publications")
+            return publications
+        except Exception as e:
+            logger.error(f"Error loading publications: {e}")
+            return []
+
+    def search_openalex(self, pub_data):
+        """Search OpenAlex for publication"""
+        # Try DOI first
+        doi = pub_data.get('doi', '').strip()
+        if doi:
+            work = self.search_by_doi(doi)
+            if work:
+                return work
+        
+        # Try title if no DOI or DOI failed
+        title = pub_data.get('title', '').strip()
+        year = pub_data.get('year_pub', '').strip()
+        if title:
+            return self.search_by_title(title, year)
+        
+        return None
+
+    def search_by_doi(self, doi):
+        """Search OpenAlex by DOI"""
+        try:
+            clean_doi = doi.replace('https://doi.org/', '').replace('http://dx.doi.org/', '')
+            clean_doi = clean_doi.replace('doi:', '').strip('/')
+            
+            url = "https://api.openalex.org/works"
+            params = {'filter': f'doi:{clean_doi}', 'per-page': 1}
+            
+            response = requests.get(url, headers=self.headers, params=params, timeout=10)
+            response.raise_for_status()
+            
+            data = response.json()
+            if data.get('results'):
+                return data['results'][0]
+            return None
+        except Exception as e:
+            logger.warning(f"DOI search failed: {e}")
+            return None
+
+    def search_by_title(self, title, year=None):
+        """Search OpenAlex by title and verify year"""
+        try:
+            url = "https://api.openalex.org/works"
+            params = {'search': title, 'per-page': 5}
+            
+            response = requests.get(url, headers=self.headers, params=params, timeout=10)
+            response.raise_for_status()
+            
+            data = response.json()
+            for work in data.get('results', []):
+                work_title = work.get('title', '').lower()
+                pub_year = str(work.get('publication_year', ''))
+                
+                # Check title similarity (simple word matching)
+                title_similarity = self.calculate_similarity(title.lower(), work_title)
+                year_match = not year or pub_year == year
+                
+                if title_similarity > 0.8 and year_match:
+                    return work
+            
+            return None
+        except Exception as e:
+            logger.warning(f"Title search failed: {e}")
+            return None
+
+    def calculate_similarity(self, text1, text2):
+        """Simple word-based similarity"""
+        words1 = set(self.normalize_text(text1).split('_'))
+        words2 = set(self.normalize_text(text2).split('_'))
+        
+        if not words1 or not words2:
+            return 0
+        
+        intersection = words1.intersection(words2)
+        union = words1.union(words2)
+        
+        return len(intersection) / len(union) if union else 0
+
+    def get_pdf_urls(self, work):
+        """Extract PDF URLs from OpenAlex work, prioritized by reliability"""
+        pdf_urls = []
+        seen_urls = set()  # Avoid duplicates
+        
+        # 1. Check best_oa_location first (OpenAlex's recommended source)
+        best_oa = work.get('best_oa_location')
+        if best_oa:
+            # Try pdf_url first
+            if best_oa.get('pdf_url'):
+                url = best_oa['pdf_url']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    pdf_urls.append({
+                        'url': url,
+                        'source': 'openalex_best_oa',
+                        'priority': 100
+                    })
+            # Also try is_oa url even if not ending in .pdf
+            if best_oa.get('url'):
+                url = best_oa['url']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    pdf_urls.append({
+                        'url': url,
+                        'source': 'openalex_best_oa_landing',
+                        'priority': 98
+                    })
+        
+        # 2. Check open_access URLs (don't require .pdf extension)
+        if work.get('open_access'):
+            oa_data = work['open_access']
+            
+            # Try oa_url
+            if oa_data.get('oa_url'):
+                url = oa_data['oa_url']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    # Higher priority if it ends with .pdf
+                    priority = 95 if url.lower().endswith('.pdf') else 93
+                    pdf_urls.append({
+                        'url': url,
+                        'source': 'openalex_oa',
+                        'priority': priority
+                    })
+            
+            # Check for any_repository_has_fulltext
+            if oa_data.get('any_repository_has_fulltext'):
+                # This indicates repositories have the full text
+                pass  # We'll get these from locations
+        
+        # 3. Check primary_location
+        primary_loc = work.get('primary_location')
+        if primary_loc:
+            # Try pdf_url
+            if primary_loc.get('pdf_url'):
+                url = primary_loc['pdf_url']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    source_data = primary_loc.get('source', {})
+                    source_name = source_data.get('display_name', 'unknown') if source_data else 'unknown'
+                    pdf_urls.append({
+                        'url': url,
+                        'source': f'primary_{source_name}',
+                        'priority': 92
+                    })
+            # Try landing page URL
+            if primary_loc.get('url'):
+                url = primary_loc['url']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    source_data = primary_loc.get('source', {})
+                    source_name = source_data.get('display_name', 'unknown') if source_data else 'unknown'
+                    pdf_urls.append({
+                        'url': url,
+                        'source': f'primary_landing_{source_name}',
+                        'priority': 88
+                    })
+        
+        # 4. Check all locations for PDFs
+        for location in work.get('locations', []):
+            source_data = location.get('source', {})
+            source_name = source_data.get('display_name', 'unknown') if source_data else 'unknown'
+            is_oa = location.get('is_oa', False)
+            
+            # Get base priority for this source
+            base_priority = self.get_source_priority(source_name)
+            
+            # Try pdf_url (highest priority for each source)
+            if location.get('pdf_url'):
+                url = location['pdf_url']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    # Boost priority if it's OA
+                    priority = base_priority + (5 if is_oa else 0)
+                    pdf_urls.append({
+                        'url': url,
+                        'source': source_name,
+                        'priority': priority
+                    })
+            
+            # Try url_for_pdf field (some locations have this)
+            if location.get('url_for_pdf'):
+                url = location['url_for_pdf']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    priority = base_priority + (3 if is_oa else 0)
+                    pdf_urls.append({
+                        'url': url,
+                        'source': f'{source_name}_pdf',
+                        'priority': priority
+                    })
+            
+            # Try landing page URL (might redirect to PDF or have PDF link)
+            if location.get('url'):
+                url = location['url']
+                if url not in seen_urls:
+                    seen_urls.add(url)
+                    # Lower priority for landing pages
+                    priority = base_priority - 10 + (3 if is_oa else 0)
+                    pdf_urls.append({
+                        'url': url,
+                        'source': f'{source_name}_landing',
+                        'priority': priority
+                    })
+        
+        # 5. Check DOI URL as last resort (might redirect to PDF)
+        if work.get('doi'):
+            doi_url = work['doi']
+            if doi_url not in seen_urls:
+                seen_urls.add(doi_url)
+                pdf_urls.append({
+                    'url': doi_url,
+                    'source': 'doi_redirect',
+                    'priority': 50
+                })
+        
+        # Sort by priority (highest first)
+        pdf_urls.sort(key=lambda x: x['priority'], reverse=True)
+        
+        # Log what we found
+        if pdf_urls:
+            logger.info(f"  Found {len(pdf_urls)} potential PDF URLs")
+            for i, pdf_info in enumerate(pdf_urls[:3]):  # Show top 3
+                logger.debug(f"    {i+1}. {pdf_info['source']} (priority: {pdf_info['priority']})")
+        
+        return pdf_urls
+
+    def get_source_priority(self, source):
+        """Assign priority to different sources"""
+        if not source:
+            return 70
+        
+        source_lower = source.lower()
+        
+        # Highest priority for known open repositories
+        if 'pmc' in source_lower or 'pubmed' in source_lower:
+            return 95
+        elif 'arxiv' in source_lower:
+            return 94
+        elif 'biorxiv' in source_lower or 'medrxiv' in source_lower:
+            return 93
+        elif 'plos' in source_lower:
+            return 92
+        elif 'frontiers' in source_lower:
+            return 91
+        elif 'nature' in source_lower and 'open' in source_lower:
+            return 90
+        elif 'springer' in source_lower and 'open' in source_lower:
+            return 89
+        elif 'mdpi' in source_lower:
+            return 88
+        elif 'hindawi' in source_lower:
+            return 87
+        elif 'repository' in source_lower or 'archive' in source_lower:
+            return 85
+        elif 'university' in source_lower or '.edu' in source_lower:
+            return 84
+        elif 'zenodo' in source_lower:
+            return 83
+        elif 'figshare' in source_lower:
+            return 82
+        elif 'researchgate' in source_lower:
+            return 75  # Often requires login
+        elif 'academia.edu' in source_lower:
+            return 74  # Often requires login
+        else:
+            return 70
+
+    def download_pdf(self, pdf_info, filename):
+        """Download PDF from URL with better content type detection"""
+        url = pdf_info['url']
+        filepath = os.path.join(self.output_dir, filename)
+        
+        # Skip if file already exists
+        if os.path.exists(filepath):
+            logger.info(f"  File already exists: {filename}")
+            self.stats['skipped'] += 1
+            return True
+        
+        try:
+            # Prepare headers
+            headers = self.headers.copy()
+            headers.update({
+                'Accept': 'application/pdf, application/octet-stream, */*;q=0.8',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            })
+            
+            # First, try HEAD request to check content type
+            try:
+                head_response = requests.head(url, headers=headers, timeout=10, allow_redirects=True)
+                content_type = head_response.headers.get('content-type', '').lower()
+                content_length = head_response.headers.get('content-length', '0')
+                
+                # Check if it's definitely HTML (skip download)
+                if 'text/html' in content_type and 'pdf' not in url.lower():
+                    logger.debug(f"  Skipping HTML page from {pdf_info['source']}")
+                    return False
+                
+                # Check if file is too small (probably an error page)
+                if content_length and int(content_length) < 1000:
+                    logger.debug(f"  File too small ({content_length} bytes) from {pdf_info['source']}")
+                    return False
+            except:
+                # If HEAD fails, continue with GET
+                pass
+            
+            # Download with streaming
+            response = requests.get(url, headers=headers, timeout=30, stream=True, allow_redirects=True)
+            response.raise_for_status()
+            
+            # Check content type from GET response
+            content_type = response.headers.get('content-type', '').lower()
+            
+            # List of acceptable content types for PDFs
+            pdf_content_types = [
+                'application/pdf',
+                'application/octet-stream',
+                'application/x-pdf',
+                'application/download',
+                'binary/octet-stream',
+                'application/force-download'
+            ]
+            
+            # Check if content might be PDF
+            is_likely_pdf = any(ct in content_type for ct in pdf_content_types)
+            
+            # If it's HTML, skip it
+            if 'text/html' in content_type and not is_likely_pdf:
+                logger.warning(f"  Got HTML instead of PDF from {pdf_info['source']}")
+                return False
+            
+            # Download to temporary file first
+            temp_filepath = filepath + '.tmp'
+            with open(temp_filepath, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            # Check file size
+            file_size = os.path.getsize(temp_filepath)
+            if file_size < 1000:  # Less than 1KB is suspicious
+                os.remove(temp_filepath)
+                logger.warning(f"  Downloaded file too small ({file_size} bytes) from {pdf_info['source']}")
+                return False
+            
+            # Check if it's actually a PDF by reading first bytes
+            with open(temp_filepath, 'rb') as f:
+                header = f.read(min(1024, file_size))
+            
+            # Check for PDF signature or common PDF patterns
+            if header.startswith(b'%PDF'):
+                # It's a PDF!
+                os.rename(temp_filepath, filepath)
+                logger.info(f"  Downloaded: {filename} ({file_size:,} bytes) from {pdf_info['source']}")
+                self.stats['downloaded'] += 1
+                return True
+            elif b'<!DOCTYPE html' in header or b'<html' in header:
+                # It's HTML
+                os.remove(temp_filepath)
+                logger.warning(f"  Got HTML content from {pdf_info['source']}")
+                return False
+            elif content_type and 'pdf' in content_type:
+                # Content type says PDF but doesn't start with %PDF - might still be valid
+                os.rename(temp_filepath, filepath)
+                logger.info(f"  Downloaded: {filename} ({file_size:,} bytes) from {pdf_info['source']} [non-standard PDF]")
+                self.stats['downloaded'] += 1
+                return True
+            else:
+                # Unknown content
+                os.remove(temp_filepath)
+                logger.warning(f"  Unknown content type from {pdf_info['source']}")
+                return False
+                
+        except requests.exceptions.HTTPError as e:
+            if e.response.status_code == 404:
+                logger.debug(f"  404 Not Found from {pdf_info['source']}")
+            else:
+                logger.warning(f"  HTTP error {e.response.status_code} from {pdf_info['source']}")
+            return False
+        except Exception as e:
+            logger.warning(f"  Download failed from {pdf_info['source']}: {str(e)[:100]}")
+            if 'temp_filepath' in locals() and os.path.exists(temp_filepath):
+                os.remove(temp_filepath)
+            return False
+
+    def process_publications(self):
+        """Main processing function"""
+        logger.info("Starting OpenAlex PDF download")
+        
+        publications = self.load_publications()
+        if not publications:
+            return
+        
+        # Initialize tracking file
+        self.init_tracking_file(publications)
+        
+        for i, pub_data in enumerate(publications, 1):
+            pub_id = pub_data.get('pub_id', f'pub_{i}')
+            logger.info(f"Processing {i}/{len(publications)}: {pub_id}")
+            
+            self.stats['processed'] += 1
+            
+            # Search OpenAlex
+            work = self.search_openalex(pub_data)
+            if not work:
+                logger.info(f"  Not found in OpenAlex")
+                self.update_tracking_file(pub_data, 'failed', 'Not found in OpenAlex')
+                continue
+            
+            self.stats['found'] += 1
+            openalex_id = work.get('id', '').replace('https://openalex.org/', '')
+            
+            # Get PDF URLs
+            pdf_urls = self.get_pdf_urls(work)
+            if not pdf_urls:
+                logger.info(f"  No PDF URLs found")
+                self.update_tracking_file(pub_data, 'failed', 'No PDF URLs available')
+                continue
+            
+            # Create filename
+            filename = self.create_filename(pub_data, openalex_id)
+            
+            # Check if already exists
+            filepath = os.path.join(self.output_dir, filename)
+            if os.path.exists(filepath):
+                logger.info(f"  File already exists: {filename}")
+                self.stats['skipped'] += 1
+                self.update_tracking_file(pub_data, 'success')
+                continue
+            
+            # Try to download from URLs (in priority order)
+            downloaded = False
+            last_error = "Download failed from all sources"
+            for pdf_info in pdf_urls:
+                if self.download_pdf(pdf_info, filename):
+                    downloaded = True
+                    self.update_tracking_file(pub_data, 'success')
+                    break
+                time.sleep(0.5)  # Small delay between attempts
+            
+            if not downloaded:
+                logger.info(f"  Failed to download from all sources")
+                self.stats['failed'] += 1
+                self.update_tracking_file(pub_data, 'failed', last_error)
+            
+            # Rate limiting
+            time.sleep(0.1)
+            
+            # Progress update
+            if i % 50 == 0:
+                logger.info(f"Progress: {i}/{len(publications)} - "
+                        f"Found: {self.stats['found']}, Downloaded: {self.stats['downloaded']}")
+
+    def print_summary(self):
+        """Print final summary"""
+        logger.info("\n" + "="*50)
+        logger.info("OPENALEX FETCHER SUMMARY")
+        logger.info("="*50)
+        for key, value in self.stats.items():
+            logger.info(f"{key.capitalize()}: {value:,}")
+        
+        if self.stats['found'] > 0:
+            success_rate = (self.stats['downloaded'] / self.stats['found']) * 100
+            logger.info(f"Download Success Rate: {success_rate:.1f}%")
+
+def main():
+    fetcher = OpenAlexFetcher()
+    fetcher.process_publications()
+    fetcher.print_summary()
+
+if __name__ == "__main__":
+    main()

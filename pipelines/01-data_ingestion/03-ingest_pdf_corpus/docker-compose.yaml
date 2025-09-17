@@ -1,0 +1,78 @@
+services:
+  # Stage 1: OpenAlex PDF Fetcher
+  openalex-fetcher:
+    build: .
+    env_file: [.env]
+    working_dir: /app
+    volumes:
+      # Publications list mounted into container
+      - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
+      # Shared output directory
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/01-openalex_fetcher.py
+    profiles: ["stage1"]
+
+  # Stage 2: CORE PDF Fetcher
+  core-fetcher:
+    build: .
+    env_file: [.env]
+    working_dir: /app
+    volumes:
+      - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/02-core_fetcher.py
+    profiles: ["stage2"]
+
+  # Stage 3: Other Sources PDF Fetcher
+  other-fetcher:
+    build: .
+    env_file: [.env]
+    working_dir: /app
+    volumes:
+      - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/03-other_fetcher.py
+    profiles: ["stage3"]
+
+  # Stage 4: PDF Validation and Deduplication
+  validator:
+    build: .
+    env_file: [.env]
+    working_dir: /app
+    volumes:
+      - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/04-validate_dedupe.py
+    profiles: ["stage4"]
+
+  # Run all stages sequentially (optional convenience)
+  full-pipeline:
+    build: .
+    env_file: [.env]
+    working_dir: /app
+    volumes:
+      - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "
+        echo 'Starting full PDF download pipeline...' &&
+        python scripts/01-openalex_fetcher.py &&
+        echo 'OpenAlex stage complete. Starting CORE...' &&
+        python scripts/02-core_fetcher.py &&
+        echo 'CORE stage complete. Starting other sources...' &&
+        python scripts/03-other_fetcher.py &&
+        echo 'Other sources complete. Starting validation...' &&
+        python scripts/04-validate_dedupe.py &&
+        echo 'Pipeline complete!'
+      "
+    profiles: ["full"]

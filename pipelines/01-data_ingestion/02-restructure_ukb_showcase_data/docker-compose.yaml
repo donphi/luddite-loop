@@ -1,0 +1,60 @@
+services:
+  # Main processor - must run first
+  ukb-processor:
+    build: .
+    container_name: ukb-processor
+    working_dir: /app
+    volumes:
+      # Scripts mounted from local ./scripts directory
+      - ./scripts:/scripts:ro
+      # Input data files
+      - ../01-ingest_ukb_showcase_data/input:/input:ro
+      # Output directory for generated files
+      - ./output:/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python /scripts/process_showcase.py
+
+  # Field category validation - checks for data errors
+  field-category-check:
+    build: .
+    container_name: ukb-field-category-validator
+    working_dir: /app
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./output:/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python /scripts/field_category_check.py
+    depends_on:
+      - ukb-processor
+
+  # Category summary generator
+  field-summary:
+    build: .
+    container_name: ukb-field-summary
+    working_dir: /app
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./output:/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python /scripts/field_check.py
+    depends_on:
+      - ukb-processor
+
+  ai-consortium:
+    build: .
+    container_name: ai-consortium
+    working_dir: /app
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./output:/output
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+    env_file:
+      - .env
+    command: python /scripts/ai_consortium_validation.py
+    depends_on:
+      - ukb-processor
