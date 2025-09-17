@@ -80,12 +80,18 @@ ACRONYM_CFG = {
 
     # UMLS source/type policy
     "TTY_WHITELIST": {"ACR","AB","AA"},  # UMLS “acronym-like” term types
-    "REQUIRE_TTY": False,         # Loose: accept any token that *looks* like acronym shape.
+    "REQUIRE_TTY": True,         # Loose: accept any token that *looks* like acronym shape.
                                   # Tighten: set True to require TTY in whitelist.
 
     # Phrase-key policy for full names (left side of mapping)
     "REQUIRE_MULTIWORD_FULLNAME": True,  # keep True to avoid single-word like "Sex"
     "ALLOW_DEPAREN": True,               # also index de-parenthesized variants of STR
+
+    # NEW: configurable UMLS governance (no hard-coded lists inside logic)
+    "REL_ACCEPTED": ("SY","RQ"),                 # relationship types to consider
+    "REL_BONUS": {"SY": 600, "RQ": 300},         # scoring bonus by REL
+    "SUPPRESS_EXCLUDE": ("O","Y"),               # drop suppressed/old strings
+}
 }
 
 # Global switch: substring fallback via Aho–Corasick (loose) vs exact-only (tight)
@@ -174,70 +180,47 @@ def is_likely_linking_word(token: str, original_token: str) -> bool:
 
 def make_acronym_validator(cfg=ACRONYM_CFG):
     import re
-    
-    punct = []
-    if cfg["ALLOW_HYPHEN"]: punct.append('-')
-    if cfg["ALLOW_PERIOD"]: punct.append('.')
-    if cfg["ALLOW_SLASH"]:  punct.append('/')
-    
-    # Modified pattern for your specific case requirement
+
+    allowed = []
+    if cfg.get("ALLOW_HYPHEN"): allowed.append("-")
+    if cfg.get("ALLOW_SLASH"):  allowed.append("/")
+    if cfg.get("ALLOW_PERIOD"): allowed.append(".")
+    allowed_class = re.escape("".join(allowed))
+
+    # disallow punctuation that commonly creates false "acronyms"
+    banned = [",","+","_","(",")","'",'"',":",";","<",">","?","!","&","\\"]
+    if not cfg.get("ALLOW_PERIOD"):
+        banned.append(".")
+    hard_ban = re.compile("[" + re.escape("".join(banned)) + "]")
+
     if cfg.get("ALLOW_FIRST_LOWER", True):
-        # Pattern: either all uppercase OR first char lowercase + rest uppercase
-        # Examples: "EGFR", "eGFR", "BP", "mRNA"
-        base_pattern = rf"^([a-z]?[A-Z0-9{''.join(map(re.escape, punct))}]+)$"
-        
-        def is_valid_case(s: str) -> bool:
-            """Check if follows allowed case patterns"""
-            if not s: return False
-            
-            # All uppercase is OK
-            if s.isupper(): return True
-            
-            # First letter lowercase, rest uppercase (with numbers)
-            if len(s) > 1:
-                first_is_lower = s[0].islower()
-                rest_is_upper = all(c.isupper() or c.isdigit() or c in punct for c in s[1:])
-                if first_is_lower and rest_is_upper:
-                    return True
-            
-            return False
+        pat = re.compile(rf"^(?:[a-z][A-Z0-9{allowed_class}]+|[A-Z][A-Z0-9{allowed_class}]+)$")
     else:
-        # Original: only uppercase
-        base_pattern = rf"^[A-Z0-9{''.join(map(re.escape, punct))}]+$"
-        def is_valid_case(s: str) -> bool:
-            return s.isupper()
-    
-    # Length constraints
-    min_len = cfg.get('ACRONYM_MIN_LEN', 2)
-    max_len = cfg.get('ACRONYM_MAX_LEN', 8)
-    
+        pat = re.compile(rf"^[A-Z][A-Z0-9{allowed_class}]+$")
+
+    min_len = cfg.get("ACRONYM_MIN_LEN", 2)
+    max_len = cfg.get("ACRONYM_MAX_LEN", 10)
+
     def is_acronym(s: str) -> bool:
         if not s: return False
         s = s.strip()
-
-        # Reject Acronyms with dashes and slashes
-        if ' - ' in s or ' / ' in s:
+        # block spaced separators (prevents "l u" from "ultrasound")
+        if " - " in s or " / " in s:
             return False
-        
-        # Check length
-        if len(s) < min_len or len(s) > max_len:
+        # length
+        if not (min_len <= len(s) <= max_len):
             return False
-        
-        # Check blacklist
-        if s.upper() in cfg.get("ACRONYM_BLACKLIST", set()):
+        # charset and case
+        if hard_ban.search(s):
             return False
-        
-        # Check case pattern
-        if not is_valid_case(s):
+        if not pat.fullmatch(s):
             return False
-        
-        # Optional: Allow trailing 's' for plurals
-        if cfg.get("ALLOW_TRAILING_PLURAL") and s.endswith('s'):
+        # optional plural stripping
+        if cfg.get("ALLOW_TRAILING_PLURAL") and s.endswith("s") and len(s) > min_len:
             s = s[:-1]
-            return is_valid_case(s) and len(s) >= min_len
-        
+            return bool(pat.fullmatch(s))
         return True
-    
+
     return is_acronym
 
 
@@ -246,8 +229,8 @@ def build_fullname_to_acronym_map(mrconso_file: Path) -> dict:
     """
     Returns {normalized_english_fullname_variant -> best_english_acronym}.
     """
-    usecols = [0,1,2,4,6,11,12,14]
-    names   = ['CUI','LAT','TS','STT','ISPREF','SAB','TTY','STR']
+    usecols = [0,1,2,4,6,11,12,14,16]
+    names   = ['CUI','LAT','TS','STT','ISPREF','SAB','TTY','STR','SUPPRESS']
 
     is_acronym = make_acronym_validator(ACRONYM_CFG)
     TTY_WL = tuple(ACRONYM_CFG["TTY_WHITELIST"])
@@ -278,7 +261,10 @@ def build_fullname_to_acronym_map(mrconso_file: Path) -> dict:
         chunk_count += 1
         print(f"  Processing chunk {chunk_count}...")
         
-        eng = chunk[chunk.LAT == 'ENG'].copy()
+        eng = chunk[
+            (chunk.LAT == 'ENG') &
+            (~chunk.SUPPRESS.fillna('').isin(ACRONYM_CFG.get('SUPPRESS_EXCLUDE', ())))
+        ].copy()
         eng['STR'] = eng['STR'].fillna('').astype(str)
         eng['TTY'] = eng['TTY'].fillna('').astype(str)
 
