@@ -12,9 +12,25 @@ You are tasked with analyzing and documenting a research pipeline folder. You mu
 
 ## File Processing Instructions
 
-### Step 1: File Analysis and Comment Standardization
+### Step 0: Large File Detection and Header Analysis
+Before processing any files, check all input and output directories for large files:
 
-For **EVERY** file in the folder:
+#### For ANY file that could be in input/ or output/ directories:
+1. **CHECK** file size first with: `ls -lh filename`
+2. **NEVER** read files larger than 10MB directly
+3. **USE** these bash commands for large files:
+   - Text/CSV files: `head -n 100 filename` (first 100 lines only)
+   - JSON files: `head -c 5000 filename | python -m json.tool 2>/dev/null | head -n 50` (first 5KB, formatted)
+   - Log files: `head -n 200 filename` (first 200 lines)
+   - Binary/Data files: `file filename && du -h filename` (just get file type and size)
+
+#### Document what you find:
+```bash
+# Example analysis commands:
+find ./input ./output -type f -size +10M -exec ls -lh {} \; 2>/dev/null  # Find all large files
+head -n 50 ./input/large_dataset.csv  # Peek at large CSV
+tail -n 50 ./output/processing.log    # Check end of log file
+wc -l ./input/*.txt                   # Count lines without reading full files
 
 #### Python Files (.py)
 ```python
@@ -167,7 +183,7 @@ services:
       - CHUNK_SIZE=512        # Hyperparameter: text chunk size
       - LOG_LEVEL=INFO        # Logging verbosity
     
-    # Resource limits - no GPU required for this service
+    # Resource limits (CPU and memory example – adjust as needed)
     deploy:
       resources:
         limits:
@@ -235,7 +251,7 @@ docker-compose up
 
 ## 💻 System Requirements
 
-- **GPU Required**: ❌ No
+- **GPU Required**: Optional (depends on workload)
 - **Minimum RAM**: 4GB
 - **Recommended RAM**: 8GB
 - **CPU Cores**: 2+ recommended
@@ -394,7 +410,7 @@ Seeds Documented:
 File Renames:
 - process_data.py → data_processor.py (standard naming convention)
 
-GPU Required: No
+GPU Required: Optional (depends on pipeline)
 Estimated Processing Time: 5-10 minutes for 100 PDFs
 Docker Image Size: ~500MB
 
