@@ -18,85 +18,192 @@ except Exception:
 
 
 USE_COMPREHENSIVE_TRACKING = True
-# ----------------------------- Acronym scoring UMLS -----------------------------
 
-CLINICAL_STY_PRIORITY = {
-    'T059': 10,  # Laboratory Procedure
-    'T060': 10,  # Diagnostic Procedure  
-    'T034': 9,   # Laboratory or Test Result
-    'T201': 9,   # Clinical Attribute
-    'T033': 8,   # Finding
-    'T047': 8,   # Disease or Syndrome
-    'T116': 7,   # Amino Acid, Peptide, or Protein
-    'T123': 7,   # Biologically Active Substance
-    'T126': 6,   # Enzyme
-    'T028': 3,   # Gene or Genome
-}
-
-SAB_PRIORITY = {
-    'LNC': 200,      # LOINC
-    'SNOMEDCT_US': 90,
-    'MSH': 80,       # MeSH
-    'NCI': 70,
-    'RXNORM': 60,
-    'UNIPROT': 50,   # UniProt for proteins
-    'HGNC': 20,      # Gene sources (lower priority in clinical)
-    'NCBI': 15,
-    'ENSEMBL': 10,
-}
-
-# ----------------------------- Acronym Matching Hyperparameters -----------------------------
-# Start LOOSE; tighten by flipping flags or narrowing ranges.
+# ========================== UMLS ACRONYM CONFIGURATION ==========================
 ACRONYM_CFG = {
-    # ACRONYM validation (what counts as valid acronym)
-    "ACRONYM_MIN_LEN": 2,         # BP, HR are valid acronyms
-    "ACRONYM_MAX_LEN": 10,         # SARS-CoV-2 is valid
+    "SCORING": {
+        # ISPREF preference weighting
+        "ISPREF": {
+            'Y': 5000,      # Preferred term - strongest signal
+            'N': -3000,      # Non-preferred
+            "default": -500
+        },
+        
+        # TTY (Term Type) hierarchy  
+        "TTY": {
+            'ACR': 100,     # Explicit acronym
+            'AB': 50,       # Abbreviation
+            'AA': 25,       # Attribute type abbreviation
+            "default": 0
+        },
+        
+        # SAB (Source) priorities
+        "SAB": {
+            # CLINICAL/EPIDEMIOLOGICAL - PRIORITIZE FOR UK BIOBANK
+            'SNOMEDCT_US': 500,
+            'RCD': 450,
+            'LNC': 400,
+            'MSH': 350,
+            'NCI': 300,
+            'ICD10CM': 250,
+            'ICD10PCS': 200,
+            'RXNORM': 150,
+            'ICD9CM': 140,
+            'CPT': 100,
+            'VANDF': 80,
+            
+            # PENALIZE - NOT RELEVANT FOR UK BIOBANK
+            'HGNC': -5000,
+            'OMIM': 500,
+            'UNIPROT': -250,
+            'NCBI': -250,
+            'ENSEMBL': -250,
+            'HL7V2.5': -500,
+            'HL7V3.0': -500,
+            'PDQ': -200,
+            'ALT': -100,
+            "default": -1000
+        },
+        
+        # STY (Semantic Type) priorities
+        "STY": {
+            # HIGH PRIORITY - UK Biobank measures
+            'T059': 100,    # Laboratory Procedure
+            'T060': 100,    # Diagnostic Procedure
+            'T034': 90,     # Laboratory or Test Result
+            'T201': 90,     # Clinical Attribute
+            'T033': 80,     # Finding
+            'T047': 80,     # Disease or Syndrome
+            'T061': 70,     # Therapeutic/Preventive Procedure
+            'T032': 60,     # Organism Attribute
+            
+            # MODERATE - Biochemical
+            'T116': 20,     # Amino Acid, Peptide, or Protein
+            'T126': 20,     # Enzyme (keep for clinical enzymes like AST/ALT)
+            'T123': 20,     # Biologically Active Substance
+            'T109': 10,     # Organic Chemical
+            
+            # STRONGLY PENALIZE
+            'T170': -500,   # Intellectual Product
+            'T028': -400,   # Gene or Genome
+            'T073': -300,   # Manufactured Object
+            'T074': -300,   # Medical Device
+            "default": 0
+        },
+        
+        # Relationship bonuses (when using MRREL)
+        "RELATIONSHIP": {
+            'same_cui': 1000,   # Acronym from same CUI as fullname
+            'SY': 600,          # Direct synonym
+            'RQ': 300,          # Related, possibly synonymous  
+            'RO': 150,          # Has relationship other than synonymy
+            'AQ': 20,           # Allowed qualifier
+            'QB': 10,           # Can be qualified by
+            "default": 0
+        },
+        
+        # Generic term penalties
+        "GENERIC_PENALTIES": {
+            'ID': -200,
+            'DEVICE': -200,
+            'METHOD': -200,
+            'TYPE': -200,
+        },
+        
+        # Special case penalties
+        "GENE_WITHOUT_CLINICAL_PENALTY": -1000,  # Gene source without clinical type
+        "EXCLUDED_TYPE_WITHOUT_CLINICAL_PENALTY": -500,  # Has excluded type, no clinical
+        "CLINICAL_TYPE_THRESHOLD": 50,  # Min score to count as "good clinical type"
+        
+        # Length penalty
+        "LENGTH_PENALTY_PER_CHAR": -0.1,
+
+        "FREQUENCY": {
+            "HIGH_SPECIFICITY_THRESHOLD": 0.1,    # >10% of uses in this concept
+            "LOW_SPECIFICITY_THRESHOLD": 0.01,    # <1% of uses in this concept  
+            "SPECIFICITY_BONUS_MULTIPLIER": 5000, # Max bonus for high specificity
+            "SPECIFICITY_BONUS_CAP": 2000,        # Cap the bonus to avoid extreme scores
+            "LOW_SPECIFICITY_PENALTY": -3000,     # Penalty for likely wrong usage
+            "LENGTH_MATCH_BONUS": 1000,           # Bonus for reasonable acronym length
+            "LENGTH_MISMATCH_PENALTY": -1500,     # Penalty for acronyms too long
+            "MIN_PHRASE_WORDS": 2,                # Minimum words in phrase for length check
+            "MAX_ACRONYM_RATIO": 2,               # Max ratio of acronym letters to phrase words
+        }
+    },
     
-    # PHRASE matching (what phrases we search for)
-    "PHRASE_MIN_LEN": 4,          # Don't match "l u" from "ultrasound"
-    "PHRASE_MAX_LEN": None,       # No upper limit on phrase length
-
-    # Other
-    "ALLOW_HYPHEN": True,         # e.g., NT-proBNP
-    "ALLOW_PERIOD": False,         # e.g., T.S.H.
-    "ALLOW_SLASH": True,          # e.g., ECG/EKG
-
-    # Case patterns (NEW)
-    "ALLOW_FIRST_LOWER": True,  # Allow eGFR, mRNA, pH patterns
-    "ALLOW_MIXED_CASE": False,  # Still reject random MiXeD case
-    "ALLOW_TRAILING_PLURAL": True,# allow HDLs
-    "ALLOW_GREEK": True,         # set True for tokens like TNF-α (needs Unicode regex)
-
-    # Semantic filters
-    "LOWERCASE_LINKING_WORDS": {  # Words that are lowercase in titles = not acronyms
-    "in", "on", "or", "as", "it", "of", "to", "at", "by", "for", "and", "the", "with"
+    # Keep your existing non-scoring config unchanged
+    "ACRONYM_MIN_LEN": 2,       # Minimum length for a valid acronym (e.g., "BP" = 2 chars)
+    "ACRONYM_MAX_LEN": 10,      # Maximum length for a valid acronym (e.g., "SNOMEDCT" = 8 chars)
+                                # Prevents treating long words as acronyms
+    
+    "PHRASE_MIN_LEN": 4,        # Minimum length for a phrase to get an acronym replacement
+                                # Prevents replacing very short words like "the" or "is"
+    
+    "PHRASE_MAX_LEN": None,     # Maximum phrase length (None = no limit)
+                                # Could set to limit very long medical descriptions
+    
+    # ===== CHARACTER RULES FOR ACRONYMS =====
+    
+    "ALLOW_HYPHEN": True,       # Allow hyphens in acronyms (e.g., "COVID-19", "SARS-CoV-2")
+    "ALLOW_PERIOD": False,      # Disallow periods (False prevents "Dr." or "Inc." as acronyms)
+    "ALLOW_SLASH": True,        # Allow slashes (e.g., "I/O", "w/o")
+    "ALLOW_FIRST_LOWER": True,  # Allow acronyms starting with lowercase (e.g., "pH", "mRNA")
+    "ALLOW_MIXED_CASE": False,  # Disallow mixed case beyond first char (False blocks "CaMKII")
+    "ALLOW_TRAILING_PLURAL": True,  # Accept plural forms (e.g., "ECGs" as plural of "ECG")
+    "ALLOW_GREEK": True,        # Allow Greek letters (α, β, γ) in medical/scientific acronyms
+    
+    # ===== TTY (TERM TYPE) FILTERING =====
+    # TTY is a column in MRCONSO.RRF that classifies each term's type
+    # This is UMLS's way of marking what kind of term each entry is
+    
+    "TTY_WHITELIST": {
+        "ACR",    # ACR = Acronym (explicitly marked acronym like "HIV", "DNA")
+        "AB"     # AB = Abbreviation (shortened forms like "Tx" for treatment)
+        #"AA",     # AA = Attribute type abbreviation (specialized medical abbreviations)
+        #"SY"      # SY = Synonym (can include acronyms not marked as ACR, like "ALT")
     },
-    "AMBIGUOUS_UPPERCASE": {      # Could be acronyms OR regular words, need context
-        "OR",   # Operating Room vs logical OR
-        "US",   # Ultrasound vs United States
-        "NO",   # Nitric Oxide vs negation
-        "IT",   # Information Technology vs pronoun
-    },
-
-    # UMLS source/type policy
-    "TTY_WHITELIST": {"ACR","AB","AA"},  # UMLS “acronym-like” term types
-    "REQUIRE_TTY": True,         # Loose: accept any token that *looks* like acronym shape.
-                                  # Tighten: set True to require TTY in whitelist.
-
-    # Phrase-key policy for full names (left side of mapping)
-    "REQUIRE_MULTIWORD_FULLNAME": True,  # keep True to avoid single-word like "Sex"
-    "ALLOW_DEPAREN": True,               # also index de-parenthesized variants of STR
-
-    # NEW: configurable UMLS governance (no hard-coded lists inside logic)
-    "REL_ACCEPTED": ("SY","RQ"),                 # relationship types to consider
-    "REL_BONUS": {"SY": 600, "RQ": 300},         # scoring bonus by REL
-    "SUPPRESS_EXCLUDE": ("O","Y"),               # drop suppressed/old strings
+    
+    "REQUIRE_TTY": True,        # If True, ONLY accept terms with TTY in whitelist
+                                # If False, accept all TTY types (risky - includes full names)
+    
+    # ===== FULLNAME FILTERING RULES =====
+    
+    "REQUIRE_MULTIWORD_FULLNAME": True,  # Only map acronyms to multi-word phrases
+                                         # True: "blood pressure" → "BP" ✓
+                                         # True: "pressure" → "BP" ✗ (single word)
+    
+    "ALLOW_DEPAREN": True,      # Strip trailing parentheticals before matching
+                                # "Alanine Aminotransferase (substance)" → "Alanine Aminotransferase"
+    
+    # ===== UMLS DATA FILTERING =====
+    
+    "SUPPRESS_EXCLUDE": ("Y", "O", "E"),  # SUPPRESS column values to exclude
+                                          # Y = Suppressed by UMLS editors
+                                          # O = Obsolete term
+                                          # E = Suppressed due to editor decision
+                                          # These are low-quality or outdated terms
+    
+    # ===== SPECIAL WORD HANDLING =====
+    
+    "LOWERCASE_LINKING_WORDS": {  # Words that are definitely NOT acronyms
+        "in", "on", "or", "as", "it", "of", "to", "at",
+        "by", "for", "and", "the", "with", "is", "be", "was"
+    },  # Prevents treating common words as potential acronyms
+    
+    "AMBIGUOUS_UPPERCASE": {     # Uppercase words that MIGHT be acronyms OR regular words
+        "OR",     # Could be: Operating Room OR logical operator "or"
+        "US",     # Could be: Ultrasound OR United States OR pronoun "us"  
+        "NO",     # Could be: Nitric Oxide OR negation "no"
+        "IT",     # Could be: Information Technology OR pronoun "it"
+        "BP",     # Blood Pressure (almost always acronym in medical context)
+        "MS",     # Multiple Sclerosis OR millisecond OR title "Ms."
+        "HR",     # Heart Rate OR Human Resources
+        "ID",     # Identifier OR infectious disease
+        "UK"      # United Kingdom
+    },  # Requires context-aware processing to disambiguate
 }
-}
 
-# Global switch: substring fallback via Aho–Corasick (loose) vs exact-only (tight)
-USE_SUBSTRING_FALLBACK = True  # tighten by setting False
-# ========================================================================================
+USE_SUBSTRING_FALLBACK = True
 
 
 # ----------------------------- helpers you already had -----------------------------
@@ -123,6 +230,52 @@ def infer_column_dtype(series, col_name):
     except:
         pass
     return 'object'
+
+def build_context_aware_frequency(mrxw_file: Path) -> tuple:
+    """Build CUI-specific and global frequency maps from MRXW_ENG.RRF"""
+    print(f"🔢 Building context-aware frequencies from {mrxw_file.name}...")
+    
+    cui_word_counts = {}  # {CUI: {word: count}}
+    word_cui_sets = {}   # {word: set(CUIs)}
+    
+    chunk_count = 0
+    total_rows = 0
+    
+    for chunk in pd.read_csv(
+        mrxw_file, sep='|', header=None,
+        names=['ENG','WORD','CUI','LUI','SUI'], 
+        dtype=str, chunksize=500_000, on_bad_lines='skip', engine='c'
+    ):
+        chunk_count += 1
+        print(f"    Processing frequency chunk {chunk_count}...")
+        
+        # NO FILTERING NEEDED - file is already English-only
+        total_rows += len(chunk)
+        
+        for _, row in chunk.iterrows():
+            cui = row['CUI']
+            word = row['WORD'].lower() if pd.notna(row['WORD']) else None
+            
+            if not word or not cui or pd.isna(cui):
+                continue
+                
+            # Count occurrences per CUI
+            if cui not in cui_word_counts:
+                cui_word_counts[cui] = {}
+            cui_word_counts[cui][word] = cui_word_counts[cui].get(word, 0) + 1
+            
+            # Track which CUIs each word appears in
+            if word not in word_cui_sets:
+                word_cui_sets[word] = set()
+            word_cui_sets[word].add(cui)
+    
+    # Convert CUI sets to counts for global frequency
+    word_global_counts = {word: len(cui_set) for word, cui_set in word_cui_sets.items()}
+    
+    print(f"    Processed {chunk_count} chunks, {total_rows:,} rows")
+    print(f"  ✓ Built frequency maps for {len(word_global_counts):,} words across {len(cui_word_counts):,} CUIs")
+    
+    return cui_word_counts, word_global_counts
 
 def load_and_type_dataframe(filepath, delimiter='\t'):
     print(f"\n📂 Loading {filepath.name}...")
@@ -230,7 +383,7 @@ def build_fullname_to_acronym_map(mrconso_file: Path) -> dict:
     Returns {normalized_english_fullname_variant -> best_english_acronym}.
     """
     usecols = [0,1,2,4,6,11,12,14,16]
-    names   = ['CUI','LAT','TS','STT','ISPREF','SAB','TTY','STR','SUPPRESS']
+    names   = ['CUI','ENG','TS','STT','ISPREF','SAB','TTY','STR','SUPPRESS']
 
     is_acronym = make_acronym_validator(ACRONYM_CFG)
     TTY_WL = tuple(ACRONYM_CFG["TTY_WHITELIST"])
@@ -262,7 +415,7 @@ def build_fullname_to_acronym_map(mrconso_file: Path) -> dict:
         print(f"  Processing chunk {chunk_count}...")
         
         eng = chunk[
-            (chunk.LAT == 'ENG') &
+            (chunk.ENG == 'ENG') &
             (~chunk.SUPPRESS.fillna('').isin(ACRONYM_CFG.get('SUPPRESS_EXCLUDE', ())))
         ].copy()
         eng['STR'] = eng['STR'].fillna('').astype(str)
@@ -319,6 +472,121 @@ def build_fullname_to_acronym_map(mrconso_file: Path) -> dict:
     
     return full2acr
 
+def build_comprehensive_acronym_data_with_frequency(mrconso_file: Path, mrsty_file: Path = None, cui_word_counts: dict = None, word_global_counts: dict = None):
+    """
+    Returns:
+    - full2candidates: {norm_fullname -> [(acr, cui, sab, tty, sty_list, score), ...]}
+    - full2best: {norm_fullname -> best_acronym} for backwards compatibility
+    """
+    is_acronym = make_acronym_validator(ACRONYM_CFG)
+    TTY_WL = tuple(ACRONYM_CFG["TTY_WHITELIST"])
+    
+    # Load semantic types if available
+    cui_to_sty = {}
+    if mrsty_file and mrsty_file.exists():
+        print(f"  Loading semantic types from {mrsty_file.name}...")
+        # MRSTY.RRF has trailing pipe delimiter, so we need to handle that
+        sty_df = pd.read_csv(mrsty_file, sep='|', header=None,
+                            usecols=[0,1,2,3,4,5],  # Keep all 6 columns
+                            names=['CUI','TUI','STN','STY','ATUI','CVF'],
+                            dtype=str, on_bad_lines='skip')
+        for cui, group in sty_df.groupby('CUI'):
+            cui_to_sty[cui] = list(group['TUI'].unique())
+    
+    # Collect all candidates per CUI
+    cui_candidates = {}  # CUI -> [(acr, sab, tty), ...]
+    cui_fullnames = {}   # CUI -> set(strings)
+    
+    print(f"\n🔤 Loading MRCONSO from {mrconso_file.name}...")
+    for chunk in pd.read_csv(
+        mrconso_file, sep='|', header=None,
+        usecols=[0,1,2,6,11,12,14,16],  
+        names=['CUI','ENG','TS','ISPREF','SAB','TTY','STR','SUPPRESS'],
+        dtype=str, chunksize=500_000, on_bad_lines='skip'
+    ):
+        # Filter once correctly
+        eng = chunk[(chunk.ENG == 'ENG') & 
+                    ~chunk.SUPPRESS.fillna('').isin(['Y','O','E'])].copy()
+        
+        # Collect all fullnames
+        for row in eng.itertuples(index=False):
+            if pd.isna(row.STR):
+                continue
+            s = str(row.STR).strip()
+            if s:
+                cui_fullnames.setdefault(row.CUI, set()).add(s)
+                
+        # Collect all acronym candidates WITH ISPREF!
+        for row in eng.itertuples(index=False):
+            if pd.isna(row.STR):
+                continue
+            cand = str(row.STR).strip()
+            
+            if is_likely_linking_word(cand.lower(), cand):
+                continue
+                
+            if is_acronym(cand):
+                cui_candidates.setdefault(row.CUI, []).append(
+                    (cand, row.SAB, row.TTY, row.ISPREF)  # ← ADD ISPREF!
+                )
+
+    # Then fix the scoring loop:
+    full2candidates = {}
+    full2best = {}
+    
+    if cui_candidates:  # Only debug if we have data
+        debug_specific_terms(cui_candidates, cui_fullnames, cui_to_sty)
+
+    acronym_cui_count = {}
+    for cui, candidates in cui_candidates.items():
+        for acr, _, _, _ in candidates:
+            acronym_cui_count.setdefault(acr, set()).add(cui)
+
+    for cui, candidates in cui_candidates.items():
+        if not candidates:
+            continue
+        
+        sty_list = cui_to_sty.get(cui, [])  # MOVE THIS UP HERE
+        
+        # Score each candidate
+        scored = []
+        for acr, sab, tty, ispref in candidates:
+            cui_count = len(acronym_cui_count.get(acr, set()))
+            ambiguity_penalty = 0
+            if cui_count > 3:
+                ambiguity_penalty = -2000 * (cui_count - 3)
+            
+            score = compute_acronym_score(acr, sab, tty, sty_list, ispref)
+            score += ambiguity_penalty
+            scored.append((acr, cui, sab, tty, sty_list, score))
+        
+        # Sort by score (highest first)
+        scored.sort(key=lambda x: (-x[5], len(x[0]), x[0]))  # score, length, alpha
+        
+        # Map to all fullnames for this CUI
+        for full in cui_fullnames.get(cui, []):
+            norm_key = _norm(full)
+            # ADD THIS: Skip very short phrases that are likely to cause false matches
+            if norm_key and len(norm_key) >= ACRONYM_CFG.get("PHRASE_MIN_LEN", 4):
+                if not ACRONYM_CFG["REQUIRE_MULTIWORD_FULLNAME"] or ' ' in norm_key:
+                    # FILTER: Only keep acronyms that are actually SHORTER than the full phrase
+                    # Remove spaces from comparison to handle multi-word phrases properly
+                    full_no_spaces = full.replace(' ', '').replace('-', '').replace('/', '')
+                    valid_scored = []
+                    for candidate in scored:
+                        acr = candidate[0]
+                        acr_no_spaces = acr.replace(' ', '').replace('-', '').replace('/', '')
+                        # Acronym must be shorter than the original phrase
+                        if len(acr_no_spaces) < len(full_no_spaces):
+                            if len(full_no_spaces) / len(acr_no_spaces) >= 3:
+                                valid_scored.append(candidate)
+                    
+                    # Only add if we have valid (shorter) acronyms
+                    if valid_scored:
+                        full2candidates.setdefault(norm_key, []).extend(valid_scored)
+                        
+    return full2candidates, full2best
+
 def build_comprehensive_acronym_data(mrconso_file: Path, mrsty_file: Path = None):
     """
     Returns:
@@ -347,10 +615,13 @@ def build_comprehensive_acronym_data(mrconso_file: Path, mrsty_file: Path = None
     print(f"\n🔤 Loading MRCONSO from {mrconso_file.name}...")
     for chunk in pd.read_csv(
         mrconso_file, sep='|', header=None,
-        names=['CUI','LAT','TS','STT','ISPREF','SAB','TTY','STR'],
-        usecols=[0,1,2,4,6,11,12,14], dtype=str, chunksize=500_000
+        usecols=[0,1,2,6,11,12,14,16],  
+        names=['CUI','ENG','TS','ISPREF','SAB','TTY','STR','SUPPRESS'],
+        dtype=str, chunksize=500_000, on_bad_lines='skip'
     ):
-        eng = chunk[chunk.LAT == 'ENG'].copy()
+        # Filter once correctly
+        eng = chunk[(chunk.ENG == 'ENG') & 
+                    ~chunk.SUPPRESS.fillna('').isin(['Y','O','E'])].copy()
         
         # Collect all fullnames
         for row in eng.itertuples(index=False):
@@ -360,25 +631,24 @@ def build_comprehensive_acronym_data(mrconso_file: Path, mrsty_file: Path = None
             if s:
                 cui_fullnames.setdefault(row.CUI, set()).add(s)
                 
-        # Collect all acronym candidates (separately!)
+        # Collect all acronym candidates WITH ISPREF!
         for row in eng.itertuples(index=False):
             if pd.isna(row.STR):
                 continue
             cand = str(row.STR).strip()
             
-            # Skip linking words
             if is_likely_linking_word(cand.lower(), cand):
                 continue
                 
             if is_acronym(cand):
                 cui_candidates.setdefault(row.CUI, []).append(
-                    (cand, row.SAB, row.TTY)
+                    (cand, row.SAB, row.TTY, row.ISPREF)  # ← ADD ISPREF!
                 )
-    
-    # Build mapping with ALL candidates
+
+    # Then fix the scoring loop:
     full2candidates = {}
     full2best = {}
-
+    
     if cui_candidates:  # Only debug if we have data
         debug_specific_terms(cui_candidates, cui_fullnames, cui_to_sty)
     
@@ -390,8 +660,8 @@ def build_comprehensive_acronym_data(mrconso_file: Path, mrsty_file: Path = None
         
         # Score each candidate
         scored = []
-        for acr, sab, tty in candidates:
-            score = compute_acronym_score(acr, sab, tty, sty_list)
+        for acr, sab, tty, ispref in candidates:  # Now unpacking 4 values!
+            score = compute_acronym_score(acr, sab, tty, sty_list, ispref)
             scored.append((acr, cui, sab, tty, sty_list, score))
         
         # Sort by score (highest first)
@@ -412,14 +682,13 @@ def build_comprehensive_acronym_data(mrconso_file: Path, mrsty_file: Path = None
                         acr_no_spaces = acr.replace(' ', '').replace('-', '').replace('/', '')
                         # Acronym must be shorter than the original phrase
                         if len(acr_no_spaces) < len(full_no_spaces):
-                            valid_scored.append(candidate)
+                            if len(full_no_spaces) / len(acr_no_spaces) >= 3:
+                                valid_scored.append(candidate)
                     
                     # Only add if we have valid (shorter) acronyms
                     if valid_scored:
                         full2candidates.setdefault(norm_key, []).extend(valid_scored)
-                        if norm_key not in full2best:
-                            full2best[norm_key] = valid_scored[0][0]  # best acronym
-    
+                        
     return full2candidates, full2best
 
 def build_comprehensive_acronym_data_with_relations(mrconso_file: Path, mrrel_file: Path, mrsty_file: Path = None):
@@ -466,10 +735,13 @@ def build_comprehensive_acronym_data_with_relations(mrconso_file: Path, mrrel_fi
     # Change this part where you read MRCONSO:
     for chunk in pd.read_csv(
         mrconso_file, sep='|', header=None,
-        names=['CUI','LAT','TS','STT','ISPREF','SAB','TTY','STR'],  
-        usecols=[0,1,2,4,6,11,12,14], dtype=str, chunksize=500_000
+        usecols=[0,1,2,6,11,12,14,16],  # Add SUPPRESS column!
+        names=['CUI','LAT','TS','ISPREF','SAB','TTY','STR','SUPPRESS'],
+        dtype=str, chunksize=500_000
     ):
-        eng = chunk[chunk.LAT == 'ENG'].copy()
+        # NOW filter properly!
+        eng = chunk[(chunk.LAT == 'ENG') & 
+                    ~chunk.SUPPRESS.fillna('').isin(['Y','O','E'])].copy()
         
         for row in eng.itertuples(index=False):
             if pd.isna(row.STR):
@@ -572,30 +844,79 @@ def build_comprehensive_acronym_data_with_relations(mrconso_file: Path, mrrel_fi
     
     return full2candidates, full2best
 
-def compute_acronym_score(acr: str, sab: str, tty: str, sty_list: list, ispref: str = 'N') -> float:
-
-    """Compute deterministic score for an acronym candidate"""
+def compute_acronym_score(acr: str, sab: str, tty: str, sty_list: list, 
+                         ispref: str = None, relationship: str = None,
+                         cui: str = None, phrase: str = None,
+                         cui_word_counts: dict = None, word_global_counts: dict = None) -> float:
+    """Enhanced scoring with contextual frequency analysis"""
+    config = ACRONYM_CFG["SCORING"]
     score = 0.0
-    
-    # TTY bonus
-    if tty in ACRONYM_CFG["TTY_WHITELIST"]:
-        score += 50
-    
-    # SAB priority  
-    score += SAB_PRIORITY.get(sab, 1)
 
-    # Use ISPREF from UMLS
-    if ispref == 'Y':
-        score += 300
+    # Your existing filters
+    ALLOWED_TYPES = {'T059', 'T060', 'T034', 'T201', 'T033', 'T126'}
+    if sty_list and not any(sty in ALLOWED_TYPES for sty in sty_list):
+        return -10000
     
-    # STY bonus (prefer clinical/analyte)
-    max_sty_score = 0
-    for sty in sty_list:
-        max_sty_score = max(max_sty_score, CLINICAL_STY_PRIORITY.get(sty, 0))
-    score += max_sty_score * 10
+    # Apply base scoring components
+    score += config["ISPREF"].get(ispref, config["ISPREF"]["default"])
+    score += config["TTY"].get(tty, config["TTY"]["default"])
+    score += config["SAB"].get(sab, config["SAB"]["default"])
+    if sab == 'RCD':  # Read Codes are deprecated
+        score -= 1000
     
-    # Length penalty (prefer shorter)
-    score -= len(acr) * 0.1
+    # Semantic type scoring
+    if sty_list:
+        sty_scores = [config["STY"].get(sty, config["STY"]["default"]) 
+                      for sty in sty_list]
+        max_sty = max(sty_scores) if sty_scores else 0
+        
+        # Check for excluded types without good clinical type
+        excluded_types = {'T170', 'T028', 'T073', 'T074'}
+        if any(sty in excluded_types for sty in sty_list):
+            if max_sty < config["CLINICAL_TYPE_THRESHOLD"]:
+                score += config["EXCLUDED_TYPE_WITHOUT_CLINICAL_PENALTY"]
+        
+        score += max_sty
+    
+    # NEW: Contextual frequency scoring
+    if cui_word_counts and word_global_counts and cui and acr:
+        freq_config = config["FREQUENCY"]
+        global_freq = word_global_counts.get(acr.lower(), 1)
+        concept_freq = cui_word_counts.get(cui, {}).get(acr.lower(), 1)
+        
+        # Calculate specificity ratio
+        if global_freq > 1:
+            specificity_ratio = concept_freq / global_freq
+            
+            if specificity_ratio > freq_config["HIGH_SPECIFICITY_THRESHOLD"]:
+                bonus = min(freq_config["SPECIFICITY_BONUS_CAP"], 
+                           specificity_ratio * freq_config["SPECIFICITY_BONUS_MULTIPLIER"])
+                score += bonus
+            elif specificity_ratio < freq_config["LOW_SPECIFICITY_THRESHOLD"]:
+                score += freq_config["LOW_SPECIFICITY_PENALTY"]
+        
+        # Length-based validation
+        if phrase:
+            phrase_words = len(phrase.split())
+            acr_letters = len(acr.replace('-', '').replace('/', ''))
+            
+            if (phrase_words >= freq_config["MIN_PHRASE_WORDS"] and 
+                2 <= acr_letters <= phrase_words + 2):
+                score += freq_config["LENGTH_MATCH_BONUS"]
+            elif acr_letters > phrase_words * freq_config["MAX_ACRONYM_RATIO"]:
+                score += freq_config["LENGTH_MISMATCH_PENALTY"]
+    
+    # Existing relationship and penalty logic
+    if relationship == 'same_cui':
+        score += config["RELATIONSHIP"]['same_cui']
+    elif relationship:
+        score += config["RELATIONSHIP"].get(relationship, config["RELATIONSHIP"]["default"])
+    
+    acr_upper = acr.upper()
+    if acr_upper in config["GENERIC_PENALTIES"]:
+        score += config["GENERIC_PENALTIES"][acr_upper]
+    
+    score += len(acr) * config["LENGTH_PENALTY_PER_CHAR"]
     
     return score
 
@@ -623,8 +944,8 @@ def debug_specific_terms(cui_candidates, cui_fullnames, cui_to_sty):
                         sty_list = cui_to_sty.get(cui, [])
                         
                         print("  Candidates found:")
-                        for acr, sab, tty in candidates:
-                            score = compute_acronym_score(acr, sab, tty, sty_list)
+                        for acr, sab, tty, ispref in candidates:  # ← Unpack 4 values
+                            score = compute_acronym_score(acr, sab, tty, sty_list, ispref)  # ← Pass ispref
                             in_expected = "✓" if acr in expected_acrs else "✗"
                             print(f"    {in_expected} {acr:<10} SAB:{sab:<15} TTY:{tty:<5} Score:{score:.1f}")
                     else:
@@ -676,91 +997,97 @@ def apply_acronyms_with_tracking(fields_df: pd.DataFrame, full2candidates: dict)
         # Sort by longest match first
         matches.sort(key=lambda x: -(x[1] - x[0] + 1))
         
-        # Take the longest non-overlapping match
-        chosen = None
+        # Resolve overlapping matches - take ALL non-overlapping ones
+        chosen_matches = []
+        taken = [False] * len(norm_title)
         for start, end, phrase, candidates in matches:
-            # For now, just take the first/longest match
-            if not chosen:
-                chosen = (phrase, candidates)
-                break
+            # Skip very short phrases without spaces
+            if len(phrase) <= 3 and ' ' not in phrase:
+                continue
+            
+            if any(taken[i] for i in range(start, end + 1)):
+                continue  # Skip overlapping
+            for i in range(start, end + 1):
+                taken[i] = True
+            chosen_matches.append((phrase, candidates))
         
-        if not chosen:
+        if not chosen_matches:
             applied.append("")
             continue
         
-        matched_phrase, candidates = chosen
-        
-        # Check for conflicts in the top candidates
-        has_gene = any('T028' in c[4] for c in candidates[:5] if len(c) > 4)
-        has_clinical = any(
-            any(sty in CLINICAL_STY_PRIORITY for sty in c[4]) 
-            for c in candidates[:5] if len(c) > 4
-        )
-        conflict = has_gene and has_clinical
-        
-        # Choose best and apply the replacement
-        best = candidates[0]
-        
-        # Actually replace the phrase in the title
+        # Process ALL chosen matches
+        replaced_title = title
         import re
-        tokens = [re.escape(tok) for tok in matched_phrase.split()]
-
-
-        if len(matched_phrase) <= 3 and ' ' not in matched_phrase:
-            # For very short phrases without spaces, ensure they're whole words
-            # This prevents "l u" from inside "ultrasound"
-            continue  # Skip this match entirely
+        
+        for matched_phrase, candidates in chosen_matches:
+            # Check for conflicts in the top candidates
+            has_gene = any('T028' in c[4] for c in candidates[:5] if len(c) > 4)
+            has_clinical = any(
+                any(sty in ACRONYM_CFG["SCORING"]["STY"] for sty in c[4]) 
+                for c in candidates[:5] if len(c) > 4
+            )
+            conflict = has_gene and has_clinical
             
-        pattern = re.compile(r'\b' + r'[\s\-/]+'.join(tokens) + r'\b', re.IGNORECASE)
+            # Choose best and apply the replacement
+            best = candidates[0]
+            acronym = best[0]
+            
+            # Actually replace the phrase in the title
+            tokens = [re.escape(tok) for tok in matched_phrase.split()]
+            pattern = re.compile(r'\b' + r'[\s\-/]+'.join(tokens) + r'\b', re.IGNORECASE)
+            replaced_title = pattern.sub(acronym, replaced_title)
+            
+            # Record all candidates for this match
+            for rank, cand in enumerate(candidates[:10], 1):
+                if len(cand) >= 6:  # Full candidate tuple
+                    acr, cui, sab, tty, sty_list, score = cand
+                    all_candidates_list.append({
+                        'field_id': field_id,
+                        'title': title,
+                        'matched_phrase': matched_phrase,
+                        'replaced_title': "",  # Will be set at the end
+                        'candidate_acronym': acr,
+                        'cui': cui,
+                        'sab': sab,
+                        'tty': tty,
+                        'sty': '|'.join(sty_list) if sty_list else "",
+                        'score': score,
+                        'rank': rank,
+                        'chosen': rank == 1,
+                        'has_conflict': conflict,
+                        'domain': 'gene' if 'T028' in sty_list else 'clinical'
+                    })
+        
+        # After ALL replacements, handle redundant patterns
+        redundant_pattern = re.compile(r'\b(\w+)\s*\(\s*\1\s*\)', re.IGNORECASE)
+        replaced_title = redundant_pattern.sub(r'\1', replaced_title)
 
-        # Check if this creates a redundant pattern like "BMD (BMD)"
-        # If the acronym already appears before the parentheses, remove the whole parenthetical
-        acronym = best[0]
-        redundant_pattern = re.compile(
-            rf'\b{re.escape(acronym)}\s*\(\s*{re.escape(acronym)}\s*\)', 
-            re.IGNORECASE
-        )
+        # Handle different acronyms for same condition (e.g., "COPD (COAD)")
+        double_acronym_pattern = re.compile(r'\b([A-Z]{2,10})\s*\(\s*([A-Z]{2,10})\s*\)', re.IGNORECASE)
+        if double_acronym_pattern.search(replaced_title):
+            replaced_title = double_acronym_pattern.sub(r'\1', replaced_title)
 
-        replaced_title = pattern.sub(acronym, title)
-
-        # Fix redundant acronyms like "BMD (BMD)" -> "BMD"
-        if redundant_pattern.search(replaced_title):
-            replaced_title = redundant_pattern.sub(acronym, replaced_title)
-
+        
         # Also handle case where acronym is already there: "BMD (bone mineral density)" -> "BMD"
-        already_there_pattern = re.compile(
-            rf'\b{re.escape(acronym)}\s*\(\s*{re.escape(matched_phrase)}\s*\)',
-            re.IGNORECASE
-        )
-        if already_there_pattern.search(title):
-            replaced_title = already_there_pattern.sub(acronym, title)
+        for matched_phrase, candidates in chosen_matches:
+            acronym = candidates[0][0]
+            already_there_pattern = re.compile(
+                rf'\b{re.escape(acronym)}\s*\(\s*{re.escape(matched_phrase)}\s*\)',
+                re.IGNORECASE
+            )
+            if already_there_pattern.search(replaced_title):
+                replaced_title = already_there_pattern.sub(acronym, replaced_title)
+        
+        # Update replaced_title in all candidate records for this field
+        for record in all_candidates_list:
+            if record['field_id'] == field_id:
+                record['replaced_title'] = replaced_title if replaced_title != title else ""
         
         # Only count as "applied" if we actually changed something
         if replaced_title != title:
             applied.append(replaced_title)
         else:
             applied.append("")
-        
-        # Record all candidates for this match
-        for rank, cand in enumerate(candidates[:10], 1):
-            if len(cand) >= 6:  # Full candidate tuple
-                acr, cui, sab, tty, sty_list, score = cand
-                all_candidates_list.append({
-                    'field_id': field_id,
-                    'title': title,
-                    'matched_phrase': matched_phrase,
-                    'replaced_title': replaced_title if replaced_title != title else "",
-                    'candidate_acronym': acr,
-                    'cui': cui,
-                    'sab': sab,
-                    'tty': tty,
-                    'sty': '|'.join(sty_list) if sty_list else "",
-                    'score': score,
-                    'rank': rank,
-                    'chosen': rank == 1,
-                    'has_conflict': conflict,
-                    'domain': 'gene' if 'T028' in sty_list else 'clinical'
-                })
     
     candidates_df = pd.DataFrame(all_candidates_list)
     return pd.Series(applied, dtype='string'), candidates_df
@@ -1180,18 +1507,13 @@ def main():
     # ---------- NEW: Load MRCONSO abbreviations if available ----------
     if mrconso_file.exists():
         mrsty_file = input_dir / 'MRSTY.RRF'
+        mrxw_file = input_dir / 'MRXW_ENG.RRF'
         
         if USE_COMPREHENSIVE_TRACKING:
-            mrrel_file = input_dir / 'MRREL.RRF'
-            if mrrel_file.exists():
-                full2candidates, full2acr = build_comprehensive_acronym_data_with_relations(
-                    mrconso_file, mrrel_file, mrsty_file
-                )
-            else:
-                print("⚠️ MRREL.RRF not found, falling back to single-CUI matching")
-                full2candidates, full2acr = build_comprehensive_acronym_data(
-                    mrconso_file, mrsty_file
-                )
+            full2candidates, full2acr = build_comprehensive_acronym_data(
+                mrconso_file, mrsty_file  # NO FREQUENCY DATA
+            )
+
             fields_df['acr_abb'], candidates_df = apply_acronyms_with_tracking(
                 fields_df, full2candidates
             )
@@ -1401,12 +1723,112 @@ def main():
                       (enriched['category_title'] != 'Unmatched Category')).sum()
     no_category_fields = (enriched['category_title'] == 'No Category Assigned').sum()
     unmatched_fields = (enriched['category_title'] == 'Unmatched Category').sum()
-    
-    # NEW: Count abbreviation matches
+
     if 'acr_abb' in enriched.columns:
         abbr_matched = enriched['acr_abb'].fillna("").astype(str).str.len().gt(0).sum()
     else:
         abbr_matched = 0
+    
+   # Analyze acronym coverage
+    print("\n📊 ACRONYM COVERAGE ANALYSIS")
+    print("=" * 50)
+
+    # Count unique acronyms captured
+    if 'acr_abb' in enriched.columns:
+        # Get all successful replacements
+        has_acronym = enriched['acr_abb'].fillna("").astype(str).str.len() > 0
+        matched_df = enriched[has_acronym].copy()
+        
+        # Extract unique acronyms used
+        unique_acronyms = set()
+        for title in matched_df['acr_abb']:
+            # Find all uppercase sequences (likely acronyms)
+            import re
+            acronyms = re.findall(r'\b[A-Z]{2,10}\b', str(title))
+            unique_acronyms.update(acronyms)
+        
+        print(f"✓ Fields with replacements: {len(matched_df):,} / {total_fields:,} ({len(matched_df)/total_fields*100:.1f}%)")
+        print(f"✓ Unique acronyms used: {len(unique_acronyms)}")
+        print(f"✓ Top 20 acronyms: {sorted(list(unique_acronyms))[:20]}")
+        
+        # Show what's NOT being captured
+        no_acronym = enriched[~has_acronym].copy()
+        print(f"\n✗ Fields without acronyms: {len(no_acronym):,}")
+        
+        # Sample titles that might have missable acronyms
+        print("\nPotential missed opportunities (sample):")
+        for _, row in no_acronym.head(20).iterrows():
+            title = row['title']
+            # Look for parenthetical content that might be acronyms
+            parens = re.findall(r'\(([A-Z]{2,10})\)', str(title))
+            if parens:
+                print(f"  - '{title}' (contains: {parens})")
+
+    print("\n📝 Exporting unique acronym mappings...")
+    unique_mappings = {}
+
+    if not candidates_df.empty:
+        # Get all chosen (primary) replacements
+        chosen_only = candidates_df[candidates_df['chosen'] == True].copy()
+        
+        # Create unique mappings dictionary
+        for _, row in chosen_only.iterrows():
+            phrase = row['matched_phrase']
+            acronym = row['candidate_acronym']
+            if pd.notna(phrase) and pd.notna(acronym):
+                # Normalize the phrase for consistency
+                normalized = phrase.lower().strip()
+                if normalized not in unique_mappings:
+                    unique_mappings[normalized] = acronym
+                elif unique_mappings[normalized] != acronym:
+                    # Track conflicts if same phrase maps to different acronyms
+                    print(f"  Conflict: '{phrase}' maps to both '{unique_mappings[normalized]}' and '{acronym}'")
+
+    # Sort by phrase for readability
+    sorted_mappings = dict(sorted(unique_mappings.items()))
+
+    # Write to file
+    mappings_file = output_dir / 'acronym_mappings.txt'
+    with open(mappings_file, 'w') as f:
+        f.write("UNIQUE ACRONYM MAPPINGS\n")
+        f.write("=" * 50 + "\n")
+        f.write(f"Total unique mappings: {len(sorted_mappings)}\n")
+        f.write("=" * 50 + "\n\n")
+        
+        for phrase, acronym in sorted_mappings.items():
+            f.write(f"{phrase} = {acronym}\n")
+
+    print(f"✓ Exported {len(sorted_mappings)} unique mappings to {mappings_file.name}")
+
+    # Also create a summary by acronym (reverse mapping)
+    acronym_to_phrases = {}
+    for phrase, acronym in sorted_mappings.items():
+        if acronym not in acronym_to_phrases:
+            acronym_to_phrases[acronym] = []
+        acronym_to_phrases[acronym].append(phrase)
+
+    # Sort by acronym
+    sorted_by_acronym = dict(sorted(acronym_to_phrases.items()))
+
+    # Write reverse mapping
+    reverse_file = output_dir / 'acronym_summary.txt'
+    with open(reverse_file, 'w') as f:
+        f.write("ACRONYMS BY FREQUENCY\n")
+        f.write("=" * 50 + "\n")
+        f.write(f"Total unique acronyms: {len(sorted_by_acronym)}\n")
+        f.write("=" * 50 + "\n\n")
+        
+        # Sort by number of phrases each acronym replaces
+        for acronym, phrases in sorted(sorted_by_acronym.items(), 
+                                    key=lambda x: len(x[1]), reverse=True):
+            f.write(f"\n{acronym} ({len(phrases)} phrases):\n")
+            for phrase in sorted(phrases)[:5]:  # Show first 5 phrases
+                f.write(f"  - {phrase}\n")
+            if len(phrases) > 5:
+                f.write(f"  ... and {len(phrases)-5} more\n")
+
+    print(f"✓ Exported acronym summary to {reverse_file.name}")
+
 
     report_path = output_dir / 'validation_report.txt'
     with open(report_path, 'w') as f:
