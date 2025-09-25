@@ -1,7 +1,56 @@
-#!/usr/bin/env python3
+# ============================================================================
+# FILE: scripts/01-openalex_fetcher.py
+# LOCATION: 01-data_ingestion/03-ingest_pdf_corpus/scripts/01-openalex_fetcher.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 03
+# PURPOSE: Fetches PDF documents from OpenAlex API using publication metadata
+# ============================================================================
+
 """
-Stage 1: OpenAlex PDF Fetcher
-Simple script to download PDFs from OpenAlex API
+MODULE OVERVIEW:
+This module downloads PDF documents from the OpenAlex academic database API.
+It searches for publications by DOI or title, then attempts to download PDFs
+from multiple sources in order of reliability.
+
+CLASSES:
+- OpenAlexFetcher: Main class for handling OpenAlex API interactions and PDF downloads
+
+METHODS:
+- __init__(): Initializes the fetcher with environment variables and creates output directories
+- init_tracking_file(): Creates a tracking file to record download status for each publication
+- update_tracking_file(): Updates the tracking file with success/failure status
+- normalize_text(): Cleans text for consistent filename generation
+- create_filename(): Generates standardized PDF filenames from publication metadata
+- load_publications(): Reads publication data from input TSV file
+- search_openalex(): Searches OpenAlex for a publication using DOI or title
+- search_by_doi(): Searches OpenAlex specifically by DOI identifier
+- search_by_title(): Searches OpenAlex by title and verifies publication year
+- calculate_similarity(): Computes text similarity for title matching
+- get_pdf_urls(): Extracts and prioritizes PDF download URLs from OpenAlex work data
+- get_source_priority(): Assigns reliability scores to different academic sources
+- download_pdf(): Downloads PDF from URL with content validation
+- process_publications(): Main orchestration method that processes all publications
+- print_summary(): Displays final statistics of the download operation
+
+ROUTES:
+- N/A (This is a data processing module, not a web service)
+
+HYPERPARAMETERS:
+- REQUEST_TIMEOUT: 10 seconds (in search methods, for API calls)
+- DOWNLOAD_TIMEOUT: 30 seconds (in download_pdf method)
+- MIN_FILE_SIZE: 1000 bytes (in download_pdf method, minimum valid file size)
+- SIMILARITY_THRESHOLD: 0.8 (in search_by_title method, for title matching)
+- MAX_FILENAME_LENGTH: 200 characters (in create_filename method)
+
+SEEDS:
+- N/A (No random seeds used in this module)
+
+DEPENDENCIES:
+- requests: For HTTP API calls and file downloads
+- pathlib: For cross-platform file path handling
+- csv: For reading tab-separated publication data
+- logging: For operation tracking and debugging
+- re: For text normalization and pattern matching
+- time: For rate limiting between API calls
 """
 
 import os
@@ -17,37 +66,73 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class OpenAlexFetcher:
+    """
+    Main class for fetching PDFs from OpenAlex API.
+
+    This class handles the complete pipeline of:
+    1. Loading publication metadata from a file
+    2. Searching OpenAlex for each publication
+    3. Finding available PDF download links
+    4. Downloading PDFs with validation
+    5. Tracking success/failure for each publication
+    """
+
     def __init__(self):
+        """
+        Initialize the OpenAlex fetcher with configuration from environment variables.
+
+        Sets up API credentials, creates necessary directories, and prepares
+        HTTP headers for API requests. Like setting up a research library card
+        and preparing your backpack before going to find books.
+        """
+        # Get file paths from environment (like reading your shopping list)
         self.input_file = os.getenv("PUBLICATIONS_FILE", "/app/data/publications.txt")
         self.output_dir = Path("/app/output/openalex")
         self.openalex_token = os.getenv("OPENALEX_TOKEN", "")
         self.email = os.getenv("EMAIL", "researcher@example.com")
-        
-        # Create output directory
+
+        # Create the folder where we'll save downloaded PDFs
+        # Like making sure your downloads folder exists before starting
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
-        
-        # API setup
+
+        # Set up HTTP headers for API requests
+        # This is like showing your library card and contact info when asking for books
         self.headers = {
             'User-Agent': f'PDFDownloader/1.0 (mailto:{self.email})',
         }
         if self.openalex_token:
             self.headers['Authorization'] = f'Bearer {self.openalex_token}'
-            logger.info("Using OpenAlex API token")
-        
+            logger.info("Using OpenAlex API token for higher rate limits")
+
+        # Track how many publications we process, find, download, etc.
+        # Like keeping score in a game
         self.stats = {'processed': 0, 'found': 0, 'downloaded': 0, 'skipped': 0, 'failed': 0}
 
     def init_tracking_file(self, publications):
-        """Initialize the tracking file with header from original file"""
+        """
+        Create a tracking file to record what happens to each publication.
+
+        This file keeps a record of which publications were successfully downloaded,
+        which failed, and why. It's like a checklist where you mark off items
+        as you complete them, but also note any problems you encounter.
+
+        Args:
+            publications: List of publication dictionaries (not used in this method,
+                         but passed for consistency with other methods)
+        """
+        # Create path for tracking file in publications subfolder
         self.tracking_file = Path(self.output_dir) / "publications" / "publications_openalex.txt"
         self.tracking_file.parent.mkdir(parents=True, exist_ok=True)
-        
-        # Copy header from original file
+
+        # Copy the header line from input file (column names)
+        # This ensures our tracking file has the same format as the input
         with open(self.input_file, 'r', encoding='utf-8') as f:
             header = f.readline()
-        
+
+        # Start the tracking file with just the header
         with open(self.tracking_file, 'w', encoding='utf-8') as f:
             f.write(header)
-        
+
         logger.info(f"Initialized tracking file: {self.tracking_file}")
 
     def update_tracking_file(self, pub_data, status, error_msg=None):
@@ -75,27 +160,42 @@ class OpenAlexFetcher:
         return text
 
     def create_filename(self, pub_data, openalex_id):
-        """Create consistent filename format: {doi}_{title_words}_{year}.pdf"""
-        # Normalize DOI
+        """
+        Create a consistent, readable filename for the PDF.
+
+        This method builds filenames like: "10_1371_journal_pone_0123456_introduction_to_machine_learning_2023.pdf"
+        Using DOI, title words, and year to make files easy to identify.
+
+        Args:
+            pub_data: Dictionary with publication metadata
+            openalex_id: OpenAlex identifier (currently not used in filename)
+
+        Returns:
+            String filename ending in .pdf
+        """
+        # Clean up the DOI for use in filename
+        # Remove URL prefixes and make it filesystem-safe
         doi = pub_data.get('doi', '').lower()
         doi = doi.replace('https://doi.org/', '').replace('http://dx.doi.org/', '')
         doi = doi.replace('doi:', '').strip('/')
         doi = self.normalize_text(doi) if doi else 'no_doi'
-        
-        # Get first 5 words of title
+
+        # Take first 5 words of title to keep filename reasonable length
+        # This is like using a book title's first few words as a nickname
         title = pub_data.get('title', '')
         title_words = self.normalize_text(title).split('_')[:5]
         title_part = '_'.join(title_words) if title_words else 'no_title'
-        
-        # Get year
+
+        # Get publication year
         year = pub_data.get('year_pub', '').strip() or 'no_year'
-        
-        # Create filename
+
+        # Put it all together
         filename = f"{doi}_{title_part}_{year}.pdf"
-        # Ensure filename isn't too long
+
+        # Make sure filename isn't too long for the filesystem
         if len(filename) > 200:
             filename = filename[:200] + ".pdf"
-        
+
         return filename
 
     def load_publications(self):
@@ -189,14 +289,29 @@ class OpenAlexFetcher:
         return len(intersection) / len(union) if union else 0
 
     def get_pdf_urls(self, work):
-        """Extract PDF URLs from OpenAlex work, prioritized by reliability"""
+        """
+        Find all possible PDF download links from OpenAlex work data.
+
+        OpenAlex provides multiple sources for each paper. This method collects
+        them all and ranks them by reliability. It's like checking multiple
+        libraries and bookstores for the same book, then ranking them by
+        trustworthiness.
+
+        Args:
+            work: OpenAlex work dictionary containing location data
+
+        Returns:
+            List of dictionaries with 'url', 'source', and 'priority' keys,
+            sorted by priority (highest first)
+        """
         pdf_urls = []
-        seen_urls = set()  # Avoid duplicates
-        
-        # 1. Check best_oa_location first (OpenAlex's recommended source)
+        seen_urls = set()  # Keep track of URLs we've already found
+
+        # Step 1: Check OpenAlex's "best open access location" first
+        # This is like asking the librarian for their top recommendation
         best_oa = work.get('best_oa_location')
         if best_oa:
-            # Try pdf_url first
+            # Try the direct PDF link first (highest priority)
             if best_oa.get('pdf_url'):
                 url = best_oa['pdf_url']
                 if url not in seen_urls:
@@ -204,9 +319,9 @@ class OpenAlexFetcher:
                     pdf_urls.append({
                         'url': url,
                         'source': 'openalex_best_oa',
-                        'priority': 100
+                        'priority': 100  # Highest priority
                     })
-            # Also try is_oa url even if not ending in .pdf
+            # Also save the landing page URL (might redirect to PDF)
             if best_oa.get('url'):
                 url = best_oa['url']
                 if url not in seen_urls:
@@ -214,35 +329,34 @@ class OpenAlexFetcher:
                     pdf_urls.append({
                         'url': url,
                         'source': 'openalex_best_oa_landing',
-                        'priority': 98
+                        'priority': 98  # Slightly lower priority
                     })
         
-        # 2. Check open_access URLs (don't require .pdf extension)
+        # Step 2: Check general open access information
+        # This is broader than the "best" location
         if work.get('open_access'):
             oa_data = work['open_access']
-            
-            # Try oa_url
+
+            # Try the open access URL
             if oa_data.get('oa_url'):
                 url = oa_data['oa_url']
                 if url not in seen_urls:
                     seen_urls.add(url)
-                    # Higher priority if it ends with .pdf
+                    # Give higher priority if URL ends with .pdf
                     priority = 95 if url.lower().endswith('.pdf') else 93
                     pdf_urls.append({
                         'url': url,
                         'source': 'openalex_oa',
                         'priority': priority
                     })
-            
-            # Check for any_repository_has_fulltext
-            if oa_data.get('any_repository_has_fulltext'):
-                # This indicates repositories have the full text
-                pass  # We'll get these from locations
-        
-        # 3. Check primary_location
+
+            # Note: any_repository_has_fulltext indicates repositories have the paper,
+            # but we'll find those specific links in the locations section below
+
+        # Step 3: Check the primary location (usually the publisher's site)
         primary_loc = work.get('primary_location')
         if primary_loc:
-            # Try pdf_url
+            # Try direct PDF link from primary location
             if primary_loc.get('pdf_url'):
                 url = primary_loc['pdf_url']
                 if url not in seen_urls:
@@ -254,7 +368,7 @@ class OpenAlexFetcher:
                         'source': f'primary_{source_name}',
                         'priority': 92
                     })
-            # Try landing page URL
+            # Try landing page from primary location
             if primary_loc.get('url'):
                 url = primary_loc['url']
                 if url not in seen_urls:
@@ -267,29 +381,30 @@ class OpenAlexFetcher:
                         'priority': 88
                     })
         
-        # 4. Check all locations for PDFs
+        # Step 4: Check all locations (repositories, archives, etc.)
+        # This is the most comprehensive search - like checking every library in town
         for location in work.get('locations', []):
             source_data = location.get('source', {})
             source_name = source_data.get('display_name', 'unknown') if source_data else 'unknown'
-            is_oa = location.get('is_oa', False)
-            
-            # Get base priority for this source
+            is_oa = location.get('is_oa', False)  # Is this location open access?
+
+            # Get reliability score for this source (high for PMC, low for ResearchGate)
             base_priority = self.get_source_priority(source_name)
-            
-            # Try pdf_url (highest priority for each source)
+
+            # Try direct PDF link (best option for each source)
             if location.get('pdf_url'):
                 url = location['pdf_url']
                 if url not in seen_urls:
                     seen_urls.add(url)
-                    # Boost priority if it's OA
+                    # Give bonus points if it's open access
                     priority = base_priority + (5 if is_oa else 0)
                     pdf_urls.append({
                         'url': url,
                         'source': source_name,
                         'priority': priority
                     })
-            
-            # Try url_for_pdf field (some locations have this)
+
+            # Try special PDF URL field (some sources have this)
             if location.get('url_for_pdf'):
                 url = location['url_for_pdf']
                 if url not in seen_urls:
@@ -300,21 +415,21 @@ class OpenAlexFetcher:
                         'source': f'{source_name}_pdf',
                         'priority': priority
                     })
-            
-            # Try landing page URL (might redirect to PDF or have PDF link)
+
+            # Try landing page (might have PDF download link)
             if location.get('url'):
                 url = location['url']
                 if url not in seen_urls:
                     seen_urls.add(url)
-                    # Lower priority for landing pages
+                    # Landing pages get lower priority since they might not directly link to PDF
                     priority = base_priority - 10 + (3 if is_oa else 0)
                     pdf_urls.append({
                         'url': url,
                         'source': f'{source_name}_landing',
                         'priority': priority
                     })
-        
-        # 5. Check DOI URL as last resort (might redirect to PDF)
+
+        # Step 5: Last resort - try the DOI URL (might redirect to publisher page with PDF)
         if work.get('doi'):
             doi_url = work['doi']
             if doi_url not in seen_urls:
@@ -322,18 +437,18 @@ class OpenAlexFetcher:
                 pdf_urls.append({
                     'url': doi_url,
                     'source': 'doi_redirect',
-                    'priority': 50
+                    'priority': 50  # Very low priority
                 })
-        
-        # Sort by priority (highest first)
+
+        # Sort all found URLs by priority (best sources first)
         pdf_urls.sort(key=lambda x: x['priority'], reverse=True)
-        
-        # Log what we found
+
+        # Tell the user what we found
         if pdf_urls:
             logger.info(f"  Found {len(pdf_urls)} potential PDF URLs")
             for i, pdf_info in enumerate(pdf_urls[:3]):  # Show top 3
                 logger.debug(f"    {i+1}. {pdf_info['source']} (priority: {pdf_info['priority']})")
-        
+
         return pdf_urls
 
     def get_source_priority(self, source):
@@ -580,3 +695,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print("✅ OpenAlex PDF fetcher module loaded successfully")

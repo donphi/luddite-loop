@@ -1,18 +1,25 @@
+# ============================================================================
+# FILE: docker-compose.yaml
+# LOCATION: 01-data_ingestion/03-ingest_pdf_corpus/docker-compose.yaml
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 03
+# PURPOSE: Orchestrates PDF corpus ingestion pipeline with volume mounts and profiles
+# ============================================================================
+
 services:
-  # Stage 1: OpenAlex PDF Fetcher
+  # Stage 1: OpenAlex PDF Fetcher - Downloads PDFs from OpenAlex API
   openalex-fetcher:
     build: .
     env_file: [.env]
     working_dir: /app
     volumes:
-      # Publications list mounted into container
+      # Publications list mounted into container (read-only)
       - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
-      # Shared output directory
+      # Shared output directory for all downloaded PDFs
       - ./output:/app/output
     environment:
-      - PYTHONUNBUFFERED=1
+      - PYTHONUNBUFFERED=1  # Ensure Python output is not buffered
     command: python scripts/01-openalex_fetcher.py
-    profiles: ["stage1"]
+    profiles: ["stage1"]  # Run with: docker-compose --profile stage1 up
 
   # Stage 2: CORE PDF Fetcher
   core-fetcher:

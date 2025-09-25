@@ -1,4 +1,24 @@
 #!/usr/bin/env python3
+# ============================================================================
+# FILE: field_check.py
+# LOCATION: pipelines/01-data_ingestion/02-restructure_ukb_showcase_data/scripts/field_check.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 02
+# PURPOSE: Generates category summary statistics from processed UK Biobank field data
+# ============================================================================
+
+"""
+MODULE OVERVIEW:
+This utility script creates a summary of fields per category from the processed ukb_fields.csv file.
+It groups fields by category_title and calculates aggregate statistics including:
+- Number of fields per category
+- Average and sum of participant counts
+- Provides insights into data distribution across categories
+
+DEPENDENCIES:
+- pandas==2.1.4
+- pathlib (standard library)
+"""
+
 import pandas as pd
 from pathlib import Path
 

@@ -1,11 +1,23 @@
-pandas==2.1.4 
-pyarrow==14.0.2 
-numpy==1.26.2
-pyahocorasick>=2.1.0
-requests>=2.31.0
-python-dotenv>=1.0.0
+# ============================================================================
+# FILE: requirements.txt
+# LOCATION: pipelines/01-data_ingestion/02-restructure_ukb_showcase_data/requirements.txt
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 02
+# PURPOSE: Python dependencies for UK Biobank data restructuring with MRCONSO acronym mapping
+# ============================================================================
 
-# Transformer models for SPECTER 2
-transformers>=4.35.0
-sentence-transformers>=2.2.2
-tokenizers>=0.15.0
+# Core data processing libraries
+pandas==2.1.4          # Data manipulation and analysis
+pyarrow==14.0.2        # Apache Arrow for efficient data serialization
+numpy==1.26.2          # Numerical computing
+
+# Text processing and pattern matching
+pyahocorasick>=2.1.0   # Aho-Corasick algorithm for efficient substring matching
+
+# HTTP requests and environment management
+requests>=2.31.0      # HTTP library for API calls
+python-dotenv>=1.0.0   # Environment variable management
+
+# Transformer models for SPECTER 2 embeddings (used in Meta-Inventory processing)
+transformers>=4.35.0      # HuggingFace transformers for NLP models
+sentence-transformers>=2.2.2  # Sentence embeddings for semantic similarity
+tokenizers>=0.15.0          # Fast tokenization library

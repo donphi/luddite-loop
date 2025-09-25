@@ -1,12 +1,19 @@
+# ============================================================================
+# FILE: docker-compose.yaml
+# LOCATION: pipelines/01-data_ingestion/02-restructure_ukb_showcase_data/docker-compose.yaml
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 02
+# PURPOSE: Orchestrates UK Biobank data restructuring pipeline with multiple processing services
+# ============================================================================
+
 services:
-  # Main processor - must run first
+  # Main processor - must run first (uses MRCONSO for acronym mapping)
   ukb-processor:
     build: .
     container_name: ukb-processor
     working_dir: /app
     volumes:
       # Scripts mounted from local ./scripts directory
-      - ./scripts/process_showcase_meta.py:/app/scripts/process_showcase_meta.py:ro  # Add this line
+      - ./scripts/process_showcase_meta.py:/app/scripts/process_showcase_meta.py:ro
       - ./scripts:/scripts:ro
       - ../01-ingest_ukb_showcase_data/input:/input:ro
       - ./output-meta:/output

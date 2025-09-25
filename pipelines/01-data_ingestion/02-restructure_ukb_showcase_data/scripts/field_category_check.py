@@ -1,8 +1,26 @@
 #!/usr/bin/env python3
+# ============================================================================
+# FILE: field_category_check.py
+# LOCATION: pipelines/01-data_ingestion/02-restructure_ukb_showcase_data/scripts/field_category_check.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 02
+# PURPOSE: Validates UK Biobank data integrity by checking for field IDs that are actually category IDs in disguise
+# ============================================================================
+
 """
-UK Biobank Field-Category Title Match Validation
-Checks if field_ids match category_id values AND their titles match category_titles
-This would indicate category IDs were mistakenly used as field IDs
+MODULE OVERVIEW:
+This validation script checks for a critical UK Biobank data error where category IDs might have been
+mistakenly used as field IDs. It identifies cases where:
+1. field_id numerically matches a category_id
+2. field title matches the category title
+This would indicate UK Biobank created fields using category IDs instead of proper field IDs.
+
+The script generates detailed reports and CSV outputs for data quality assessment.
+
+DEPENDENCIES:
+- pandas==2.1.4
+- numpy==1.26.2
+- pathlib (standard library)
+- sys (standard library)
 """
 
 import pandas as pd

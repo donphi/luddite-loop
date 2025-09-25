@@ -1,2 +1,12 @@
+# ============================================================================
+# FILE: requirements.txt
+# LOCATION: 01-data_ingestion/03-ingest_pdf_corpus/requirements.txt
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 03
+# PURPOSE: Python dependencies for PDF corpus ingestion pipeline
+# ============================================================================
+
+# HTTP library for API requests and PDF downloads
 requests==2.31.0
+
+# PDF processing library for validation and text extraction
 PyPDF2==3.0.1

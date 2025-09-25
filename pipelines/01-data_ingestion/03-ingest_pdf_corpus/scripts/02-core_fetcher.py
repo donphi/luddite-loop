@@ -1,7 +1,58 @@
-#!/usr/bin/env python3
+# ============================================================================
+# FILE: scripts/02-core_fetcher.py
+# LOCATION: 01-data_ingestion/03-ingest_pdf_corpus/scripts/02-core_fetcher.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 03
+# PURPOSE: Fetches PDF documents from CORE (COnnecting REpositories) API
+# ============================================================================
+
 """
-Stage 2: CORE PDF Fetcher
-Simple script to download PDFs from CORE API with retry logic
+MODULE OVERVIEW:
+This module downloads PDF documents from the CORE academic repository API.
+CORE provides access to millions of open access research papers. This fetcher
+includes robust retry logic for handling rate limits and server errors.
+
+CLASSES:
+- CoreFetcher: Main class for handling CORE API interactions and PDF downloads
+
+METHODS:
+- __init__(): Initializes the fetcher with environment variables and creates output directories
+- init_tracking_file(): Creates a tracking file to record download status for each publication
+- update_tracking_file(): Updates the tracking file with success/failure status
+- normalize_text(): Cleans text for consistent filename generation
+- create_filename(): Generates standardized PDF filenames from publication metadata
+- load_publications(): Reads publication data from input TSV file
+- make_api_request_with_retry(): Makes API calls with exponential backoff for rate limits
+- search_core(): Searches CORE for a publication using DOI or title
+- search_by_doi(): Searches CORE specifically by DOI identifier
+- search_by_title(): Searches CORE by title and verifies publication year
+- calculate_similarity(): Computes text similarity for title matching
+- get_pdf_urls(): Extracts PDF download URLs from CORE work data
+- download_pdf(): Downloads PDF from URL with content validation
+- process_publications(): Main orchestration method that processes all publications
+- print_summary(): Displays final statistics of the download operation
+
+ROUTES:
+- N/A (This is a data processing module, not a web service)
+
+HYPERPARAMETERS:
+- REQUEST_TIMEOUT: 15 seconds (in make_api_request_with_retry method)
+- DOWNLOAD_TIMEOUT: 30 seconds (in download_pdf method)
+- MAX_RETRIES: 5 (in make_api_request_with_retry method)
+- MIN_FILE_SIZE: 1000 bytes (in download_pdf method, minimum valid file size)
+- SIMILARITY_THRESHOLD: 0.8 (in search_by_title method, for title matching)
+- MAX_FILENAME_LENGTH: 200 characters (in create_filename method)
+- RATE_LIMIT_DELAY: 12 seconds (in process_publications method, between publications)
+
+SEEDS:
+- N/A (No random seeds used in this module)
+
+DEPENDENCIES:
+- requests: For HTTP API calls and file downloads
+- pathlib: For cross-platform file path handling
+- csv: For reading tab-separated publication data
+- logging: For operation tracking and debugging
+- re: For text normalization and pattern matching
+- time: For rate limiting between API calls
 """
 
 import os
@@ -17,26 +68,48 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class CoreFetcher:
+    """
+    Main class for fetching PDFs from CORE (COnnecting REpositories) API.
+
+    This class handles the complete pipeline of:
+    1. Loading publication metadata from a file
+    2. Searching CORE for each publication with retry logic
+    3. Finding available PDF download links
+    4. Downloading PDFs with validation
+    5. Tracking success/failure for each publication
+    """
+
     def __init__(self):
+        """
+        Initialize the CORE fetcher with configuration from environment variables.
+
+        Sets up API credentials, creates necessary directories, and prepares
+        HTTP headers for API requests. CORE has strict rate limits, so proper
+        setup is crucial.
+        """
+        # Get file paths from environment (like reading your shopping list)
         self.input_file = os.getenv("PUBLICATIONS_FILE", "/app/data/publications.txt")
         self.output_dir = Path("/app/output/core")
         self.core_api_key = os.getenv('CORE_API_KEY', '')
-        
-        # Create output directory
+
+        # Create the folder where we'll save downloaded PDFs
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
-        
-        # API setup
+
+        # Set up HTTP headers for CORE API
+        # CORE requires Bearer token authentication
         self.base_url = "https://api.core.ac.uk/v3"
         self.headers = {
             'Authorization': f'Bearer {self.core_api_key}',
             'Content-Type': 'application/json'
         }
-        
+
+        # Warn if no API key (CORE allows some requests without key but limits heavily)
         if not self.core_api_key:
-            logger.warning("No CORE API key provided - this may limit results")
+            logger.warning("No CORE API key provided - requests may be rate limited")
         else:
-            logger.info("Using CORE API key")
-        
+            logger.info("Using CORE API key for higher rate limits")
+
+        # Track how many publications we process, find, download, etc.
         self.stats = {'processed': 0, 'found': 0, 'downloaded': 0, 'skipped': 0, 'failed': 0}
 
     def init_tracking_file(self, publications):
@@ -434,3 +507,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print("✅ CORE PDF fetcher module loaded successfully")

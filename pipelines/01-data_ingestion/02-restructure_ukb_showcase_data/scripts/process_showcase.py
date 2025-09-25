@@ -1,9 +1,62 @@
 #!/usr/bin/env python3
+# ============================================================================
+# FILE: process_showcase.py (DEPRECATED)
+# LOCATION: pipelines/01-data_ingestion/02-restructure_ukb_showcase_data/scripts/process_showcase.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 02
+# PURPOSE: Legacy MRCONSO-based processing (superseded by process_showcase_meta.py)
+# ============================================================================
+
 """
-UK Biobank Field + Category + Dictionary Linker
-- Enrich field.txt with dictionary metadata inserted immediately after encoding_id
-- Build an exploded codebook linking each field_id to all dictionary codes (ICD10/ICD9/OPCS4/etc.)
-- NEW: Add acr_abb column with MRCONSO abbreviation matching
+MODULE OVERVIEW:
+⚠️  DEPRECATED: This script uses MRCONSO.RRF for acronym mapping.
+   Use process_showcase_meta.py instead for Meta-Inventory processing.
+
+This module processes UK Biobank showcase data using MRCONSO data by:
+1. Loading field, category, and encoding data from tab-separated files
+2. Joining fields with their categories and encoding metadata
+3. Building a comprehensive field-to-dictionary codebook
+4. Adding MRCONSO-based acronym mappings for medical terms (DEPRECATED)
+5. Generating validation reports and human verification samples
+
+CLASSES:
+- N/A (MRCONSO processing only)
+
+METHODS:
+- infer_column_dtype(): Infers pandas dtypes from sample data
+- build_context_aware_frequency(): Builds word frequency maps from MRXW data
+- load_and_type_dataframe(): Loads TSV files with automatic type inference
+- reorder_columns(): Reorders DataFrame columns
+- move_after(): Moves columns to position after anchor column
+- build_fullname_to_acronym_map(): Creates acronym mappings from MRCONSO (DEPRECATED)
+- build_comprehensive_acronym_data(): Advanced acronym mapping with scoring (DEPRECATED)
+- build_comprehensive_acronym_data_with_relations(): Uses MRREL for related CUIs (DEPRECATED)
+- compute_acronym_score(): Scores acronym candidates using multiple criteria (DEPRECATED)
+- debug_specific_terms(): Debugs acronym selection for specific terms (DEPRECATED)
+- apply_acronyms_with_tracking(): Applies acronyms with comprehensive tracking (DEPRECATED)
+- debug_blood_pressure_mapping(): Debugs blood pressure acronym mapping (DEPRECATED)
+- debug_specific_replacements(): Debugs specific term replacements (DEPRECATED)
+- replace_fullnames_with_acronyms(): Replaces full names with acronyms (DEPRECATED)
+- map_titles_to_abbrev_exact(): Exact mapping of normalized titles (DEPRECATED)
+- map_titles_to_abbrev_substring(): Substring-based acronym mapping (DEPRECATED)
+- main(): Main processing function (DEPRECATED)
+
+ROUTES:
+- N/A (This is a data processing module, not a web service)
+
+HYPERPARAMETERS:
+- USE_COMPREHENSIVE_TRACKING: True (enables detailed acronym tracking)
+- ACRONYM_CFG: Dictionary of acronym validation rules and scoring weights (DEPRECATED)
+
+SEEDS:
+- RANDOM_SEED: Not explicitly set (uses default numpy random state)
+
+DEPENDENCIES:
+- pandas==2.1.4
+- pyarrow==14.0.2
+- numpy==1.26.2
+- pyahocorasick>=2.1.0 (optional, for substring matching)
+- requests>=2.31.0
+- python-dotenv>=1.0.0
 """
 
 import pandas as pd

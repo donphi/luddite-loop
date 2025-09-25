@@ -1,7 +1,51 @@
-#!/usr/bin/env python3
+# ============================================================================
+# FILE: scripts/04-validate_dedupe.py
+# LOCATION: 01-data_ingestion/03-ingest_pdf_corpus/scripts/04-validate_dedupe.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 03
+# PURPOSE: Validates downloaded PDFs and removes duplicates, keeping the best quality version
+# ============================================================================
+
 """
-Stage 4: PDF Validation and Deduplication
-Validates all downloaded PDFs and removes duplicates, keeping the best quality version
+MODULE OVERVIEW:
+This module validates all PDFs downloaded from various sources and removes duplicates
+by grouping them by publication identity (DOI or filename pattern). It keeps the
+highest quality version of each unique publication.
+
+CLASSES:
+- PDFValidator: Main class for PDF validation and deduplication
+
+METHODS:
+- __init__(): Initializes the validator with directory paths and loads publication data
+- load_publications(): Reads publication metadata for DOI mapping
+- create_doi_mapping(): Creates mapping from DOI to publication ID for deduplication
+- normalize_doi(): Standardizes DOI format for consistent comparison
+- validate_pdf(): Checks if a PDF is valid (readable, has content, not encrypted)
+- extract_metadata_from_filename(): Parses DOI and metadata from standardized filenames
+- group_pdfs_by_identity(): Groups PDFs by publication identity using DOI or filename patterns
+- select_best_pdf(): Chooses the highest quality PDF from a group of duplicates
+- process_all_pdfs(): Main orchestration method for validation and deduplication
+- generate_report(): Creates a detailed validation report file
+- print_summary(): Displays final statistics and directory locations
+
+ROUTES:
+- N/A (This is a data processing module, not a web service)
+
+HYPERPARAMETERS:
+- MIN_FILE_SIZE: 1000 bytes (minimum valid file size)
+- MIN_PAGE_COUNT: 2 (minimum pages for a valid PDF)
+- MIN_TEXT_LENGTH: 10 characters (minimum text extractable from first page)
+- TITLE_SIMILARITY_THRESHOLD: N/A (not used in this module)
+
+SEEDS:
+- N/A (No random seeds used in this module)
+
+DEPENDENCIES:
+- PyPDF2: For PDF reading and validation
+- pathlib: For cross-platform file path handling
+- csv: For reading publication metadata
+- logging: For operation tracking and debugging
+- shutil: For moving files between directories
+- collections.defaultdict: For grouping PDFs by identity
 """
 
 import os
@@ -376,3 +420,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print("✅ PDF validation and deduplication module loaded successfully")

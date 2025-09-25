@@ -1,8 +1,70 @@
 #!/usr/bin/env python3
+# ============================================================================
+# FILE: process_showcase_meta.py
+# LOCATION: pipelines/01-data_ingestion/02-restructure_ukb_showcase_data/scripts/process_showcase_meta.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 02
+# PURPOSE: Restructures UK Biobank showcase data using Meta-Inventory acronyms with SPECTER 2 embeddings for optimal selection
+# ============================================================================
+
 """
-UK Biobank Field + Category + Dictionary Linker
-- Uses Medical Abbreviation and Acronym Meta-Inventory for acronym matching
-- Enhanced with SPECTER 2 embeddings for optimal acronym selection
+MODULE OVERVIEW:
+This module processes UK Biobank showcase data using the Medical Abbreviation and Acronym Meta-Inventory:
+1. Loads field, category, and encoding data from tab-separated files
+2. Uses SPECTER 2 embeddings to select optimal acronyms from Meta-Inventory
+3. Joins fields with categories and encoding metadata
+4. Builds comprehensive field-to-dictionary codebook
+5. Generates validation reports and human verification samples
+
+CLASSES:
+- AcronymEmbeddingSelector: Uses SPECTER 2 embeddings to select best acronyms by semantic similarity
+
+METHODS:
+- embed_batch(): Generates embeddings for text batches using SPECTER 2
+- select_best_acronym(): Selects best acronym using embedding similarity
+- process_phrase_group(): Processes acronym candidates for a phrase
+- infer_column_dtype(): Infers pandas dtypes from sample data
+- load_and_type_dataframe(): Loads TSV files with automatic type inference
+- reorder_columns(): Reorders DataFrame columns
+- move_after(): Moves columns to position after anchor column
+- _norm(): Normalizes text for matching
+- validate_acronym_match(): Validates if acronym is reasonable for phrase
+- load_meta_inventory(): Loads Medical Abbreviation and Acronym Meta-Inventory
+- build_comprehensive_meta_inventory_data(): Builds acronym mappings with embedding selection
+- apply_acronyms_with_tracking(): Applies acronyms with comprehensive tracking
+- main(): Main processing function
+
+ROUTES:
+- N/A (This is a data processing module, not a web service)
+
+HYPERPARAMETERS:
+- USE_COMPREHENSIVE_TRACKING: True (enables detailed acronym tracking)
+- USE_EMBEDDINGS: True (enables SPECTER 2 embedding-based selection)
+- META_INVENTORY_CFG: Dictionary of Meta-Inventory processing parameters
+- MAX_ACRONYMS_PER_TITLE: 4 (maximum acronyms to replace per title)
+- MIN_PHRASE_LEN: 2 (minimum phrase length to consider)
+- MIN_ACRONYM_LEN: 2 (minimum acronym length)
+- MAX_ACRONYM_LEN: 10 (maximum acronym length)
+- EMBEDDING_MODEL: 'cambridgeltl/SapBERT-from-PubMedBERT-fulltext'
+- EMBEDDING_BATCH_SIZE: 128
+- SIMILARITY_THRESHOLD: 0.65 (minimum similarity to accept)
+- HIGH_CONFIDENCE_THRESHOLD: 0.91 (auto-accept threshold)
+
+SEEDS:
+- RANDOM_SEED: Not explicitly set (uses default numpy random state)
+- NP_SEED: Not explicitly set
+
+DEPENDENCIES:
+- pandas==2.1.4
+- pyarrow==14.0.2
+- numpy==1.26.2
+- pyahocorasick>=2.1.0 (optional, for substring matching)
+- requests>=2.31.0
+- python-dotenv>=1.0.0
+- transformers>=4.35.0
+- sentence-transformers>=2.2.2
+- tokenizers>=0.15.0
+- torch>=2.0.0 (for GPU acceleration)
+- scikit-learn>=1.3.0 (for cosine similarity)
 """
 
 import pandas as pd

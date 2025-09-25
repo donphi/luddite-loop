@@ -1,58 +1,123 @@
-# Academic PDF Download Pipeline
+# Pipeline 01-03: PDF Corpus Ingestion
 
-A simple, reproducible 4-stage pipeline for downloading academic PDFs from multiple sources using Docker.
+## 🔢 Pipeline Sequence: `01.03`
+**Execution Order**: This is sub-pipeline 3 of main pipeline 01 (Data Ingestion)
+- **Previous**: 01.02 - PDF Text Extraction
+- **Current**: 01.03 - PDF Corpus Ingestion
+- **Next**: 02.01 - Data Conversion
 
-## Overview
+## 📋 Purpose
+This pipeline downloads PDF documents for academic publications from multiple open access sources. It implements a multi-stage approach to maximize coverage by trying different academic repositories and APIs in sequence.
 
-This pipeline downloads PDFs for academic publications through 4 sequential stages:
+## ⚙️ Hyperparameters
 
-1. **OpenAlex** - Downloads from OpenAlex API (primary source)
-2. **CORE** - Downloads from CORE API (secondary source)  
-3. **Other Sources** - Downloads from Unpaywall, PMC, arXiv (additional sources)
-4. **Validation & Deduplication** - Validates PDFs and removes duplicates
+| Parameter | Default | File | Method/Line | Description |
+|-----------|---------|------|-------------|-------------|
+| REQUEST_TIMEOUT | 10-30s | Various | download_pdf() | HTTP request timeout for PDF downloads |
+| MIN_FILE_SIZE | 1000 bytes | 04-validate_dedupe.py | validate_pdf() L107 | Minimum valid file size |
+| MIN_PAGE_COUNT | 2 | 04-validate_dedupe.py | validate_pdf() L128 | Minimum pages for valid PDF |
+| MAX_FILENAME_LENGTH | 200 chars | All fetchers | create_filename() | Maximum filename length |
+| SIMILARITY_THRESHOLD | 0.7-0.8 | Various | calculate_similarity() | Title matching threshold |
 
-## Features
+## 🎲 Seeds and Reproducibility
 
-- ✅ **Consistent file naming** across all sources
-- ✅ **Automatic deduplication** (keeps best quality PDF)
-- ✅ **PDF validation** (removes broken/corrupted files)
-- ✅ **Docker containerized** for reproducibility
-- ✅ **Simple stage-by-stage execution**
-- ✅ **Comprehensive logging and reporting**
+| Seed Name | Value | File | Purpose |
+|-----------|-------|------|---------|
+| N/A | N/A | N/A | No random operations in this pipeline |
 
-## Prerequisites
+Seeds are not used in this pipeline as all operations are deterministic.
 
-1. **Docker** and **Docker Compose** installed
-2. **API tokens** (see Configuration section)
-3. **Publications file** in tab-separated format
+## 🚀 Execution Process
 
-## Quick Start
+### Build Sequence:
+1. Configure environment variables in `.env`
+2. Prepare publications file in TSV format
+3. Build Docker image: `docker compose build`
+4. Run pipeline stages sequentially
 
-1. **Clone/download this repository**
-2. **Create environment file** (see Configuration)
-3. **Prepare your publications file**
-4. **Run the pipeline**
+### Execution Order:
+1. **01-openalex_fetcher.py** - Downloads from OpenAlex API (primary source)
+2. **02-core_fetcher.py** - Downloads from CORE API (secondary source)
+3. **03-other_fetcher.py** - Downloads from Unpaywall, PMC, arXiv (additional sources)
+4. **04-validate_dedupe.py** - Validates PDFs and removes duplicates
 
+### Script Execution:
 ```bash
-# Run all stages sequentially
+# Option 1: Run all stages sequentially
 docker compose --profile full up
 
-# OR run individual stages
+# Option 2: Run individual stages
 docker compose --profile stage1 up  # OpenAlex
-docker compose --profile stage2 up  # CORE  
+docker compose --profile stage2 up  # CORE
 docker compose --profile stage3 up  # Other sources
 docker compose --profile stage4 up  # Validation
 ```
 
-## Configuration
+## 💻 System Requirements
 
-### 1. Environment Variables
+- **GPU Required**: No
+- **Minimum RAM**: 2GB
+- **Recommended RAM**: 4GB
+- **CPU Cores**: 1+ recommended
+- **Storage**: 50GB minimum for PDF storage
 
-Create a `.env` file in the project root:
+## 🐳 Docker Execution
 
+### Quick Start:
+```bash
+# Clone the repository
+git clone <repository>
+cd 01-data_ingestion/03-ingest_pdf_corpus
+
+# Configure environment
+cp .env.example .env
+# Edit .env with your API tokens and file paths
+
+# Run the full pipeline
+docker-compose --profile full up
+```
+
+### Custom Configuration:
+```bash
+# Override environment variables
+docker-compose run -e EMAIL=your.email@domain.com openalex-fetcher
+
+# Mount custom publications file
+docker run -v /path/to/publications.txt:/app/data/publications.txt pdf-corpus
+```
+
+## 📁 Folder Structure
+
+```
+03-ingest_pdf_corpus/
+├── .env.example              # Environment template
+├── .env                      # Environment configuration
+├── docker-compose.yaml       # Multi-stage orchestration
+├── Dockerfile               # Container definition
+├── requirements.txt         # Python dependencies
+├── README.md                # This documentation
+├── scripts/
+│   ├── 01-openalex_fetcher.py # OpenAlex API downloader
+│   ├── 02-core_fetcher.py     # CORE API downloader
+│   ├── 03-other_fetcher.py    # Additional sources downloader
+│   └── 04-validate_dedupe.py  # PDF validation and deduplication
+└── output/                  # Generated output directory
+    ├── openalex/            # Stage 1 raw downloads
+    ├── core/                # Stage 2 raw downloads
+    ├── other/               # Stage 3 raw downloads
+    ├── valid_pdfs/          # Final validated PDFs
+    ├── invalid_pdfs/        # Corrupted PDFs
+    ├── duplicate_pdfs/      # Removed duplicates
+    ├── publications/        # Tracking files
+    └── validation_report.txt
+```
+
+## 🔧 Configuration
+
+### Environment Variables (.env):
 ```env
 # Required: Path to your publications file
-PUBLICATIONS_FILE=/path/to/your/publications.txt
+PUBLICATIONS_FILE=/app/data/publications.txt
 
 # Required: Your email address (for API requests)
 EMAIL=your.email@university.edu
@@ -62,236 +127,54 @@ OPENALEX_TOKEN=your_openalex_token_here
 CORE_API_KEY=your_core_api_key_here
 ```
 
-### 2. Get API Tokens
+### Publications File Format:
+Tab-separated values with required columns:
+- `pub_id`: Unique publication identifier
+- `title`: Publication title
+- `doi`: DOI (optional but recommended)
+- `year_pub`: Publication year
 
-#### OpenAlex Token (Recommended)
-- Go to [OpenAlex](https://openalex.org/)
-- Sign up for free API access
-- Get your token from account settings
-- Higher rate limits with token
+## 📊 Output Format
 
-#### CORE API Key (Recommended)  
-- Go to [CORE API](https://core.ac.uk/services/api/)
-- Register for free API key
-- Required for full CORE access
-
-### 3. Publications File Format
-
-Your publications file must be **tab-separated** with these columns:
-
-```
-pub_id	title	doi	year_pub	journal	authors
-pub_001	Sample Paper Title	10.1000/sample	2023	Nature	Smith, J.
-pub_002	Another Study	10.1000/another	2022	Science	Jones, A.
-```
-
-**Required columns:**
-- `pub_id` - Unique identifier for each publication
-- `title` - Publication title
-- `doi` - DOI (if available, otherwise can be empty)
-- `year_pub` - Publication year
-
-**Optional columns:**
-- `journal`, `authors`, etc. (for reference only)
-
-## File Naming Convention
-
-All PDFs use a consistent naming format:
-
-```
-{normalized_doi}_{first_5_title_words}_{year}.pdf
-```
-
-**Examples:**
-- `10_1038_nature12345_machine_learning_protein_folding_2023.pdf`
-- `no_doi_covid_vaccine_efficacy_study_2022.pdf`
-
-This ensures:
-- ✅ Same paper from different sources gets same filename
-- ✅ Easy deduplication based on filename
-- ✅ Human-readable file identification
-
-## Directory Structure
-
-```
-project/
-├── 1_openalex_fetcher.py
-├── 2_core_fetcher.py
-├── 3_other_fetcher.py
-├── 4_validate_and_dedupe.py
-├── docker compose.yml
-├── Dockerfile
-├── requirements.txt
-├── .env
-└── output/
-    ├── openalex/          # Stage 1 downloads
-    ├── core/              # Stage 2 downloads
-    ├── other/             # Stage 3 downloads
-    ├── valid_pdfs/        # Final valid PDFs
-    ├── invalid_pdfs/      # Broken/corrupted PDFs
-    ├── duplicate_pdfs/    # Removed duplicates
-    └── validation_report.txt
-```
-
-## Usage Instructions
-
-### Option 1: Run Full Pipeline
-
-```bash
-# Run all 4 stages automatically
-docker compose --profile full up
-```
-
-This runs all stages sequentially. Best for unattended operation.
-
-### Option 2: Run Individual Stages
-
-```bash
-# Stage 1: OpenAlex
-docker compose --profile stage1 up
-
-# Stage 2: CORE
-docker compose --profile stage2 up
-
-# Stage 3: Other sources
-docker compose --profile stage3 up
-
-# Stage 4: Validation & deduplication
-docker compose --profile stage4 up
-```
-
-Run stages individually for more control and monitoring.
-
-### Option 3: Development/Testing
-
-```bash
-# Build the container
-docker compose build
-
-# Run specific script manually
-docker run -v ./output:/app/output -v /path/to/publications.txt:/app/data/publications.txt pdf-pipeline python 1_openalex_fetcher.py
-```
-
-## Output Explanation
-
-After completion, check these directories:
-
-### `output/valid_pdfs/` - YOUR FINAL PDFS ✅
-- Contains validated, deduplicated PDFs
-- These are ready for analysis/processing
+### Valid PDFs (`output/valid_pdfs/`):
 - One PDF per unique publication
+- Standardized filenames: `{doi}_{title_words}_{year}.pdf`
+- Validated for readability and content
 
-### `output/invalid_pdfs/` - Problematic files ❌
-- Corrupted PDFs
-- Encrypted PDFs  
-- Files too small (<2 pages)
-- Cannot be used
+### Tracking Files (`output/publications/`):
+- `publications_openalex.txt`: OpenAlex download status
+- `publications_core.txt`: CORE download status
+- `publications_other.txt`: Other sources download status
 
-### `output/duplicate_pdfs/` - Removed duplicates 📋
-- Lower quality versions of papers
-- Multiple downloads of same paper
-- Kept the version with most pages
+### Validation Report (`output/validation_report.txt`):
+```
+PDF Validation and Deduplication Report
+====================================
 
-### Individual stage directories:
-- `output/openalex/` - Raw downloads from OpenAlex
-- `output/core/` - Raw downloads from CORE  
-- `output/other/` - Raw downloads from other sources
-
-## Monitoring Progress
-
-Each stage provides detailed logging:
-
-```bash
-# View logs for specific stage
-docker compose --profile stage1 up --logs
-
-# Follow logs in real-time
-docker compose --profile stage1 up --follow
+SUMMARY:
+Total PDFs: 1500
+Valid PDFs: 1200
+Invalid PDFs: 200
+Duplicates Removed: 100
+Final Unique PDFs: 1100
 ```
 
-**Log messages to watch for:**
-- `✓ Downloaded: filename.pdf` - Successful download
-- `Not found in [source]` - Paper not available in that source
-- `File already exists` - Skipping duplicate download
-- `Moved to invalid` - PDF failed validation
+## 🐛 Troubleshooting
 
-## Troubleshooting
+| Issue | Solution |
+|-------|----------|
+| No PDFs found | Check publications file format (tab-separated) |
+| API rate limits | Add API tokens, increase delays between requests |
+| Permission denied | Check Docker volume mounts and file permissions |
+| SSL errors | Pipeline handles most SSL issues automatically |
+| Low success rate | Check institutional VPN access for paywalled content |
 
-### Common Issues
+## 📝 Notes
 
-**1. "No PDFs found"**
-- Check your publications file format (tab-separated)
-- Verify `pub_id`, `title`, `doi` columns exist
-- Ensure DOIs are properly formatted
-
-**2. "API rate limit exceeded"**
-- Add delays between requests (modify `time.sleep()` values)
-- Get API tokens for higher rate limits
-- Run stages separately with breaks
-
-**3. "Permission denied"**
-- Check Docker has access to your publications file
-- Verify output directory permissions
-- Try running with `sudo` if needed
-
-**4. "SSL/Certificate errors"**
-- Some academic sites have SSL issues
-- Pipeline automatically handles most cases
-- Check network connectivity
-
-### Performance Tips
-
-- **Use API tokens** - Much higher rate limits
-- **Run overnight** - Academic sites are faster off-peak
-- **Monitor disk space** - PDFs can be large
-- **Check institution access** - Some sources need university VPN
-
-## Expected Results
-
-**Typical success rates:**
-- OpenAlex: 60-80% (depends on DOI availability)
-- CORE: 40-60% (open access papers)
-- Other sources: 20-40% (additional coverage)
-- **Combined: 70-90%** coverage for recent papers
-
-**Final output:**
-- 1 validated PDF per unique publication
-- Consistent filenames for easy processing
-- Detailed report of success/failure rates
-
-## Citation & Credits
-
-This pipeline uses APIs from:
-- [OpenAlex](https://openalex.org/) - Open bibliographic database
-- [CORE](https://core.ac.uk/) - Open access research aggregator  
-- [Unpaywall](https://unpaywall.org/) - Open access finder
-- [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc/) - Life sciences repository
-
-## License
-
-MIT License - Feel free to modify and distribute.
-
-## Support
-
-For issues:
-1. Check the troubleshooting section
-2. Review log files for error details
-3. Verify your input file format
-4. Test with a small subset first
+- Success rates vary by publication age and subject area
+- Recent publications may not be indexed in all sources yet
+- Institutional access can significantly improve success rates
+- Pipeline is designed for batch processing of large publication lists
 
 ---
-
-## ⚠️ Important Data Availability Limitations
-
-Before proceeding, be aware of these critical limitations:
-
-- **Publication Lag**: New UK Biobank publications take time to be indexed in OpenAlex, CORE, and other academic databases. Recent publications may not have PDFs available yet.
-- **Incomplete Corpus**: You will **not** be able to download the entire publication corpus due to various access restrictions.
-- **Paywall Restrictions**: Many publications are behind publisher paywalls, limiting full-text PDF access even when metadata is available.
-- **Best Effort Extraction**: Expect to retrieve approximately 40-70% of the full corpus depending on your institutional access and the age of publications.
-
----
-
-
-
-**Happy PDF hunting! 📚**
+✨ Pipeline ready for PDF corpus ingestion

@@ -1,7 +1,57 @@
-#!/usr/bin/env python3
+# ============================================================================
+# FILE: scripts/03-other_fetcher.py
+# LOCATION: 01-data_ingestion/03-ingest_pdf_corpus/scripts/03-other_fetcher.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 03
+# PURPOSE: Fetches PDF documents from additional open access sources (Unpaywall, PMC, arXiv)
+# ============================================================================
+
 """
-Stage 3: Other Open Access Sources PDF Fetcher
-Simple script to download PDFs from Unpaywall, bioRxiv, arXiv, and PMC
+MODULE OVERVIEW:
+This module downloads PDF documents from various open access sources beyond OpenAlex and CORE.
+It searches Unpaywall (for DOI-based OA discovery), PubMed Central (PMC), and arXiv
+to find additional PDF sources for publications.
+
+CLASSES:
+- OtherSourcesFetcher: Main class for handling multiple OA source interactions and PDF downloads
+
+METHODS:
+- __init__(): Initializes the fetcher with environment variables and creates output directories
+- init_tracking_file(): Creates a tracking file to record download status for each publication
+- update_tracking_file(): Updates the tracking file with success/failure status
+- normalize_text(): Cleans text for consistent filename generation
+- create_filename(): Generates standardized PDF filenames from publication metadata
+- load_publications(): Reads publication data from input TSV file
+- search_unpaywall(): Searches Unpaywall API for open access PDFs by DOI
+- search_pmc(): Searches PubMed Central for open access PDFs
+- search_pmc_by_doi(): Searches PMC specifically by DOI identifier
+- search_pmc_by_title(): Searches PMC by title with year verification
+- search_arxiv(): Searches arXiv preprint repository for papers
+- calculate_similarity(): Computes text similarity for title matching
+- search_all_sources(): Orchestrates searches across all supported sources
+- download_pdf(): Downloads PDF from URL with content validation
+- process_publications(): Main orchestration method that processes all publications
+- print_summary(): Displays final statistics of the download operation
+
+ROUTES:
+- N/A (This is a data processing module, not a web service)
+
+HYPERPARAMETERS:
+- REQUEST_TIMEOUT: 10 seconds (in search methods, for API calls)
+- DOWNLOAD_TIMEOUT: 30 seconds (in download_pdf method)
+- MIN_FILE_SIZE: 1000 bytes (in download_pdf method, minimum valid file size)
+- TITLE_SIMILARITY_THRESHOLD: 0.7 (in search_pmc_by_title method, for PMC title matching)
+- MAX_FILENAME_LENGTH: 200 characters (in create_filename method)
+
+SEEDS:
+- N/A (No random seeds used in this module)
+
+DEPENDENCIES:
+- requests: For HTTP API calls and file downloads
+- pathlib: For cross-platform file path handling
+- csv: For reading tab-separated publication data
+- logging: For operation tracking and debugging
+- re: For text normalization and pattern matching
+- time: For rate limiting between API calls
 """
 
 import os
@@ -449,3 +499,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+print("✅ Other sources PDF fetcher module loaded successfully")

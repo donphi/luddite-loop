@@ -1,7 +1,33 @@
 #!/usr/bin/env python3
+# ============================================================================
+# FILE: ai_consortium_validation.py
+# LOCATION: pipelines/01-data_ingestion/02-restructure_ukb_showcase_data/scripts/ai_consortium_validation.py
+# PIPELINE POSITION: Main Pipeline 01 → Sub-Pipeline 02
+# PURPOSE: Validates MRCONSO acronym mappings using multiple AI models via OpenRouter API for consensus validation
+# ============================================================================
+
 """
-AI Consortium Validation for MRCONSO Acronym Mappings
-Validates acronym mappings using multiple AI models through OpenRouter API
+MODULE OVERVIEW:
+This validation script uses multiple AI models (Google Gemini, OpenAI GPT-4o-mini, etc.) to validate
+acronym mappings generated from MRCONSO data. It:
+1. Reads human verification samples from previous processing
+2. Queries 5 different AI models for each acronym mapping
+3. Calculates consensus from model responses
+4. Generates detailed validation reports with alternatives
+5. Provides statistical analysis of model performance and agreement
+
+The script uses conservative API settings and implements retry logic for robustness.
+
+DEPENDENCIES:
+- pandas==2.1.4
+- requests>=2.31.0
+- json (standard library)
+- os (standard library)
+- sys (standard library)
+- time (standard library)
+- collections.Counter (standard library)
+- pathlib (standard library)
+- typing (standard library)
 """
 
 import os
