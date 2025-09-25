@@ -4,3 +4,8 @@ numpy==1.26.2
 pyahocorasick>=2.1.0
 requests>=2.31.0
 python-dotenv>=1.0.0
+
+# Transformer models for SPECTER 2
+transformers>=4.35.0
+sentence-transformers>=2.2.2
+tokenizers>=0.15.0

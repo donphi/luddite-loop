@@ -1,0 +1,2297 @@
+ACRONYMS BY FREQUENCY
+==================================================
+Total unique acronyms: 652
+==================================================
+
+
+CS (10 phrases):
+  - chronic sinusitis
+  - cigarette smoke
+  - cigarette smoking
+  - circumferential strain
+  - congenital syphilis
+  ... and 5 more
+
+AA (8 phrases):
+  - acetoacetate
+  - alopecia areata
+  - amino acid
+  - aortic aneurysm
+  - arteries
+  ... and 3 more
+
+AB (7 phrases):
+  - abdomen
+  - abdominal
+  - abortion
+  - acute bronchitis
+  - antibiotic
+  ... and 2 more
+
+LA (7 phrases):
+  - lactate
+  - lateral
+  - lateral nucleus
+  - left atrial
+  - left atrium
+  ... and 2 more
+
+PA (7 phrases):
+  - abscess
+  - alcohol
+  - panic attack
+  - panic attacks
+  - pantothenic acid
+  ... and 2 more
+
+CA (6 phrases):
+  - abnormalities
+  - activity
+  - caffeine
+  - calcium
+  - cardiac arrest
+  ... and 1 more
+
+PD (6 phrases):
+  - depression
+  - parkinson's disease
+  - parkinsonism
+  - patients
+  - personality disorders
+  ... and 1 more
+
+PO (6 phrases):
+  - administered
+  - parietal operculum
+  - parieto occipital
+  - post operative
+  - posterior
+  ... and 1 more
+
+SD (6 phrases):
+  - depletion
+  - diameter
+  - seborrhoeic dermatitis
+  - sexual dysfunction
+  - sleep disorders
+  ... and 1 more
+
+SE (6 phrases):
+  - exposure
+  - selenium
+  - self esteem
+  - sensitivity
+  - spherical equivalent
+  ... and 1 more
+
+AD (5 phrases):
+  - accidental death
+  - alzheimer's disease
+  - antidepressants
+  - anxiety disorders
+  - atopic dermatitis
+
+AP (5 phrases):
+  - abdominal pain
+  - acute pancreatitis
+  - angina pectoris
+  - appendicitis
+  - appendix
+
+CD (5 phrases):
+  - caudate
+  - coeliac disease
+  - conduct disorders
+  - contact dermatitis
+  - distance
+
+CI (5 phrases):
+  - cardiac
+  - cardiac index
+  - cerebral infarction
+  - cirrhosis
+  - cochlear implant
+
+CP (5 phrases):
+  - cerebral peduncle
+  - chest pain
+  - choroid plexus
+  - classical
+  - process
+
+CT (5 phrases):
+  - catalase
+  - chlamydia
+  - chlamydia trachomatis
+  - connective tissue
+  - total cholesterol
+
+CVD (5 phrases):
+  - cardiovascular
+  - cardiovascular disease
+  - cerebrovascular disease
+  - cerebrovascular diseases
+  - cerebrovascular disorders
+
+EM (5 phrases):
+  - emotional
+  - emotionally
+  - emphysema
+  - endometriosis
+  - erythema multiforme
+
+IC (5 phrases):
+  - component
+  - insular cortex
+  - intercourse
+  - internal capsule
+  - intracranial
+
+ID (5 phrases):
+  - identifier
+  - immunodeficiency
+  - infectious diseases
+  - internal derangement
+  - iodine deficiency
+
+RF (5 phrases):
+  - frequencies
+  - renal failure
+  - respiratory failure
+  - rheumatic fever
+  - rheumatoid factor
+
+SA (5 phrases):
+  - saturday
+  - sexual assault
+  - short axis
+  - sleep apnoea
+  - status asthmaticus
+
+SF (5 phrases):
+  - saturated fat
+  - scarlet fever
+  - social functioning
+  - spotted fever
+  - superficial
+
+AL (4 phrases):
+  - albumin
+  - amyloidosis
+  - ligament
+  - primary
+
+CM (4 phrases):
+  - cardiac monitoring
+  - congenital malformation
+  - congenital malformations
+  - membranes
+
+CN (4 phrases):
+  - central nucleus
+  - copy number
+  - cranial nerve
+  - creatinine
+
+DD (4 phrases):
+  - delusional disorder
+  - disc diameter
+  - disorders
+  - diverticular disease
+
+FA (4 phrases):
+  - fatty acid
+  - fatty acids
+  - femoral
+  - fibrosing alveolitis
+
+HA (4 phrases):
+  - headache
+  - hearing aid
+  - hospital admission
+  - hyperalimentation
+
+HD (4 phrases):
+  - haemolytic disease
+  - hansen's disease
+  - heart disease
+  - huntington's disease
+
+HT (4 phrases):
+  - hearing test
+  - hyperthyroidism
+  - hypothermia
+  - hypothyroidism
+
+IP (4 phrases):
+  - in patient
+  - inpatient
+  - particles
+  - peripheral
+
+LV (4 phrases):
+  - lateral ventricle
+  - left ventricle
+  - liver volume
+  - lung volume
+
+MC (4 phrases):
+  - menstrual cycle
+  - merkel cell
+  - monocyte
+  - myocarditis
+
+MI (4 phrases):
+  - infection
+  - intensity
+  - meconium ileus
+  - myocardial infarction
+
+OM (4 phrases):
+  - oral mucosa
+  - osteomalacia
+  - osteomyelitis
+  - otitis media
+
+OP (4 phrases):
+  - operation
+  - operative
+  - operative procedure
+  - osteoporosis
+
+PC (4 phrases):
+  - paracentral
+  - percentage
+  - phosphatidylcholines
+  - principal components
+
+PN (4 phrases):
+  - pneumonia
+  - polyarteritis nodosa
+  - postnatal
+  - streptococcus pneumoniae
+
+PR (4 phrases):
+  - pain relief
+  - pityriasis rosea
+  - pregnant
+  - release
+
+PT (4 phrases):
+  - patient
+  - planum temporale
+  - protein
+  - proximal
+
+PV (4 phrases):
+  - partial volume
+  - peripheral vascular
+  - plasmodium vivax
+  - pulmonary valve
+
+ST (4 phrases):
+  - sore throat
+  - standard
+  - stomach
+  - stria terminalis
+
+TE (4 phrases):
+  - echo time
+  - testosterone
+  - tetanus
+  - toxic encephalopathy
+
+AF (3 phrases):
+  - abdominal fat
+  - amniotic fluid
+  - factors
+
+AM (3 phrases):
+  - alveolar
+  - amygdaloid
+  - morning
+
+BD (3 phrases):
+  - bile ducts
+  - bone density
+  - brain damage
+
+BM (3 phrases):
+  - bacterial meningitis
+  - bowel movement
+  - breast milk
+
+BP (3 phrases):
+  - bacterial pneumonia
+  - bipolar
+  - blood pressure
+
+BW (3 phrases):
+  - birth weight
+  - body weight
+  - bodyweight
+
+CC (3 phrases):
+  - common cold
+  - corpus callosum
+  - critical care
+
+CE (3 phrases):
+  - central
+  - cerebellum
+  - cholesteryl esters
+
+CH (3 phrases):
+  - chronic hepatitis
+  - congenital hydrocephalus
+  - corneal hysteresis
+
+CL (3 phrases):
+  - chloride
+  - cleft lip
+  - contact lens
+
+ED (3 phrases):
+  - deprivation
+  - end diastole
+  - energy density
+
+FF (3 phrases):
+  - fat fraction
+  - fat free
+  - feeding
+
+FL (3 phrases):
+  - fluoxetine
+  - flutter
+  - frontal lobe
+
+FT (3 phrases):
+  - fallopian tube
+  - freeze thaw
+  - full time
+
+IS (3 phrases):
+  - intraspinal
+  - ischaemic
+  - ischaemic stroke
+
+LD (3 phrases):
+  - limited
+  - liver disease
+  - long distance
+
+LE (3 phrases):
+  - life events
+  - low energy
+  - lupus erythematosus
+
+LP (3 phrases):
+  - lichen planus
+  - lipoprotein particles
+  - low protein
+
+ME (3 phrases):
+  - middle ear
+  - moderate exercise
+  - myalgic encephalomyelitis
+
+MG (3 phrases):
+  - magnesium
+  - mean gradient
+  - myasthenia gravis
+
+NS (3 phrases):
+  - nephrotic syndrome
+  - nervous system
+  - sedentary
+
+OB (3 phrases):
+  - obesity
+  - obstetric
+  - obstetrical
+
+PE (3 phrases):
+  - pleural effusion
+  - pulmonary embolism
+  - pulmonary oedema
+
+PP (3 phrases):
+  - peak to peak
+  - pleural plaque
+  - pulse pressure
+
+PU (3 phrases):
+  - peptic ulcer
+  - proteinuria
+  - putamen
+
+RA (3 phrases):
+  - arterial
+  - right atrial
+  - right atrium
+
+S. (3 phrases):
+  - salmonella
+  - staphylococcus
+  - streptococcus
+
+SC (3 phrases):
+  - sickle cell
+  - spinal cord
+  - subcutaneous
+
+SH (3 phrases):
+  - hypotension
+  - secondary hypertension
+  - sitting height
+
+STD (3 phrases):
+  - sexually transmitted disease
+  - sexually transmitted diseases
+  - standard deviation
+
+T1 (3 phrases):
+  - admission
+  - beginning
+  - longitudinal
+
+TB (3 phrases):
+  - total bilirubin
+  - trabecular bone
+  - tuberculosis
+
+TH (3 phrases):
+  - thalamus
+  - thickness
+  - thursday
+
+TP (3 phrases):
+  - pregnancy
+  - thrombophlebitis
+  - total protein
+
+TV (3 phrases):
+  - television
+  - total volume
+  - tricuspid valve
+
+WB (3 phrases):
+  - white bread
+  - whole body
+  - whole brain
+
+WM (3 phrases):
+  - weighted mean
+  - white matter
+  - whole milk
+
+AC (2 phrases):
+  - acetate
+  - acetone
+
+ACC (2 phrases):
+  - acceleration
+  - accommodation
+
+AG (2 phrases):
+  - angular gyrus
+  - antigen
+
+AH (2 phrases):
+  - acute hepatitis
+  - anterior
+
+AMI (2 phrases):
+  - acute myocardial infarction
+  - amitriptyline
+
+AN (2 phrases):
+  - acanthosis nigricans
+  - aneurysm
+
+AR (2 phrases):
+  - allergic rhinitis
+  - arrhythmia
+
+AS (2 phrases):
+  - arterial stiffness
+  - artificial sweetener
+
+AT (2 phrases):
+  - adipose tissue
+  - atresia
+
+AV (2 phrases):
+  - atrioventricular
+  - average
+
+BG (2 phrases):
+  - background
+  - basal ganglia
+
+BL (2 phrases):
+  - bilateral
+  - blood loss
+
+BR (2 phrases):
+  - bathroom
+  - bilirubin
+
+BS (2 phrases):
+  - brain stem
+  - brainstem
+
+BT (2 phrases):
+  - bedtime
+  - blood type
+
+C/S (2 phrases):
+  - caesarean section
+  - caesarian section
+
+CHO (2 phrases):
+  - carbohydrate
+  - cholesterol
+
+CNS (2 phrases):
+  - central nervous system
+  - cranial nerves
+
+CO (2 phrases):
+  - concentration
+  - control
+
+CRD (2 phrases):
+  - chronic respiratory disease
+  - crohn's disease
+
+CRF (2 phrases):
+  - chronic renal failure
+  - corneal resistance factor
+
+CV (2 phrases):
+  - cell volume
+  - vasculitis
+
+D. (2 phrases):
+  - density
+  - duration
+
+DF (2 phrases):
+  - dengue fever
+  - dietary fibre
+
+DU (2 phrases):
+  - decubitus ulcer
+  - duodenal ulcer
+
+DX (2 phrases):
+  - diagnosis
+  - diagnostic
+
+EXT (2 phrases):
+  - exercise test
+  - extremities
+
+FC (2 phrases):
+  - free cholesterol
+  - frontal
+
+FH (2 phrases):
+  - family history
+  - femoral hernia
+
+FM (2 phrases):
+  - face mask
+  - fat mass
+
+G-U (2 phrases):
+  - gastric ulcer
+  - genito urinary
+
+GC (2 phrases):
+  - ganglion cell
+  - gonococcal
+
+HC (2 phrases):
+  - hip circumference
+  - hydrocephalus
+
+HF (2 phrases):
+  - heart failure
+  - high fat
+
+HG (2 phrases):
+  - hand grip
+  - heschl's gyrus
+
+HM (2 phrases):
+  - heavy metal
+  - hydatidiform mole
+
+HP (2 phrases):
+  - hypersensitivity pneumonitis
+  - phosphate
+
+HPT (2 phrases):
+  - hyperparathyroidism
+  - hypoparathyroidism
+
+HTN (2 phrases):
+  - hypertension
+  - hypertensive
+
+ICH (2 phrases):
+  - intracerebral haemorrhage
+  - intracranial haemorrhage
+
+IM (2 phrases):
+  - current
+  - infectious mononucleosis
+
+IOP (2 phrases):
+  - intra ocular pressure
+  - intraocular pressure
+
+IQ (2 phrases):
+  - image quality
+  - intelligence
+
+LB (2 phrases):
+  - live birth
+  - live births
+
+LC (2 phrases):
+  - low calorie
+  - lung cancer
+
+LI (2 phrases):
+  - lactose intolerance
+  - large intestine
+
+LL (2 phrases):
+  - lesions
+  - lower limb
+
+LVEDV (2 phrases):
+  - left ventricular end diastolic volume
+  - lv end diastolic volume
+
+LVEF (2 phrases):
+  - left ventricular ejection fraction
+  - lv ejection fraction
+
+LVESV (2 phrases):
+  - left ventricular end systolic volume
+  - lv end systolic volume
+
+MD (2 phrases):
+  - diseases
+  - movement disorders
+
+ML (2 phrases):
+  - medial lemniscus
+  - molecular layer
+
+MS (2 phrases):
+  - microsatellites
+  - multiple sclerosis
+
+MV (2 phrases):
+  - mitral valve
+  - muscle volume
+
+ND (2 phrases):
+  - discharge
+  - nondiabetic
+
+NEC (2 phrases):
+  - necrotising enterocolitis
+  - not elsewhere classified
+
+NR (2 phrases):
+  - nerve root
+  - response
+
+OC (2 phrases):
+  - oral contraceptive
+  - osteochondrosis
+
+OD (2 phrases):
+  - development
+  - disease
+
+OE (2 phrases):
+  - oestradiol
+  - otitis externa
+
+ON (2 phrases):
+  - optic neuritis
+  - osteonecrosis
+
+OO (2 phrases):
+  - olive oil
+  - oophorectomy
+
+P1 (2 phrases):
+  - day of birth
+  - positive
+
+PF (2 phrases):
+  - physical functioning
+  - plasmodium falciparum
+
+PH (2 phrases):
+  - hyperplasia
+  - pulmonary haemorrhage
+
+PRCA (2 phrases):
+  - prostate cancer
+  - pure red cell aplasia
+
+PROM (2 phrases):
+  - premature rupture of membranes
+  - prospective memory
+
+PS (2 phrases):
+  - psoriasis
+  - symptoms
+
+RD (2 phrases):
+  - renal disease
+  - respiratory distress
+
+RE (2 phrases):
+  - repeated
+  - retinol equivalents
+
+REC (2 phrases):
+  - recommended
+  - recreational
+
+RI (2 phrases):
+  - reflection index
+  - refractive index
+
+RS (2 phrases):
+  - resolution
+  - respiratory system
+
+RV (2 phrases):
+  - right ventricle
+  - right ventricular
+
+SG (2 phrases):
+  - salivary glands
+  - subgroup
+
+SI (2 phrases):
+  - interval
+  - small intestine
+
+SL (2 phrases):
+  - sound level
+  - sphingolipid
+
+SM (2 phrases):
+  - skimmed milk
+  - systolic
+
+SMA (2 phrases):
+  - spinal muscular atrophy
+  - supplementary motor cortex
+
+SP (2 phrases):
+  - phosphorus
+  - seropositive
+
+SQ (2 phrases):
+  - quality
+  - sleep quality
+
+SS (2 phrases):
+  - same sex
+  - stenosis
+
+SSC (2 phrases):
+  - light scatter
+  - systemic sclerosis
+
+SW (2 phrases):
+  - sleep walking
+  - soap and water
+
+T2 (2 phrases):
+  - degrees c
+  - minutes
+
+T3 (2 phrases):
+  - 3 months
+  - treatment
+
+TA (2 phrases):
+  - analysis
+  - total area
+
+TL (2 phrases):
+  - temporal lobe
+  - total lipids
+
+TPR (2 phrases):
+  - temperature
+  - total peripheral resistance
+
+TR (2 phrases):
+  - trachea
+  - transformed
+
+TS (2 phrases):
+  - tobacco smoke
+  - turner's syndrome
+
+US (2 phrases):
+  - ultrasound
+  - ultrasound scan
+
+VA (2 phrases):
+  - visual acuity
+  - vitamin a
+
+VAD (2 phrases):
+  - vascular dementia
+  - vitamin a deficiency
+
+VT (2 phrases):
+  - tissue volume
+  - venous thrombosis
+
+WC (2 phrases):
+  - waist circumference
+  - whooping cough
+
+WG (2 phrases):
+  - weeks of gestation
+  - whole grain
+
+3HB (1 phrases):
+  - 3 hydroxybutyrate
+
+AAA (1 phrases):
+  - aromatic amino acid
+
+AAD (1 phrases):
+  - alpha 1 antitrypsin deficiency
+
+AAP (1 phrases):
+  - acute appendicitis
+
+AAT (1 phrases):
+  - aspartate aminotransferase
+
+ABB (1 phrases):
+  - acid base balance
+
+ACD (1 phrases):
+  - allergic contact dermatitis
+
+AFIB (1 phrases):
+  - atrial fibrillation
+
+AHA (1 phrases):
+  - acquired haemolytic anaemia
+
+AHB (1 phrases):
+  - acute hepatitis b
+
+AI (1 phrases):
+  - asymmetry index
+
+AIX (1 phrases):
+  - augmentation index
+
+AKA (1 phrases):
+  - also known as
+
+ALAT (1 phrases):
+  - alanine aminotransferase
+
+ALD (1 phrases):
+  - alcoholic liver disease
+
+ALK (1 phrases):
+  - alkaline phosphatase
+
+ALRI (1 phrases):
+  - acute lower respiratory infection
+
+AMD (1 phrases):
+  - age related macular degeneration
+
+ANS (1 phrases):
+  - autonomic nervous system
+
+AOV (1 phrases):
+  - aortic valve
+
+APH (1 phrases):
+  - antepartum haemorrhage
+
+APO (1 phrases):
+  - apolipoprotein
+
+APOA (1 phrases):
+  - apolipoprotein a
+
+APOB (1 phrases):
+  - apolipoprotein b
+
+ARDS (1 phrases):
+  - adult respiratory distress syndrome
+
+ARF (1 phrases):
+  - acute renal failure
+
+ART (1 phrases):
+  - tachycardia
+
+ASA (1 phrases):
+  - ascorbic acid
+
+ASI (1 phrases):
+  - arterial stiffness index
+
+ASP (1 phrases):
+  - ankylosing spondylitis
+
+AST (1 phrases):
+  - astigmatism
+
+ATH (1 phrases):
+  - atherosclerosis
+
+ATV (1 phrases):
+  - adipose tissue volume
+
+AVH (1 phrases):
+  - acute viral hepatitis
+
+AY (1 phrases):
+  - amygdala
+
+AΒ (1 phrases):
+  - amyloid beta
+
+B6 (1 phrases):
+  - vitamin b6
+
+BA (1 phrases):
+  - bone area
+
+BC (1 phrases):
+  - beta carotene
+
+BCA (1 phrases):
+  - breast cancer
+
+BCAA (1 phrases):
+  - branched chain amino acid
+
+BCAAS (1 phrases):
+  - branched chain amino acids
+
+BCS (1 phrases):
+  - breast cancer screening
+
+BE (1 phrases):
+  - bronchiectasis
+
+BF (1 phrases):
+  - blood flow
+
+BFM (1 phrases):
+  - body fat mass
+
+BFP (1 phrases):
+  - body fat percentage
+
+BI (1 phrases):
+  - indices
+
+BMC (1 phrases):
+  - bone mineral content
+
+BMD (1 phrases):
+  - bone mineral density
+
+BMI (1 phrases):
+  - body mass index
+
+BMR (1 phrases):
+  - basal metabolic rate
+
+BMS (1 phrases):
+  - bowel movements
+
+BPAD (1 phrases):
+  - bipolar affective disorder
+
+BPD (1 phrases):
+  - bipolar disorder
+
+BSA (1 phrases):
+  - body surface area
+
+BUA (1 phrases):
+  - broadband ultrasound attenuation
+
+C2 (1 phrases):
+  - cervical
+
+CAD (1 phrases):
+  - coronary artery disease
+
+CB (1 phrases):
+  - chronic bronchitis
+
+CBS (1 phrases):
+  - cannabinoids
+
+CDR (1 phrases):
+  - cup to disc ratio
+
+CEA (1 phrases):
+  - centre edge angle
+
+CF (1 phrases):
+  - function
+
+CFS (1 phrases):
+  - chronic fatigue syndrome
+
+CFTR (1 phrases):
+  - cystic fibrosis
+
+CG (1 phrases):
+  - cingulate gyrus
+
+CGM (1 phrases):
+  - cortical grey matter
+
+CHR (1 phrases):
+  - chromosomes
+
+CIHD (1 phrases):
+  - chronic ischaemic heart disease
+
+CLP (1 phrases):
+  - cleft palate
+
+CLS (1 phrases):
+  - contact lenses
+
+CMJ (1 phrases):
+  - carpometacarpal joint
+
+CMP (1 phrases):
+  - cardiomyopathy
+
+CMS (1 phrases):
+  - chylomicrons
+
+CMV (1 phrases):
+  - cytomegaloviral
+
+CNR (1 phrases):
+  - contrast to noise ratio
+
+COD (1 phrases):
+  - cause of death
+
+COPD (1 phrases):
+  - chronic obstructive pulmonary disease
+
+CR (1 phrases):
+  - complete
+
+CRP (1 phrases):
+  - c reactive protein
+
+CRPS (1 phrases):
+  - complex regional pain syndrome
+
+CSD (1 phrases):
+  - distribution
+
+CST (1 phrases):
+  - corticospinal tract
+
+CTD (1 phrases):
+  - connective tissue disorders
+
+CTS (1 phrases):
+  - carpal tunnel syndrome
+
+CVH (1 phrases):
+  - chronic viral hepatitis
+
+CVID (1 phrases):
+  - common variable immunodeficiency
+
+DAO (1 phrases):
+  - descending aorta
+
+DBIL (1 phrases):
+  - direct bilirubin
+
+DBP (1 phrases):
+  - diastolic blood pressure
+
+DC (1 phrases):
+  - distensibility
+
+DDA (1 phrases):
+  - doctor diagnosed asthma
+
+DE (1 phrases):
+  - diesel exhaust
+
+DEG (1 phrases):
+  - degeneration
+
+DH (1 phrases):
+  - diaphragmatic hernia
+
+DHA (1 phrases):
+  - docosahexaenoic acid
+
+DHF (1 phrases):
+  - dengue haemorrhagic fever
+
+DHQ (1 phrases):
+  - history questionnaire
+
+DIC (1 phrases):
+  - disseminated intravascular coagulation
+
+DM (1 phrases):
+  - diabetes mellitus
+
+DOA (1 phrases):
+  - date of admission
+
+DOB (1 phrases):
+  - date of birth
+
+DP (1 phrases):
+  - pattern
+
+DS (1 phrases):
+  - down's syndrome
+
+DSC (1 phrases):
+  - dice similarity coefficient
+
+DVT (1 phrases):
+  - deep vein thrombosis
+
+DW (1 phrases):
+  - drinking water
+
+DZ (1 phrases):
+  - dizziness
+
+E&M (1 phrases):
+  - endocrine and metabolic
+
+EB (1 phrases):
+  - epidermolysis bullosa
+
+EBV (1 phrases):
+  - epstein barr virus
+
+EC (1 phrases):
+  - esterified cholesterol
+
+EDD (1 phrases):
+  - date of delivery
+
+EDS (1 phrases):
+  - eating disorders
+
+EDV (1 phrases):
+  - end diastolic volume
+
+EF (1 phrases):
+  - ejection fraction
+
+EGFR (1 phrases):
+  - estimated glomerular filtration rate
+
+EN (1 phrases):
+  - erythema nodosum
+
+EOC (1 phrases):
+  - epithelial ovarian cancer
+
+EP (1 phrases):
+  - ectopic pregnancy
+
+ER (1 phrases):
+  - erythrocyte
+
+ES (1 phrases):
+  - end systole
+
+ESP (1 phrases):
+  - end systolic pressure
+
+ESRD (1 phrases):
+  - end stage renal disease
+
+ESV (1 phrases):
+  - end systolic volume
+
+ET (1 phrases):
+  - eustachian tube
+
+EVOO (1 phrases):
+  - extra virgin olive oil
+
+EX (1 phrases):
+  - exercise
+
+EXP (1 phrases):
+  - experimental
+
+F1 (1 phrases):
+  - frequency
+
+F8 (1 phrases):
+  - factor viii
+
+FEV1.0 (1 phrases):
+  - forced expiratory volume in 1 second
+
+FFM (1 phrases):
+  - fat free mass
+
+FG (1 phrases):
+  - fusiform gyrus
+
+FLU (1 phrases):
+  - influenza virus
+
+FMS (1 phrases):
+  - fibromyalgia syndrome
+
+FN (1 phrases):
+  - facial nerve
+
+FO (1 phrases):
+  - follicular
+
+FOS (1 phrases):
+  - frequency of seeing
+
+FS (1 phrases):
+  - former smokers
+
+FTD (1 phrases):
+  - frontotemporal dementia
+
+FU (1 phrases):
+  - follow up
+
+FVC (1 phrases):
+  - forced vital capacity
+
+FX (1 phrases):
+  - fracture
+
+G-A (1 phrases):
+  - substitution
+
+GA (1 phrases):
+  - general
+
+GAG (1 phrases):
+  - glycosaminoglycan
+
+GB (1 phrases):
+  - gallbladder
+
+GCC (1 phrases):
+  - genu of corpus callosum
+
+GD (1 phrases):
+  - gestational diabetes
+
+GE (1 phrases):
+  - gastro enteritis
+
+GERD (1 phrases):
+  - gastro oesophageal reflux disease
+
+GFAP (1 phrases):
+  - glial fibrillary acidic protein
+
+GFJ (1 phrases):
+  - grapefruit juice
+
+GGT (1 phrases):
+  - gamma glutamyltransferase
+
+GHQ (1 phrases):
+  - general health questionnaire
+
+GI (1 phrases):
+  - gastrointestinal
+
+GJ (1 phrases):
+  - gastrojejunal
+
+GM (1 phrases):
+  - grey matter
+
+GR (1 phrases):
+  - granuloma
+
+GRE (1 phrases):
+  - gradient echo
+
+GS (1 phrases):
+  - grip strength
+
+GT (1 phrases):
+  - green tea
+
+GUS (1 phrases):
+  - genito urinary system
+
+H.P. (1 phrases):
+  - helicobacter pylori
+
+HB (1 phrases):
+  - haemoglobin concentration
+
+HBA1 (1 phrases):
+  - glycated haemoglobin
+
+HBP (1 phrases):
+  - high blood pressure
+
+HBV (1 phrases):
+  - hepatitis b virus
+
+HCM (1 phrases):
+  - hypertrophic
+
+HCMV (1 phrases):
+  - human cytomegalovirus
+
+HCT (1 phrases):
+  - haematocrit
+
+HCV (1 phrases):
+  - hepatitis c virus
+
+HDL-C (1 phrases):
+  - high density lipoprotein cholesterol
+
+HEM (1 phrases):
+  - haemorrhage
+
+HGS (1 phrases):
+  - hand grip strength
+
+HHD (1 phrases):
+  - hypertensive heart disease
+
+HHV-6 (1 phrases):
+  - human herpesvirus 6
+
+HHV-7 (1 phrases):
+  - human herpesvirus 7
+
+HI (1 phrases):
+  - histidine
+
+HIB (1 phrases):
+  - haemophilus influenzae
+
+HIP (1 phrases):
+  - hippocampus
+
+HIV (1 phrases):
+  - human immunodeficiency virus
+
+HK (1 phrases):
+  - hyperkinetic
+
+HL (1 phrases):
+  - hearing loss
+
+HPC (1 phrases):
+  - hippocampal
+
+HPV-16 (1 phrases):
+  - human papillomavirus type 16
+
+HPV-18 (1 phrases):
+  - human papillomavirus type 18
+
+HR (1 phrases):
+  - heart rate
+
+HRT (1 phrases):
+  - hormone replacement therapy
+
+HSV (1 phrases):
+  - herpes simplex
+
+HSV-1 (1 phrases):
+  - herpes simplex virus 1
+
+HSV-2 (1 phrases):
+  - herpes simplex virus 2
+
+HTLV (1 phrases):
+  - human t lymphotropic virus
+
+HX (1 phrases):
+  - history
+
+HY (1 phrases):
+  - hypermetropia
+
+HYP (1 phrases):
+  - hypertrophy
+
+HZ (1 phrases):
+  - herpes zoster
+
+I/CB (1 phrases):
+  - iris and ciliary body
+
+IBS (1 phrases):
+  - irritable bowel syndrome
+
+ICA (1 phrases):
+  - internal carotid artery
+
+ICD (1 phrases):
+  - irritant contact dermatitis
+
+ICP (1 phrases):
+  - infantile cerebral palsy
+
+IDA (1 phrases):
+  - iron deficiency anaemia
+
+IDDM (1 phrases):
+  - insulin dependent diabetes mellitus
+
+IE (1 phrases):
+  - inner ear
+
+IFG (1 phrases):
+  - inferior frontal gyrus
+
+IFOF (1 phrases):
+  - inferior fronto occipital fasciculus
+
+IH (1 phrases):
+  - inguinal hernia
+
+IK (1 phrases):
+  - potassium
+
+IMT (1 phrases):
+  - intima medial thickness
+
+IN (1 phrases):
+  - insulin
+
+IND (1 phrases):
+  - indeterminate
+
+INL (1 phrases):
+  - inner nuclear layer
+
+INT (1 phrases):
+  - interference
+
+IO (1 phrases):
+  - intestinal obstruction
+
+IPF (1 phrases):
+  - idiopathic pulmonary fibrosis
+
+IPL (1 phrases):
+  - inner plexiform layer
+
+IR (1 phrases):
+  - reaction
+
+IRF (1 phrases):
+  - immature reticulocyte fraction
+
+ITG (1 phrases):
+  - inferior temporal gyrus
+
+IVD (1 phrases):
+  - intervertebral disk
+
+IZ (1 phrases):
+  - intermediate zone
+
+JA (1 phrases):
+  - juvenile arthritis
+
+JSW (1 phrases):
+  - joint space width
+
+KD (1 phrases):
+  - kidney disease
+
+KOC (1 phrases):
+  - coefficients
+
+KSHV (1 phrases):
+  - kaposi's sarcoma associated herpesvirus
+
+KV (1 phrases):
+  - kidney volume
+
+L (1 phrases):
+  - left
+
+L3 (1 phrases):
+  - infective
+
+LBBB (1 phrases):
+  - left bundle branch block
+
+LBW (1 phrases):
+  - low birth weight
+
+LDL-C (1 phrases):
+  - low density lipoprotein cholesterol
+
+LF (1 phrases):
+  - fraction
+
+LH (1 phrases):
+  - left hemisphere
+
+LM (1 phrases):
+  - lean mass
+
+LMP (1 phrases):
+  - last menstrual period
+
+LN (1 phrases):
+  - lymph nodes
+
+LOC (1 phrases):
+  - lateral occipital cortex
+
+LPA (1 phrases):
+  - light physical activity
+
+LPP (1 phrases):
+  - lipoprotein
+
+LS (1 phrases):
+  - longitudinal strain
+
+LSC (1 phrases):
+  - lichen simplex chronicus
+
+LT (1 phrases):
+  - long term
+
+LUT (1 phrases):
+  - lower urinary tract
+
+LV-SV (1 phrases):
+  - left ventricular stroke volume
+
+LVM (1 phrases):
+  - left ventricular mass
+
+LVOT (1 phrases):
+  - left ventricular outflow tract
+
+LY (1 phrases):
+  - lymphocyte
+
+MAD (1 phrases):
+  - absolute deviation
+
+MAP (1 phrases):
+  - mean arterial pressure
+
+MB (1 phrases):
+  - midbrain
+
+MCH (1 phrases):
+  - mean corpuscular haemoglobin
+
+MCHC (1 phrases):
+  - mean corpuscular haemoglobin concentration
+
+MCV (1 phrases):
+  - mean corpuscular volume
+
+MDD (1 phrases):
+  - major depression
+
+MFG (1 phrases):
+  - middle frontal gyrus
+
+MH (1 phrases):
+  - mental health
+
+MM (1 phrases):
+  - mucous membrane
+
+MMR (1 phrases):
+  - mild mental retardation
+
+MN (1 phrases):
+  - manganese
+
+MND (1 phrases):
+  - motor neurone disease
+
+MNJ (1 phrases):
+  - myoneural junction
+
+MP (1 phrases):
+  - proteins
+
+MPA (1 phrases):
+  - main pulmonary artery
+
+MR (1 phrases):
+  - mental retardation
+
+MRDM (1 phrases):
+  - malnutrition related diabetes mellitus
+
+MSA (1 phrases):
+  - multiple system atrophy
+
+MSD (1 phrases):
+  - displacement
+
+MSDS (1 phrases):
+  - musculoskeletal disorders
+
+MSK (1 phrases):
+  - musculoskeletal
+
+MT (1 phrases):
+  - mitochondrial
+
+MTB (1 phrases):
+  - miliary tuberculosis
+
+MTG (1 phrases):
+  - middle temporal gyrus
+
+MUFAS (1 phrases):
+  - monounsaturated fatty acids
+
+MWT (1 phrases):
+  - myocardial wall thickness
+
+N/V (1 phrases):
+  - nausea vomiting
+
+N1 (1 phrases):
+  - negative
+
+NB (1 phrases):
+  - newborn
+
+NFL (1 phrases):
+  - neurofilament light
+
+NHI (1 phrases):
+  - non haem iron
+
+NIDDM (1 phrases):
+  - non insulin dependent diabetes mellitus
+
+NK (1 phrases):
+  - natural
+
+NM (1 phrases):
+  - neuromuscular
+
+NMES (1 phrases):
+  - non milk extrinsic sugars
+
+NN (1 phrases):
+  - neonatal
+
+NO2 (1 phrases):
+  - nitrogen dioxide
+
+NOS (1 phrases):
+  - not otherwise specified
+
+NOX (1 phrases):
+  - nitrogen oxides
+
+NP (1 phrases):
+  - nasal polyp
+
+NRBC (1 phrases):
+  - nucleated red blood cell
+
+NRY (1 phrases):
+  - y chromosome
+
+NTG (1 phrases):
+  - non toxic goitre
+
+NU (1 phrases):
+  - nucleus
+
+NY (1 phrases):
+  - nystagmus
+
+OA (1 phrases):
+  - osteoarthritis
+
+OCD (1 phrases):
+  - obsessive compulsive disorder
+
+OCP (1 phrases):
+  - oral contraceptive pill
+
+OCT (1 phrases):
+  - optical coherence tomography
+
+OJ (1 phrases):
+  - orange juice
+
+OPD (1 phrases):
+  - other personality disorders
+
+OTC (1 phrases):
+  - over the counter
+
+OU (1 phrases):
+  - both eyes
+
+OX (1 phrases):
+  - optic chiasm
+
+PCG (1 phrases):
+  - precentral gyrus
+
+PCM (1 phrases):
+  - paracoccidioidomycosis
+
+PCT (1 phrases):
+  - platelet crit
+
+PDB (1 phrases):
+  - paget's disease of bone
+
+PDDS (1 phrases):
+  - pervasive developmental disorders
+
+PDN (1 phrases):
+  - diabetic neuropathy
+
+PDW (1 phrases):
+  - platelet distribution width
+
+PEFR (1 phrases):
+  - peak expiratory flow
+
+PEM (1 phrases):
+  - protein energy malnutrition
+
+PG (1 phrases):
+  - pyoderma gangrenosum
+
+PHE (1 phrases):
+  - phenylalanine
+
+PHG (1 phrases):
+  - parahippocampal gyrus
+
+PHL (1 phrases):
+  - phospholipids
+
+PHN (1 phrases):
+  - post herpetic neuralgia
+
+PID (1 phrases):
+  - pelvic inflammatory diseases
+
+PL (1 phrases):
+  - platelet
+
+PLT (1 phrases):
+  - platelet count
+
+PM (1 phrases):
+  - pace maker
+
+PM10 (1 phrases):
+  - particulate matter
+
+PMNL (1 phrases):
+  - polymorphonuclear neutrophils
+
+PNP (1 phrases):
+  - polyneuropathy
+
+PNS (1 phrases):
+  - peripheral nervous system
+
+POAG (1 phrases):
+  - primary open angle glaucoma
+
+POC (1 phrases):
+  - products of conception
+
+PPH (1 phrases):
+  - postpartum haemorrhage
+
+PPS (1 phrases):
+  - postpolio syndrome
+
+PSA (1 phrases):
+  - prostate specific antigen
+
+PSP (1 phrases):
+  - progressive supranuclear palsy
+
+PTA (1 phrases):
+  - peritonsillar abscess
+
+PTD (1 phrases):
+  - preterm delivery
+
+PTG (1 phrases):
+  - parathyroid gland
+
+PTR (1 phrases):
+  - pars triangularis
+
+PTX (1 phrases):
+  - pneumothorax
+
+PUFA (1 phrases):
+  - polyunsaturated fat
+
+PUFAS (1 phrases):
+  - polyunsaturated fatty acids
+
+PVT (1 phrases):
+  - portal vein thrombosis
+
+PW (1 phrases):
+  - pulse wave
+
+PWV (1 phrases):
+  - pulse wave velocity
+
+PY (1 phrases):
+  - polyomavirus
+
+QC (1 phrases):
+  - quality control
+
+QI (1 phrases):
+  - quality indicator
+
+QOS (1 phrases):
+  - quality of sleep
+
+QT (1 phrases):
+  - cardiac output
+
+QUI (1 phrases):
+  - quantitative ultrasound index
+
+R (1 phrases):
+  - right
+
+R2 (1 phrases):
+  - variation
+
+RB (1 phrases):
+  - riboflavin
+
+RBC (1 phrases):
+  - red blood cell
+
+RDS (1 phrases):
+  - retinal detachments
+
+RET (1 phrases):
+  - reticulocyte
+
+RH (1 phrases):
+  - right hemisphere
+
+RHA (1 phrases):
+  - rheumatoid arthritis
+
+RHO (1 phrases):
+  - correlation
+
+RHR (1 phrases):
+  - resting heart rate
+
+RHS (1 phrases):
+  - reticulohistiocytic system
+
+RLS (1 phrases):
+  - restless leg syndrome
+
+RNFLT (1 phrases):
+  - retinal nerve fibre layer thickness
+
+ROA (1 phrases):
+  - radiographic osteoarthritis
+
+RP (1 phrases):
+  - retained placenta
+
+RPE (1 phrases):
+  - retinal pigment epithelium
+
+RQ (1 phrases):
+  - questionnaire
+
+RT (1 phrases):
+  - radiation
+
+RVEDV (1 phrases):
+  - right ventricular end diastolic volume
+
+RVEF (1 phrases):
+  - right ventricular ejection fraction
+
+RW (1 phrases):
+  - red wine
+
+RX (1 phrases):
+  - prescription
+
+S-FA (1 phrases):
+  - saturated fatty acids
+
+S4 (1 phrases):
+  - segment 4
+
+S5 (1 phrases):
+  - segment 5
+
+S6 (1 phrases):
+  - segment 6
+
+SAB (1 phrases):
+  - spontaneous abortion
+
+SAH (1 phrases):
+  - subarachnoid haemorrhage
+
+SAR (1 phrases):
+  - sarcoidosis
+
+SB (1 phrases):
+  - spina bifida
+
+SBP (1 phrases):
+  - systolic blood pressure
+
+SCA (1 phrases):
+  - sex chromosome abnormalities
+
+SCAT (1 phrases):
+  - subcutaneous adipose tissue
+
+SCF (1 phrases):
+  - subcutaneous fat
+
+SCH (1 phrases):
+  - schizophrenia
+
+SCP (1 phrases):
+  - superior cerebellar peduncle
+
+SEM (1 phrases):
+  - eye movements
+
+SFG (1 phrases):
+  - superior frontal gyrus
+
+SK (1 phrases):
+  - seborrhoeic keratosis
+
+SLE (1 phrases):
+  - systemic lupus erythematosus
+
+SLF (1 phrases):
+  - superior longitudinal fasciculus
+
+SMG (1 phrases):
+  - supramarginal gyrus
+
+SMR (1 phrases):
+  - severe mental retardation
+
+SMS (1 phrases):
+  - sphingomyelins
+
+SN (1 phrases):
+  - substantia nigra
+
+SNHL (1 phrases):
+  - sensorineural hearing loss
+
+SNR (1 phrases):
+  - signal to noise ratio
+
+SOB (1 phrases):
+  - shortness of breath
+
+SOS (1 phrases):
+  - speed of sound
+
+SPL (1 phrases):
+  - superior parietal lobule
+
+SRT (1 phrases):
+  - speech reception threshold
+
+SSSS (1 phrases):
+  - staphylococcal scalded skin syndrome
+
+STG (1 phrases):
+  - superior temporal gyrus
+
+SU (1 phrases):
+  - sucrose
+
+SV (1 phrases):
+  - stroke volume
+
+SX (1 phrases):
+  - surgery
+
+SY (1 phrases):
+  - syphilis
+
+T&A (1 phrases):
+  - tonsils and adenoids
+
+T-FA (1 phrases):
+  - trans fatty acids
+
+T1D (1 phrases):
+  - type 1 diabetes
+
+T2D (1 phrases):
+  - type 2 diabetes
+
+T6 (1 phrases):
+  - 6 months
+
+T9 (1 phrases):
+  - thoracic
+
+TD (1 phrases):
+  - thiamine deficiency
+
+TFM (1 phrases):
+  - total fat mass
+
+TG (1 phrases):
+  - triglyceride
+
+TGN (1 phrases):
+  - trigeminal nerve
+
+TGS (1 phrases):
+  - triglycerides
+
+THR (1 phrases):
+  - target heart rate
+
+TI (1 phrases):
+  - tubulo interstitial
+
+TIN (1 phrases):
+  - tubulo interstitial nephritis
+
+TLM (1 phrases):
+  - total lean mass
+
+TM (1 phrases):
+  - tympanic membrane
+
+TMAX (1 phrases):
+  - temperature maximum
+
+TMT (1 phrases):
+  - trail making test
+
+TMV (1 phrases):
+  - total macular volume
+
+TN (1 phrases):
+  - total nitrogen
+
+TOX (1 phrases):
+  - toxoplasma gondii
+
+TPL (1 phrases):
+  - total phospholipids
+
+TT (1 phrases):
+  - genotype
+
+TY (1 phrases):
+  - tyrosine
+
+U.C. (1 phrases):
+  - ulcerative colitis
+
+UC (1 phrases):
+  - umbilical cord
+
+UF (1 phrases):
+  - uncinate fasciculus
+
+UK (1 phrases):
+  - united kingdom
+
+UL (1 phrases):
+  - upper limb
+
+URIS (1 phrases):
+  - upper respiratory infections
+
+URT (1 phrases):
+  - upper respiratory tract
+
+UTI (1 phrases):
+  - urinary tract
+
+UV-B (1 phrases):
+  - ultraviolet radiation
+
+V-CSF (1 phrases):
+  - ventricular cerebrospinal fluid
+
+V1 (1 phrases):
+  - vascular
+
+VAT (1 phrases):
+  - visceral adipose tissue
+
+VB (1 phrases):
+  - vertebrobasilar
+
+VC (1 phrases):
+  - vitamin c
+
+VD (1 phrases):
+  - vitamin d
+
+VDD (1 phrases):
+  - vitamin d deficiency
+
+VE (1 phrases):
+  - vitamin e
+
+VF (1 phrases):
+  - visceral fat
+
+VH (1 phrases):
+  - viral hepatitis
+
+VHF (1 phrases):
+  - viral haemorrhagic fever
+
+VM (1 phrases):
+  - viral meningitis
+
+VP (1 phrases):
+  - ventral
+
+VP7 (1 phrases):
+  - glycoprotein
+
+VPA (1 phrases):
+  - vigorous physical activity
+
+VR (1 phrases):
+  - ventricular rate
+
+VST (1 phrases):
+  - ventral striatum
+
+VTE (1 phrases):
+  - venous thromboembolic disease
+
+VV (1 phrases):
+  - varicose veins
+
+VVI (1 phrases):
+  - ventricular
+
+VZV (1 phrases):
+  - varicella zoster virus
+
+WBC (1 phrases):
+  - white blood cell
+
+WBCS (1 phrases):
+  - white blood cells
+
+WBQ (1 phrases):
+  - well being questionnaire
+
+WI (1 phrases):
+  - water intake
+
+WL (1 phrases):
+  - workload
+
+WMHS (1 phrases):
+  - white matter hyperintensities
+
+WR (1 phrases):
+  - white rice
+
+WS (1 phrases):
+  - syndrome
+
+WT (1 phrases):
+  - waiting time
+
+YF (1 phrases):
+  - yellow fever
+
+YOB (1 phrases):
+  - year of birth
+
+Z0 (1 phrases):
+  - impedance
+
+ZD (1 phrases):
+  - zinc deficiency

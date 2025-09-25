@@ -1,0 +1,103 @@
+Column Data Types
+==================================================
+
+FIELD.TXT COLUMNS:
+  field_id: int64
+  title: object
+  availability: int64
+  stability: int64
+  private: int64
+  value_type: int64
+  base_type: int64
+  item_type: int64
+  strata: int64
+  instanced: int64
+  arrayed: int64
+  sexed: int64
+  units: object
+  main_category: int64
+  encoding_id: int64
+  instance_id: int64
+  instance_min: int64
+  instance_max: int64
+  array_min: int64
+  array_max: int64
+  notes: object
+  debut: datetime64[ns]
+  version: datetime64[ns]
+  num_participants: int64
+  item_count: int64
+  showcase_order: float64
+  cost_do: int64
+  cost_on: int64
+  cost_sc: int64
+
+CATEGORY.TXT COLUMNS:
+  category_id: int64
+  title: object
+  availability: int64
+  group_type: int64
+  descript: object
+  notes: object
+
+ENCODING.TXT COLUMNS:
+  encoding_id: int64
+  title: object
+  availability: int64
+  coded_as: int64
+  structure: int64
+  num_members: int64
+  descript: object
+
+FINAL FIELDS COLUMNS:
+  field_id: Int64
+  title: object
+  acr_abb: string
+  category_id: int64
+  category_title: object
+  availability: Int64
+  stability: Int64
+  private: Int64
+  value_type: Int64
+  base_type: Int64
+  item_type: Int64
+  strata: Int64
+  instanced: Int64
+  arrayed: Int64
+  sexed: Int64
+  units: object
+  encoding_id: Int64
+  encoding_title: object
+  encoding_coded_as: Int64
+  encoding_structure: Int64
+  encoding_num_members: Int64
+  encoding_has_hierarchy: bool
+  encoding_system: object
+  encoding_description: object
+  instance_id: Int64
+  instance_min: Int64
+  instance_max: Int64
+  array_min: Int64
+  array_max: Int64
+  notes: object
+  debut: datetime64[ns]
+  version: datetime64[ns]
+  num_participants: Int64
+  item_count: Int64
+  showcase_order: float64
+  cost_do: Int64
+  cost_on: Int64
+  cost_sc: Int64
+  category_notes: object
+
+FIELD CODEBOOK COLUMNS:
+  field_id: Int64
+  title: string
+  acr_abb: string
+  encoding_id: Int64
+  coding: string
+  meaning: string
+  node_id: Int64
+  parent_id: Int64
+  selectable: Int8
+  encoding_system: string

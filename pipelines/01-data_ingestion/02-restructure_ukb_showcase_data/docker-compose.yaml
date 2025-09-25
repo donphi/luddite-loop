@@ -6,14 +6,48 @@ services:
     working_dir: /app
     volumes:
       # Scripts mounted from local ./scripts directory
+      - ./scripts/process_showcase_meta.py:/app/scripts/process_showcase_meta.py:ro  # Add this line
       - ./scripts:/scripts:ro
-      # Input data files
       - ../01-ingest_ukb_showcase_data/input:/input:ro
-      # Output directory for generated files
-      - ./output:/output
+      - ./output-meta:/output
     environment:
       - PYTHONUNBUFFERED=1
     command: python /scripts/process_showcase.py
+
+  ukb-meta-processor-gpu:
+    build: .
+    container_name: ukb-meta-processor-gpu
+    runtime: nvidia
+    volumes:  # ADD THESE LINES
+      - ./scripts:/scripts:ro
+      - ../01-ingest_ukb_showcase_data/input:/input:ro
+      - ./output-meta:/output
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - PYTHONUNBUFFERED=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: python /scripts/process_showcase_meta.py
+
+  ukb-meta-processor:
+    build: .
+    container_name: ukb-meta-processor
+    working_dir: /app
+    volumes:
+      # Scripts mounted from local ./scripts directory
+      - ./scripts:/scripts:ro
+      # Input data files (needs meta inventory file)
+      - ../01-ingest_ukb_showcase_data/input:/input:ro
+      # Output directory for generated files
+      - ./output-meta:/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python /scripts/process_showcase_meta.py
 
   # Field category validation - checks for data errors
   field-category-check:

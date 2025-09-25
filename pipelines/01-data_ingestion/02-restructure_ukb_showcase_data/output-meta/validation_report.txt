@@ -1,0 +1,677 @@
+UK Biobank Data Processing Validation Report
+==================================================
+
+CATEGORY LINKAGE SUMMARY
+------------------------------
+Total fields processed: 10,489
+Fully matched fields: 10,363 (98.8%)
+No category (null/empty): 0 (0.0%)
+Unmatched category IDs: 126 (1.2%)
+
+ABBREVIATION MATCHING (Meta-Inventory)
+------------------------------
+Fields with Meta-Inventory abbreviations: 7,314 (69.7%)
+
+DICTIONARY COVERAGE
+------------------------------
+Unique encodings referenced by fields: 656
+Dictionary rows available: 13,646
+
+Encoding IDs used (with system guess):
+ encoding_id                                                                 encoding_title  encoding_system  encoding_num_members
+           0                                                                    NOT-ENCODED            Other                  1024
+           1                                              Flag indicating Yes/True/Presence  YesTruePresence                     1
+           2                                                                     Employment       Employment                 26408
+           3                                                                         Cancer           Cancer                    89
+           4                                                                     Treatments        Treatment                  6745
+           5                                                                      Operation        Operation                   270
+           6                                                             Non-cancer Illness NonCancerIllness                   474
+           7                                                      Yes No dichotomous choice            YesNo                     2
+           8                                                                 Calendar Month    CalendarMonth                    12
+           9                                                                            Sex            Other                     2
+          10                                                              Assessment Centre            Other                    27
+          12                                                                    ACE boolean            Other                     2
+          13                                                          event-time-exceptions            Other                     2
+          14                                                              event-time-coding            Other                     4
+          15                                                                    SIN-volumes            Other                     5
+          16                                                                     PM choices            Other                     5
+          17                                 Use of Next button in touchscreen hearing test            Other                     1
+          18                                                    Prospective memory grouping            Other                     3
+          19                                                                          ICD10            ICD10                 19190
+          21                                                              Yes No or Unknown            Other                     3
+          22                                                                   ACE-coding22            Other                     3
+          23                                                                   ACE-coding23            Other                     3
+          24                                                                   ACE-coding24            Other                     2
+          27                                                          Yes No or Unsure (=2)            Other                     3
+          29                                                              Yes No or Abandon            Other                     3
+          30                                                                   ACE-coding30            Other                     3
+          31                                                                   ACE-coding31            Other                     3
+          32                                                                   ACE-coding32            Other                     2
+          33                                                                   ACE-coding33            Other                     3
+          34                                                                   ACE-coding34            Other                     2
+          35                                                                   ACE-coding35            Other                     5
+          36                                                                   ACE-coding36            Other                     3
+          37                                                            age-year exceptions            Other                     2
+          42                                                                 Not-applicable            Other                     2
+          47                                                             Post-hoc coding 47            Other                    41
+          49                                                             Post-hoc coding 49            Other                    15
+          50                                                             Post-hoc coding 50            Other                    14
+          51                                                             Post-hoc coding 51            Other                    11
+          54                                                             Post-hoc coding 54            Other                    14
+          55                                      Quality control for carotid ultrasound QC            Other                     2
+          56                                                             Post-hoc coding 56            Other                    14
+          59                                                             Post-hoc coding 59            Other                    17
+          60                                                             Post-hoc coding 60            Other                    11
+          71                                                             Post-hoc coding 71            Other                    11
+          73                                                                    Day of Week            Other                     7
+          74                                                             Supplement options            Other                    21
+          75                                                      Reasons for atypical diet            Other                     4
+          76                                                           Type of special diet            Other                     6
+          77                                      Types of spread used on bread or crackers            Other                    37
+          78                                             Types of spreads, sauces, dips etc            Other                    19
+          79                                                                 Types of meals            Other                     5
+          80                                               Types of fat/oil used in cooking            Other                    44
+          81                                                                  Type of bread            Other                     5
+          82                                                       Size of wine glass drunk            Other                     3
+          83                                        Thickness of spreading butter/margarine            Other                     3
+          84                                                   Liquid used to make porridge            Other                     2
+          85                                                           Type of yogurt eaten            Other                     2
+          86                                                            Ingredients in soup            Other                     6
+          87                                                                           ICD9             ICD9                 13710
+          89                                                             Country (of birth)            Other                   201
+          90                                                             Status of activity            Other                     4
+          91                                                   Urban/rural area definitions            Other                    17
+          92                                                 Card faces used by touchscreen            Other                    25
+          93                                                     Accelerometer data quality            Other                     3
+          96                                                                Scale of liking            Other                    11
+          97                                                        Unmatched case-controls            Other                     2
+         100                                                          Pass/Fail test result            Other                     2
+         101                                          Result of a pass/fail/not-tested test            Other                     3
+         102                                                               inclusion status            Other                     2
+         103                                                       Neurobiomarker sample QC            Other                     3
+         114                                                              Difficulty levels            Other                     7
+         123                                                               UK Biobank staff            Other                  1231
+         127                                                                   Common tasks            Other                    10
+         135                                                                      Intervals            Other                     6
+         140                                      Myocardial strain estimation quality flag            Other                     4
+         149                                                              Effect of problem            Other                     4
+         155                                                   Unified recoding for DETNCAT            Other                     8
+         156                                                  Unified recoding for ADMISTAT            Other                     7
+         165                                                         Assay correction level            Other                     3
+         168                                                       Days-in-week frequencies            Other                     5
+         169                                                               Blood haplotypes            Other                     6
+         170                                                               Map co-ordinates            Other                     1
+         192                                         Difficulty levels, including NA option            Other                     8
+         196                                         Result flags for sodium in urine assay            Other                     2
+         197                                      Result flags for potassium in urine assay            Other                     2
+         198                                   Result flags for microalbumin in urine assay            Other                     1
+         199                         Result flags for (enzymatic) creatinine in urine assay            Other                     1
+         200                                                         Urine analysis devices            Other                     1
+         201                                                        HES coding for CATEGORY            Other                    14
+         212                                           HES coding for DELPREAN and DELPOSAN            Other                     9
+         213                                                         HES coding for BIRORDR            Other                    10
+         214                                                         HES coding for BIRWEIT            Other                     2
+         215                                                        HES coding for DELCHANG            Other                     8
+         216                                                         HES coding for DELMETH            Other                    11
+         217                                            HES coding for DELPLAC and DELINTEN            Other                    10
+         218                                                          HES coding for GESTAT            Other                     1
+         219                                                         HES coding for BIRSTAT            Other                     5
+         220                                                        HES coding for DELONSET            Other                     7
+         221                                                         HES coding for NUMBABY            Other                     8
+         223                                                         HES coding for BIRESUS            Other                     8
+         224                                                         HES coding for SEXBABY            Other                     5
+         225                                                         HES coding for DELSTAT            Other                     5
+         227                                                         HES coding for CARERSI            Other                     3
+         228                                                         HES coding for MENTCAT            Other                     7
+         231                                                        HES coding for LEGLSTAT            Other                    29
+         238                                                         HES coding for EPITYPE            Other                     6
+         239                                             HES coding for PCTCODE and GPPRPCT            Other                   417
+         240                                                          OPCS4 operation codes            OPCS4                 11288
+         259                                                          OPCS3 operation codes            Other                  1902
+         261                                                       Death information source            Other                     7
+         262                                                      Cancer information source            Other                     8
+         263                                                         HES information source            Other                    18
+         264                                                  Unified recoding for ADMIMETH            Other                    42
+         265                                                  Unified recoding for ADMISORC            Other                    51
+         266                                                  Unified recoding for CLASSPAT            Other                    13
+         267                                                   Unified recoding for DISDEST            Other                    52
+         268                                                   Unified recoding for DISMETH            Other                    19
+         269                                                  Unified recoding for TRETSPEF            Other                   211
+         270                                                  Unified recoding for MAINSPEF            Other                    96
+         271                                                  Unified recoding for INTMANAG            Other                     7
+         272                                                             Outcome date flags            Other                     1
+         275                                                                       Protocol            Other                     2
+         300                                                       Source of outcome report            Other                     7
+         305                                              Reason for assay correction level            Other                     5
+         339                                                                Degree bothered            Other                     4
+         400                                                    Abdominal MRI image quality            Other                     9
+         401                                                        Thigh measurement error            Other                     4
+         402                                                                    Test status            Other                     1
+         403                                                       Abdominal VAT/ASAT error            Other                     2
+         408                                                                     Pain level            Other                    12
+         439                                                                  Not performed            Other                     1
+         470                                  Measurement method for automated-only devices            Other                     3
+         479                                                 Completion status with timeout            Other                     3
+         480                         Device used to enter online occupational questionnaire            Other                     7
+         485                                                            Invalid timing flag            Other                     1
+         486                                                                      gapcoding            Other                    10
+         487                                                            period over a month            Other                     1
+         488                                                            shorter than a year            Other                     1
+         489                                                                shiftwork state            Other                     3
+         493                                                  Occupational exposure choices            Other                     4
+         494                                                            Lumped hours worked            Other                     4
+         496                                                                Tobacco smoking            Other                     5
+         497                    Job occupation groupings used for online work questionnaire            Other                   995
+         498                                                              Completion status            Other                     2
+         500                                  Pattern dictionary used for symbol digit test            Other                    34
+         502                                                             TAF answer-set 502            Other                     4
+         503                                                             TAF answer-set 503            Other                     3
+         504                                                             TAF answer-set 504            Other                     5
+         505                                                             TAF answer-set 505            Other                     6
+         506                                                             TAF answer-set 506            Other                     5
+         507                                                             TAF answer-set 507            Other                     6
+         508                                                             TAF answer-set 508            Other                     2
+         509                                                             TAF answer-set 509            Other                     7
+         510                                                             TAF answer-set 510            Other                     5
+         511                                                             TAF answer-set 511            Other                     2
+         513                                                             TAF answer-set 513            Other                     2
+         514                                                             TAF answer-set 514            Other                     5
+         515                                                             TAF answer-set 515            Other                     5
+         516                                                             TAF answer-set 516            Other                     4
+         517                                                             TAF answer-set 517            Other                     1
+         518                                                             TAF answer-set 518            Other                     4
+         519                                                             TAF answer-set 519            Other                     6
+         520                                                             TAF answer-set 520            Other                     3
+         521                                                             TAF answer-set 521            Other                     6
+         522                                                             TAF answer-set 522            Other                     6
+         523                                                             TAF answer-set 523            Other                     6
+         524                                                             TAF answer-set 524            Other                     4
+         526                                                             TAF answer-set 526            Other                     6
+         527                                                             TAF answer-set 527            Other                     6
+         528                                                             TAF answer-set 528            Other                     3
+         529                                                             TAF answer-set 529            Other                     6
+         530                                                             TAF answer-set 530            Other                     3
+         531                                                             TAF answer-set 531            Other                     7
+         532                                                             TAF answer-set 532            Other                     6
+         533                                                             TAF answer-set 533            Other                     4
+         534                                                             TAF answer-set 534            Other                     6
+         535                                                             TAF answer-set 535            Other                     4
+         536                                                             TAF answer-set 536            Other                     4
+         537                                                             TAF answer-set 537            Other                     8
+         538                                                             TAF answer-set 538            Other                     7
+         548                                                          Level of interference            Other                    12
+         584                                                           Prefer not to answer            Other                     1
+         586                                                     Special undetermined dates            Other                     3
+         592                                                        Marker for pending data            Other                     1
+         603                                                 COVID-19 antibody study result            Other                     3
+         616                                                                Happiness level            Other                    12
+         620                                                                     Distension            Other                    12
+         634                                                   Status with uncertain option            Other                     3
+         656                                                          Error indicator codes            Other                     7
+         682                                                                  Kinship level            Other                     4
+         691                                                                 Date responses            Other                     2
+         701                                                    Aids to questionnaire entry            Other                     6
+         744                                                                    Antibiotics            Other                  1025
+         777                                                           Weekday after Monday            Other                     7
+         778                                                 Brain MRI acquisition protocol            Other                     5
+         782                                              Reasons for lack of a measurement            Other                     8
+         783                                                   COVID-19 lateral flow device            Other                     2
+         790                                       Completion status with no-data indicator            Other                     2
+         819                                                             lumped event dates            Other                     6
+         871                                                    Frequency within week/month            Other                     8
+         909                                                       Measurement not returned            Other                     1
+         913                                                                 Days with pain            Other                    12
+         946                                                       Cigarette smoking amount            Other                     3
+         947                      Reason for exclusion from genetic relatedness calculation            Other                     2
+         950                                                           Frequency of effects            Other                     6
+         957                                                                 Working status            Other                     3
+        1001                                                 initial ethnic background tree            Other                    22
+        1002                                                                Ethnic Grouping            Other                     1
+        1007                                                            Email access status            Other                     2
+        1010                                              Illnesses, touchscreen self-entry            Other                    19
+        1018                                                                   Botheredness            Other                     5
+        1021                                                                      Yes/No/NA            Other                     3
+        1022                                                                  Yes/No/NA/PNA            Other                     4
+        1101                                                          Genomic data problems            Other                     1
+        1180                                                           Water hardness level            Other                     4
+        1181                                                                 Water hardness            Other                     2
+        1182                                                     Water hardness data origin            Other                     2
+        1200                                                                 ACE-coding1200            Other                    23
+        1204                                                                 ACE-coding1204            Other                    16
+        1205                                                                 ACE-coding1205            Other                     2
+        1206                                                                 ACE-coding1206            Other                     2
+        1207                                                                 ACE-coding1207            Other                     1
+        1208                                                                 ACE-coding1208            Other                     1
+        1209                                                                 ACE-coding1209            Other                     1
+        1210                                                                 ACE-coding1210            Other                     1
+        1220                                                                      Main home            Other                     7
+        1221                                                             Rooms in main home            Other                    11
+        1222                                                          Number of individuals            Other                    11
+        1223                                               Number of individuals (extended)            Other                    13
+        1224                                                             Proportion of time            Other                     6
+        1225                                                        Number of days per week            Other                     6
+        1227                                             Length of time with COVID sufferer            Other                     6
+        1228                                                              Employment status            Other                    11
+        1229                                                            Main transportation            Other                    12
+        1230                                                              Key worker status            Other                    10
+        1231                                                                  Care provided            Other                     4
+        1273                                                                Date conditions            Other                     2
+        1313                                                       Masked date for location            Other                     1
+        1317                                                        Scanner position issues            Other                     1
+        1342                                                    Variability of home address            Other                     3
+        1343                                          Inability to assign grid co-ordinates            Other                     1
+        1344                                                   Boolean plus do not remember            Other                     3
+        1345                                                Invalid self-reported test date            Other                     2
+        1371                                           Mode of last contact with UK Biobank            Other                     3
+        1400                                                          Source of test result            Other                     4
+        1401                                                         Mental health problems            Other                    18
+        1402                                                     Refractometer status codes            Other                     7
+        1405                                                          Depression substances            Other                     4
+        1406                                                           Depression therapies            Other                     3
+        1407                                      Manifestations of high or irritable state            Other                     9
+        1414                                                          Addiction to medicine            Other                     5
+        1415                                                             Types of addiction            Other                     3
+        1422                                                           Methods of self-harm            Other                     7
+        1423                                                        Treatment for self-harm            Other                     6
+        1439                                                                Time conditions            Other                     2
+        1506                                                                  Spirometry QC            Other                     3
+        1529                                                           Biochemistry aliquot            Other                     5
+        1543                                                               Levels of myopia            Other                     3
+        1642                                                       Reason date is uncertain            Other                     1
+        1833                                                                   WES tranches            Other                     6
+        1854                                                                    Test result            Other                     2
+        1862                                                                Diagnosis route            Other                     6
+        1900                                                       COVID-19 number of times            Other                     3
+        1901                                                      COVID-19 diagnosis method            Other                     7
+        1902                                             Extent of improvement or worsening            Other                     7
+        1903                                          Number of period/times of occurrences            Other                     3
+        1904                                                     Time of day mood was worse            Other                     5
+        1905                                                             Change in appetite            Other                     5
+        1906                                                       Difficulty coping levels            Other                     4
+        1907                                                          Number of occurrences            Other                     3
+        1908                                                     Antidepressant medications            Other                     9
+        1909                                                                 Degree of help            Other                     4
+        1910                                                          Panic attack symptoms            Other                    15
+        1911                                                 Length of time to 5 years plus            Other                     8
+        1912                                                           Too many to remember            Other                     2
+        1913                                         Event is a result of medical condition            Other                     5
+        1914                                                       Mental health conditions            Other                    11
+        1915                                                              Dependency levels            Other                     4
+        1916                           Methods of controlling body shape or weight control             Other                     9
+        1917                                                  Boolean weekly event plus PNA            Other                     3
+        1918                                             Occurrence of event with frequency            Other                     4
+        1919                                                         Length of time, months            Other                     4
+        1920                                              Times when overeating experienced            Other                     5
+        1921                                                        Frequency of occurrence            Other                     5
+        1922                                                      Actions whilst overeating            Other                     7
+        1923                                                 Length of time, days and weeks            Other                     6
+        1924                                           Number of occurrences including zero            Other                     4
+        1926                                                            Number in household            Other                     5
+        1927                                         Frequency scale in days, weeks, months            Other                     7
+        1928                                                           Employment situation            Other                    12
+        1929                                                                Retirement year            Other                     4
+        1930                                                                Frequency scale            Other                     5
+        1931                                                                Agreement scale            Other                     5
+        1932                                             Event occurs in specific situation            Other                     5
+        1933                                                   Timing of event in last year            Other                     4
+        1934                                                             Extent of feelings            Other                     7
+        1935                                                              Proportion of day            Other                     6
+        1936                                                        Frequency scale in days            Other                     5
+        1937                                                                 Trueness scale            Other                     6
+        1938                       Number of occurrences including no, once, more than once            Other                     4
+        1939                                                       Walking problem severity            Other                     5
+        1940                                               Self-care problem severity today            Other                     5
+        1941                                        Usual activities problem severity today            Other                     5
+        1942                                                            Pain severity today            Other                     5
+        1943                                                         Anxiety severity today            Other                     5
+        1944                                                                  Weight change            Other                     6
+        1945                                                 Length of time to 2 years plus            Other                     7
+        1946                                                               Degree of effect            Other                     5
+        1947                                            Frequency scale in weeks and months            Other                     6
+        1948                                                               Number of drinks            Other                     6
+        1949                                        Frequency scale, daily, weekly, monthly            Other                     6
+        1950                                                                Timing of event            Other                     4
+        1951                                                                Number of times            Other                     6
+        1952                                      Frequency scale in days, weeks and months            Other                     6
+        1953                                                   Sports and social activities            Other                     7
+        1954                                             Mental health conditions, detailed            Other                    26
+        1955                                                                  Lowest weight            Other                     3
+        1956                                                    Depression substances taken            Other                     5
+        1957                                                  Non-drug depression therapies            Other                     4
+        1958                                        Manifestations of mania or irritability            Other                    10
+        1959                                                              Self-harm methods            Other                     7
+        1965                                                              Lost to follow-up            Other                     5
+        1970                                                              Record providence            Other                     9
+        1990                                                               Trail completion            Other                     1
+        2171                                  Source(s) of first reports of health outcomes            Other                     8
+        2226                                                       LIMS data transfer route            Other                     3
+        2301                                                                Spectrometer ID            Other                     8
+        2302                                                                       QC flags            Other                     2
+        2310                                                         QC flags (nightingale)            Other                    11
+        2380                                                            Sequencing provider            Other                     4
+        2382                                                                      WGS Batch            Other                    26
+        2520                                   Frequency scale using days, weeks and months            Other                     6
+        2521                                                                 Activity state            Other                     4
+        2522                                                                Part of the day            Other                     8
+        2525                       Responses to (non-imaging) assessment centre invitations            Other                     5
+        2526                                                      Heart-rate data type used            Other                     2
+        2527                                                 Reason cine file not generated            Other                     9
+        2528                                          HHV-6 Result from TaqMan assay screen            Other                     5
+        2531                                                                      Model set            Other                     5
+        2535                                          Reasons for lack of grid co-ordinates            Other                     3
+        2536                                                           Problem scoring test            Other                     1
+        2541                                                QC score - Short Axis Heart MRI            Other                     3
+        2542                                                         Interval within day #1            Other                     7
+        2543                                                                      Tiredness            Other                     5
+        2544                                                          Time intervals in day            Other                     7
+        2545                                                          Time of day intervals            Other                     6
+        2546                                                     Morning/Evening preference            Other                     6
+        2547                                                              Shift work status            Other                     7
+        2548                                                               Problem severity            Other                     5
+        2549                                                               Well-being scale            Other                     5
+        2550                                                               Likelihood scale            Other                     5
+        2551                                      Likelihood scale including not-applicable            Other                     6
+        2552                                                           Varies significantly            Other                     2
+        2553                                                                 Good/Bad scale            Other                     5
+        2554                                        Frequency of occurrence, times per week            Other                     5
+        2555 Frequency scale in days, weeks and months; with do-not-know and not-applicable            Other                     8
+        2556                                                  Number of times of occurrence            Other                     8
+        2557                                                               Scale of problem            Other                     5
+        2558         Frequency of occurrence, times per week including do-not-know/remember            Other                     6
+        2559                                Likelihood scale including do-not-know/remember            Other                     6
+        2560                                  Good/Bad scale including do-not-know/remember            Other                     6
+        2561                                  Change in sleep hours since COVID-19 pandemic            Other                     8
+        2562                                    Reasons for change in number of sleep hours            Other                     9
+        2563                                                      Length of time in minutes            Other                     6
+        2564                                                                Waking up early            Other                     7
+        2565                                                               Number of nights            Other                     6
+        2566                                                                   Rating scale            Other                     6
+        2567                                                       Degree to which affected            Other                     6
+        2568                                             Length of time problem experienced            Other                     9
+        2569                              Situations in which participant experiences event            Other                     8
+        2570                                  Frequency scale in days, weeks, months, years            Other                    10
+        2571                                                                 Snoring volume            Other                     5
+        2572                   Frequency scale in days, weeks, months including do-not-know            Other                     7
+        2573                                     Yes/No/Not applicable/Prefer not to answer            Other                     4
+        2574                                Frequency of driving accident due to sleepiness            Other                     7
+        2575                  Degree to which affected ranging from not at all to extremely            Other                     5
+        2576                                            Frequency - number of days per week            Other                     5
+        2577                                          Part of the day - expanded categories            Other                     7
+        2578                                                               Degree of relief            Other                     4
+        2579                                      Frequency scale in days per week or month            Other                     9
+        2580                                             Scale of chance of event occurring            Other                     5
+        2581                    Scale of chance of event occurring including not-applicable            Other                     6
+        2582                                          Rating scale for severity of problem             Other                     5
+        2583                                                        Number of full siblings            Other                    10
+        2584                                     Frequency of using a sleep-tracking device            Other                     7
+        2585                                                Frequency during the past month            Other                     6
+        2586                                              Length of time, minutes and hours            Other                     7
+        2587                                  Frequency of exercising during the past month            Other                     7
+        2588                                 Part of the day including Varies significantly            Other                     7
+        2589                                                         Screen time before bed            Other                     7
+        2590                                                 Number of servings of caffeine            Other                     2
+        2730                                                                    Onset speed            Other                     4
+        3002                                                        Headache pain frequency            Other                     5
+        3003                                                              Symptoms severity            Other                     5
+        3004                                                      Mobility problem severity            Other                     5
+        3005                                                               Anxiety severity            Other                     5
+        3006                                                           Depression frequency            Other                     5
+        3008                                             Location of pain that bothers most            Other                    14
+        3012                                     Level of difficulty experienced with tasks            Other                     5
+        3013                                             Length of time suffering with pain            Other                     5
+        3014                                               Scale of pain over last 24 hours            Other                     4
+        3015                     Level of pain relief provided by treatments or medications            Other                    13
+        3017                                                                        DNK/PNA            Other                     2
+        3018                                  Length of time since headaches began or ended            Other                     3
+        3019                                                     Self-care problem severity            Other                     5
+        3020                                              Usual activities problem severity            Other                     5
+        3021                                                                  Pain severity            Other                     5
+        3022                                              Location of pain during past week            Other                    21
+        3050                                                     Reason for concluding test            Other                     4
+        4917                                                                  Reportability            Other                     5
+        4982                                                          Block count exception            Other                     1
+        5001                                                                  Answer to FI1            Other                     7
+        5002                                                                 Answers to FI2            Other                     7
+        5003                                                                 Answers to FI3            Other                     7
+        5004                                                                 Answers to FI4            Other                     7
+        5005                                                                 Answers to FI5            Other                     7
+        5006                                                                 Answers to FI6            Other                     7
+        5007                                                                 Answers to FI7            Other                     7
+        5008                                                                 Answers to FI8            Other                     7
+        5009                                                                 Answers to FI9            Other                     7
+        5010                                                                Answers to FI10            Other                     7
+        5011                                                                Answers to FI11            Other                     7
+        5013                                                                Answers to FI13            Other                     7
+        5014                                                                Answers to FI14            Other                     7
+        5015           List of possible answers to online fluid intelligence question FI12.            Other                     8
+        5159                                                                     Mood scale            Other                     5
+        5160                                                            Input device/method            Other                     5
+        5178                                                                Pointing method            Other                     5
+        6312                                                                Tower responses            Other                     6
+        6314                                                            Word/picture groups            Other                   340
+        6315                                                  Position of picture on screen            Other                     4
+        6332                                                              Pattern selection            Other                     8
+        6361                                                           Symbol digit failure            Other                     1
+        6448                                                   Paired associates for "huge"            Other                     5
+        6459                                                  Paired associates for "happy"            Other                     5
+        6470                                               Paired associates for "tattered"            Other                     5
+        6481                                                    Paired associates for "old"            Other                     5
+        6492                                                   Paired associates for "long"            Other                     5
+        6503                                                    Paired associates for "red"            Other                     5
+        6514                                                Paired associates for "sulking"            Other                     5
+        6525                                                 Paired associates for "pretty"            Other                     5
+        6536                                                   Paired associates for "tiny"            Other                     5
+        6547                                                    Paired associates for "new"            Other                     5
+        7310                                                              Initial infection            Other                     7
+        7618                                                                     Antigen QC            Other                     2
+        7667                                                Signal to noise ratio exclusion            Other                     1
+        9564                      Method of returning questionnaire responses to UK Biobank            Other                     2
+       22000                                                               Genotyping array            Other                   108
+      100001                                                        WEBDIET-coding100000001            Other                     3
+      100002                                                        WEBDIET-coding100000002            Other                     5
+      100003                                                        WEBDIET-coding100000003            Other                     4
+      100004                                                        WEBDIET-coding100000004            Other                     5
+      100005                                                        WEBDIET-coding100000005            Other                     7
+      100006                                                        WEBDIET-coding100000006            Other                     7
+      100007                                                        WEBDIET-coding100000007            Other                     6
+      100008                                                        WEBDIET-coding100000008            Other                     5
+      100009                                                        WEBDIET-coding100000009            Other                     2
+      100010                                                        WEBDIET-coding100000010            Other                     2
+      100011                                                        WEBDIET-coding100000011            Other                     8
+      100012                                                        WEBDIET-coding100000012            Other                     8
+      100013                                                        WEBDIET-coding100000013            Other                     2
+      100014                                                        WEBDIET-coding100000014            Other                     3
+      100015                                                        WEBDIET-coding100000015            Other                    12
+      100016                                                        WEBDIET-coding100000016            Other                     6
+      100017                                                        WEBDIET-coding100000017            Other                     5
+      100256                                                       Tfm_ex_ecg::opt_ecg_meth            Other                     4
+      100257                                                   Tfm_ex_ecg::opt_ecg_complete            Other                     5
+      100258                                                         Tfm_i_birth::opt_bunit            Other                     3
+      100259                                                            Tfm_i_bp::opt_bmeth            Other                     5
+      100260                                                         Tfm_m_bones::opt_bmeth            Other                     5
+      100261                                                         Tfm_m_imped::opt_wmeth            Other                     5
+      100262                                                         Tfm_m_manual::opt_hbox            Other                     3
+      100263                                                    Tfm_m_stiff::opt_stiff_meth            Other                     4
+      100264                                                                      Yes or No            Other                     2
+      100267                                                               Yes No or Unsure            Other                     3
+      100270                                                    Tfm_s_spiro::opt_smeth/main            Other                     5
+      100271                                                        Tfm_u_eyes::opt_sur_any            Other                     4
+      100272                                                       Tfm_u_eyes::opt_sur_side            Other                     5
+      100273                                                       Tfm_u_eyes::opt_eye_miss            Other                     4
+      100274                                                             U_OPTION::opt_meth            Other                     3
+      100279                                                        Tfm_i_parent::opt_month            Other                    13
+      100280                                                           Tfm_i_psy::opt_words            Other                     3
+      100282                                                   Tfm_s_spiro::opt_smeth/pilot            Other                     3
+      100286                                                          g22.i.answer.a.D4.ans            Other                     7
+      100287                                                          g22.i.answer.a.D5.ans            Other                     8
+      100288                                                    g22.i.answer.a.D5A.ans/main            Other                     6
+      100289                                                        g22.i.answer.a.D5A1.ans            Other                     9
+      100290                                                         g22.i.answer.a.D5B.ans            Other                     3
+      100291                                                          g22.i.answer.a.D7.ans            Other                     2
+      100292                                                         g22.i.answer.a.D7A.ans            Other                     9
+      100293                                                          g22.i.answer.a.D8.ans            Other                     7
+      100294                                                    g22.i.answer.a.D10.ans/main            Other                     7
+      100295                                                          g22.i.answer.a.D9.ans            Other                     9
+      100298                                                         g22.i.answer.a.D9G.ans            Other                     3
+      100299                                                         g22.i.answer.a.D9E.ans            Other                     6
+      100300                                                         g22.i.answer.a.D9F.ans            Other                     3
+      100301                                                         g22.i.answer.a.D9B.ans            Other                     6
+      100305                                                    g22.i.answer.a.D12.ans/main            Other                     8
+      100306                                                         g22.i.answer.a.D11.ans            Other                     3
+      100307                                                         g22.i.answer.a.WP1.ans            Other                     3
+      100313                                                         g22.i.answer.a.WP4.ans            Other                     5
+      100314                                                        g22.i.answer.a.WP4A.ans            Other                     8
+      100316                                                       g22.i.answer.a.WP4B1.ans            Other                     7
+      100317                                                       g22.i.answer.a.WP4C1.ans            Other                     8
+      100318                                                       g22.i.answer.a.WP4E1.ans            Other                     9
+      100327                                                   g22.i.answer.a.WP11.ans/main            Other                     9
+      100328                                                        g22.i.answer.a.WP12.ans            Other                     7
+      100329                                                       g22.i.answer.a.WP12A.ans            Other                     3
+      100334                                                         g22.i.answer.a.WP8.ans            Other                     7
+      100335                                                         g22.i.answer.a.MB1.ans            Other                     7
+      100336                                                    g22.i.answer.a.MB2.ans/main            Other                     8
+      100337                                                        g22.i.answer.a.MB2A.ans            Other                     7
+      100338                                                    g22.i.answer.a.MB3.ans/main            Other                     6
+      100339                                                        g22.i.answer.a.MB3A.ans            Other                     5
+      100341                                                       g22.i.answer.a.SL1AA.ans            Other                     6
+      100342                                                       g22.i.answer.a.SL1AB.ans            Other                     6
+      100343                                                        g22.i.answer.a.SL1A.ans            Other                     4
+      100345                                                         g22.i.answer.a.SL3.ans            Other                     4
+      100346                                                    g22.i.answer.a.SL4.ans/main            Other                     6
+      100347                                                          g22.i.answer.a.S1.ans            Other                     4
+      100348                                                          g22.i.answer.a.S2.ans            Other                     5
+      100349                                                    g22.i.answer.a.S2A.ans/main            Other                     4
+      100351                                                          g22.i.answer.a.S4.ans            Other                     5
+      100352                                                        g22.i.answer.a.S4AA.ans            Other                     3
+      100353                                                        g22.i.answer.a.S4AB.ans            Other                     2
+      100355                                                         g22.i.answer.a.S4A.ans            Other                     3
+      100356                                                         g22.i.answer.a.S4B.ans            Other                     7
+      100357                                                         g22.i.answer.a.S4C.ans            Other                     5
+      100358                                                          g22.i.answer.a.S5.ans            Other                     4
+      100359                                                        g22.i.answer.a.S5AA.ans            Other                     5
+      100360                                                         g22.i.answer.a.S5A.ans            Other                     4
+      100361                                                         g22.i.answer.a.S5B.ans            Other                     7
+      100369                                                        g22.i.answer.a.S10B.ans            Other                     6
+      100370                                                         g22.i.answer.a.S11.ans            Other                     4
+      100373                                                         g22.i.answer.a.DT1.ans            Other                     3
+      100377                                                         g22.i.answer.a.DT4.ans            Other                     8
+      100385                                                   g22.i.answer.a.DT8B.ans/main            Other                     6
+      100387                                                        g22.i.answer.a.DT10.ans            Other                     8
+      100388                                                  g22.i.answer.a.DT10A.ans/main            Other                     6
+      100389                                                      g22.i.answer.a.DT10AA.ans            Other                     9
+      100391                                                   g22.i.answer.a.DT11.ans/main            Other                     6
+      100393                                                       g22.i.answer.a.DT11A.ans            Other                     7
+      100394                                                       g22.i.answer.a.DT11B.ans            Other                     5
+      100397                                                      g22.i.answer.a.DT13AA.ans            Other                     6
+      100398                                                       g22.i.answer.a.DT13A.ans            Other                     5
+      100400                                                        g22.i.answer.a.DT15.ans            Other                     4
+      100401                                                   g22.i.answer.a.DT16.ans/main            Other                     5
+      100402                                                          g22.i.answer.a.A1.ans            Other                     7
+      100416                                                          g22.i.answer.a.A5.ans            Other                     5
+      100417                                                          g22.i.answer.a.A6.ans            Other                     5
+      100418                                                     g22.i.answer.a.A7.ans/main            Other                     7
+      100420                                                          g22.i.answer.a.D2.ans            Other                     8
+      100428                                                          g22.i.answer.a.Y4.ans            Other                     5
+      100429                                                          g22.i.answer.a.Y5.ans            Other                     5
+      100430                                                          g22.i.answer.a.Y6.ans            Other                     4
+      100431                                                         g22.i.answer.a.Y6A.ans            Other                     8
+      100432                                                        g22.i.answer.a.Y6AA.ans            Other                     6
+      100434                                                         g22.i.answer.a.Y6B.ans            Other                     8
+      100435                                                         g22.i.answer.a.Y6C.ans            Other                     5
+      100478                                                         g22.i.answer.a.P31.ans            Other                     8
+      100479                                                        g22.i.answer.a.P31A.ans            Other                     9
+      100484                                                          g22.i.answer.a.P1.ans            Other                     6
+      100498                                                         g22.i.answer.a.P8A.ans            Other                     6
+      100499                                                         g22.i.answer.a.P8B.ans            Other                     5
+      100500                                                         g22.i.answer.a.P8C.ans            Other                     4
+      100501                                                          g22.i.answer.a.E1.ans            Other                     8
+      100502                                                     g22.i.answer.a.E2.ans/main            Other                     8
+      100503                                                      g22.i.answer.a.INTRO7.ans            Other                     2
+      100504                                                         g22.i.answer.a.SE1.ans            Other                     3
+      100508                                                          g22.i.answer.a.H3.ans            Other                     6
+      100510                                                         g22.i.answer.a.H4A.ans            Other                     6
+      100511                                                         g22.i.answer.a.H4B.ans            Other                     6
+      100514                                                        g22.i.answer.a.H5AB.ans            Other                     9
+      100515                                                       g22.i.answer.a.H5AB1.ans            Other                     3
+      100523                                                         g22.i.answer.a.H5C.ans            Other                     9
+      100536                                                        g22.i.answer.a.Y6AB.ans            Other                     7
+      100537                                                        g22.i.answer.a.Y6AC.ans            Other                     3
+      100538                                                         g22.i.answer.a.H7C.ans            Other                     8
+      100539                                                          g22.i.answer.a.H8.ans            Other                     4
+      100540                                                          g22.i.answer.a.H9.ans            Other                     5
+      100549                                                        g22.i.answer.a.SY4F.ans            Other                     5
+      100550                                                        g22.i.answer.a.SY4G.ans            Other                     4
+      100552                                                        g22.i.answer.a.SY4I.ans            Other                     6
+      100553                                                         g22.i.answer.a.SY5.ans            Other                    10
+      100563                                                        g22.i.answer.a.SY1A.ans            Other                     4
+      100564                                                        g22.i.answer.a.SY1B.ans            Other                     4
+      100567                                                        g22.i.answer.a.H10A.ans            Other                     3
+      100569                                                         g22.i.answer.a.MH3.ans            Other                     3
+      100570                                                         g22.i.answer.a.MH4.ans            Other                     5
+      100572                                                         g22.i.answer.a.MH6.ans            Other                     6
+      100579                                                         g22.i.answer.a.FH2.ans            Other                     5
+      100582                                                        g22.i.answer.a.FH2C.ans            Other                     3
+      100584                                                         g22.i.answer.a.FH3.ans            Other                     1
+      100585                                                        g22.i.answer.a.FH3A.ans            Other                     3
+      100586                                                        g22.i.answer.a.FH3B.ans            Other                     2
+      100595                                                        g22.i.answer.a.FH5B.ans            Other                     3
+      100598                                                        g22.i.answer.a.FH6B.ans            Other                     3
+      100599                                                         g22.i.answer.a.FH9.ans            Other                     4
+      100603                                                        g22.i.answer.a.OP1M.ans            Other                     4
+      100605                                                          g22.i.answer.a.L1.ans            Other                     6
+      100610                                                          g22.i.answer.a.L2.ans            Other                     7
+      100617                                                    g22.i.answer.a.L3A.ans/main            Other                     5
+      100622                                                         g22.i.answer.a.L5A.ans            Other                     9
+      100625                                                        g22.i.answer.a.L5DM.ans            Other                     6
+      100626                                                        g22.i.answer.a.L5DF.ans            Other                     8
+      100628                                                         g22.i.answer.a.L6C.ans            Other                     9
+      100629                                                     g22.i.answer.a.L7.ans/main            Other                     9
+      100630                                                    g22.i.answer.a.L7A.ans/main            Other                     8
+      100631                                                     g22.i.answer.a.H6.ans/main            Other                     5
+      100635                                                         g22.i.answer.a.H11.ans            Other                     7
+      100636                                                        g22.i.answer.a.H11A.ans            Other                     6
+      100637                                                         g22.i.answer.a.H12.ans            Other                     6
+      100639                                                          g22.i.answer.a.F1.ans            Other                     4
+      100640                                                    g22.i.answer.a.HT_CANDO.ans            Other                     4
+      100641                                                    g22.i.answer.a.COG_INIT.ans            Other                     2
+      100642                                                    g22.i.answer.a.FI_INTRO.ans            Other                     2
+      100643                                                        g22.i.answer.a.FI_1.ans            Other                     7
+      100644                                                        g22.i.answer.a.FI_2.ans            Other                     7
+      100645                                                        g22.i.answer.a.FI_3.ans            Other                     7
+      100646                                                        g22.i.answer.a.FI_4.ans            Other                     6
+      100647                                                        g22.i.answer.a.FI_5.ans            Other                     7
+      100648                                                        g22.i.answer.a.FI_6.ans            Other                     7
+      100649                                                        g22.i.answer.a.FI_7.ans            Other                     7
+      100650                                                        g22.i.answer.a.FI_8.ans            Other                     7
+      100651                                                        g22.i.answer.a.FI_9.ans            Other                     7
+      100652                                                       g22.i.answer.a.FI_10.ans            Other                     7
+      100653                                                       g22.i.answer.a.FI_11.ans            Other                     7
+      100654                                                       g22.i.answer.a.FI_12.ans            Other                     8
+      100655                                                       g22.i.answer.a.FI_13.ans            Other                     6
+      100656                                                   g22.i.answer.a.D5A.ans/pilot            Other                     6
+      100657                                                   g22.i.answer.a.D10.ans/pilot            Other                     7
+      100658                                                   g22.i.answer.a.D12.ans/pilot            Other                     7
+      100659                                                  g22.i.answer.a.WP1A.ans/pilot            Other                     7
+      100662                                                  g22.i.answer.a.WP11.ans/pilot            Other                     8
+      100663                                                   g22.i.answer.a.MB2.ans/pilot            Other                     6
+      100664                                                   g22.i.answer.a.MB3.ans/pilot            Other                     6
+      100668                                                    g22.i.answer.a.S9.ans/pilot            Other                     3
+      100669                                                   g22.i.answer.a.S10.ans/pilot            Other                     5
+      100672                                                  g22.i.answer.a.DT8B.ans/pilot            Other                     6
+      100673                                                 g22.i.answer.a.DT10A.ans/pilot            Other                     8
+      100674                                                  g22.i.answer.a.DT11.ans/pilot            Other                     7
+      100683                                                    g22.i.answer.a.E2.ans/pilot            Other                     9
+      100685                                                   g22.i.answer.a.H7B.ans/pilot            Other                     6
+      100686                                                        g22.i.answer.a.FH5C.ans            Other                     8
+      100688                                                         g22.i.answer.a.L6A.ans            Other                     8
+      100689                                                         g22.i.answer.a.L6B.ans            Other                     7
+      100690                                                   g22.i.answer.a.L7A.ans/pilot            Other                     8
+      100691                                                    g22.i.answer.a.L7.ans/pilot            Other                     8
+      100692                                                          g22.i.answer.a.L8.ans            Other                     8
+      100693                                                       Responses to invitations            Other                     3
+      100694                                                                   Bipolar type            Other                     2
+      100695                                                             Depressive episode            Other                     6
+      100696                                                            Test abandoned flag            Other                     1
+      100698                                                                 Status of role            Other                     1
+      100699                                                                 Eprime failure            Other                     2
+      100700                                                                          Level            Other                     3
