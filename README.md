@@ -16,7 +16,7 @@ The project reveals a striking paradox: While the UK Biobank offers **~10,000 da
 
 This "Luddite Loop" represents a self-reinforcing cycle where traditional statistical thinking and cognitive limitations prevent researchers from leveraging the full power of modern AI and big data approaches, leaving 99.5% of the UK Biobank's potential untapped.
 
-For background and methodology, see my [📄 Preliminary Report](preliminary-report.pdf).
+For background and methodology, see my [📄 Preliminary Report](preliminary-report-donald-philp.pdf).
 
 ### Key Findings
 - **Gini coefficient of 0.866**: Extreme inequality in feature usage
