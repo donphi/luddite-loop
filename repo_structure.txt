@@ -1,0 +1,80 @@
+.
+├── data
+│   └── showcase
+├── pipelines
+│   ├── 01-data_ingestion
+│   │   ├── 01-ingest_ukb_showcase_data
+│   │   │   ├── input
+│   │   │   │   ├── category.txt
+│   │   │   │   ├── ehierint.txt
+│   │   │   │   ├── ehierstring.txt
+│   │   │   │   ├── encoding.txt
+│   │   │   │   ├── esimpint.txt
+│   │   │   │   ├── esimpreal.txt
+│   │   │   │   ├── esimpstring.txt
+│   │   │   │   ├── esimptime.txt
+│   │   │   │   ├── field.txt
+│   │   │   │   ├── Metainventory_Version1.0.0.csv
+│   │   │   │   └── publications.txt
+│   │   │   └── README.md
+│   │   ├── 02-restructure_ukb_showcase_data
+│   │   │   ├── docker-compose.yaml
+│   │   │   ├── Dockerfile
+│   │   │   ├── output-meta
+│   │   │   │   ├── acronym_candidates.csv
+│   │   │   │   ├── acronym_candidates.parquet
+│   │   │   │   ├── acronym_mappings.txt
+│   │   │   │   ├── acronym_summary.txt
+│   │   │   │   ├── column_dtypes.txt
+│   │   │   │   ├── embedding_cache
+│   │   │   │   │   └── embedding_cache.pkl
+│   │   │   │   ├── human_verify.txt
+│   │   │   │   ├── ukb_field_codebook.csv
+│   │   │   │   ├── ukb_field_codebook.parquet
+│   │   │   │   ├── ukb_fields.csv
+│   │   │   │   ├── ukb_fields.parquet
+│   │   │   │   └── validation_report.txt
+│   │   │   ├── README.md
+│   │   │   ├── requirements.txt
+│   │   │   └── scripts
+│   │   │       ├── ai_consortium_validation.py
+│   │   │       ├── field_category_check.py
+│   │   │       ├── field_check.py
+│   │   │       └── process_showcase_meta.py
+│   │   └── 03-ingest_pdf_corpus
+│   │       ├── docker-compose.yaml
+│   │       ├── Dockerfile
+│   │       ├── output
+│   │       │   ├── batch_urls.html
+│   │       │   ├── batch_urls.txt
+│   │       │   ├── core
+│   │       │   │   └── publications
+│   │       │   │       └── publications_core.txt
+│   │       │   ├── current_batch_urls.txt
+│   │       │   ├── manual
+│   │       │   ├── manual_download_progress.json
+│   │       │   ├── manual_download.txt
+│   │       │   ├── manual_renamed
+│   │       │   ├── openalex
+│   │       │   │   └── publications
+│   │       │   │       └── publications_openalex.txt
+│   │       │   └── other
+│   │       │       └── publications
+│   │       │           └── publications_other.txt
+│   │       ├── README.md
+│   │       ├── requirements.txt
+│   │       └── scripts
+│   │           ├── 01-openalex_fetcher.py
+│   │           ├── 02-core_fetcher.py
+│   │           ├── 03-other_fetcher.py
+│   │           ├── 04-manual_download_helper.py
+│   │           ├── 05-validate_dedupe.py
+│   │           └── output
+│   │               ├── manual
+│   │               └── manual_renamed
+│   ├── 02-data_conversion
+│   ├── 03-data_extraction
+│   └── prompt_neaten.md
+└── repo_structure.txt
+
+27 directories, 51 files
