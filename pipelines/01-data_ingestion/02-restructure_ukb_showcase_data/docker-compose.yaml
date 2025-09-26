@@ -6,26 +6,12 @@
 # ============================================================================
 
 services:
-  # Main processor - must run first (uses MRCONSO for acronym mapping)
-  ukb-processor:
-    build: .
-    container_name: ukb-processor
-    working_dir: /app
-    volumes:
-      # Scripts mounted from local ./scripts directory
-      - ./scripts/process_showcase_meta.py:/app/scripts/process_showcase_meta.py:ro
-      - ./scripts:/scripts:ro
-      - ../01-ingest_ukb_showcase_data/input:/input:ro
-      - ./output-meta:/output
-    environment:
-      - PYTHONUNBUFFERED=1
-    command: python /scripts/process_showcase.py
-
+  # Primary Meta-Inventory processor with GPU acceleration (recommended)
   ukb-meta-processor-gpu:
     build: .
     container_name: ukb-meta-processor-gpu
     runtime: nvidia
-    volumes:  # ADD THESE LINES
+    volumes:
       - ./scripts:/scripts:ro
       - ../01-ingest_ukb_showcase_data/input:/input:ro
       - ./output-meta:/output
@@ -41,6 +27,7 @@ services:
               capabilities: [gpu]
     command: python /scripts/process_showcase_meta.py
 
+  # CPU-only Meta-Inventory processor (fallback option)
   ukb-meta-processor:
     build: .
     container_name: ukb-meta-processor
@@ -63,12 +50,12 @@ services:
     working_dir: /app
     volumes:
       - ./scripts:/scripts:ro
-      - ./output:/output
+      - ./output-meta:/output
     environment:
       - PYTHONUNBUFFERED=1
     command: python /scripts/field_category_check.py
     depends_on:
-      - ukb-processor
+      - ukb-meta-processor
 
   # Category summary generator
   field-summary:
@@ -77,20 +64,21 @@ services:
     working_dir: /app
     volumes:
       - ./scripts:/scripts:ro
-      - ./output:/output
+      - ./output-meta:/output
     environment:
       - PYTHONUNBUFFERED=1
     command: python /scripts/field_check.py
     depends_on:
-      - ukb-processor
+      - ukb-meta-processor
 
+  # AI-powered acronym validation (optional, requires OPENROUTER_API_KEY)
   ai-consortium:
     build: .
     container_name: ai-consortium
     working_dir: /app
     volumes:
       - ./scripts:/scripts:ro
-      - ./output:/output
+      - ./output-meta:/output
     environment:
       - PYTHONUNBUFFERED=1
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
@@ -98,4 +86,4 @@ services:
       - .env
     command: python /scripts/ai_consortium_validation.py
     depends_on:
-      - ukb-processor
+      - ukb-meta-processor

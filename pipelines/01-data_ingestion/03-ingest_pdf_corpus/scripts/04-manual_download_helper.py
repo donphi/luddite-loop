@@ -50,27 +50,55 @@ from pathlib import Path
 from datetime import datetime
 
 class ManualDownloadHelper:
+    """
+    Helper for manually downloading PDFs that couldn't be fetched automatically.
+    
+    Think of this like having a personal assistant for the tedious task of
+    manually downloading research papers. When the automated systems can't
+    download certain papers (maybe they're behind login walls or have tricky
+    download systems), this helper:
+    
+    1. Shows you exactly which URLs to visit
+    2. Creates a nice web interface so you can click to download
+    3. Keeps track of what you've already downloaded
+    4. Helps rename the downloaded files to match our naming system
+    5. Remembers where you left off if you need to take a break
+    
+    It's like having a smart checklist that guides you through manual work.
+    """
+    
     def __init__(self):
-        # File paths
-        self.manual_list_file = Path("/app/output/manual_download.txt")
-        self.manual_download_dir = Path("/app/output/manual")
-        self.progress_file = Path("/app/output/manual_download_progress.json")
-        self.renamed_dir = Path("/app/output/manual_renamed")
+        """
+        Set up the manual download assistant.
         
-        # Create directories
+        This is like organizing your workspace before starting a big manual task.
+        We need folders for incoming downloads, renamed files, progress tracking,
+        and we need to load any work we've already done.
+        """
+        # Set up all the file paths we'll need
+        # Think of these like labeled folders on your desk
+        self.manual_list_file = Path("/app/output/manual_download.txt")  # The shopping list
+        self.manual_download_dir = Path("/app/output/manual")  # Where downloads go first
+        self.progress_file = Path("/app/output/manual_download_progress.json")  # Our checklist
+        self.renamed_dir = Path("/app/output/manual_renamed")  # Where properly named files go
+        
+        # Create directories if they don't exist
+        # Like making sure you have all the right folders set up
         self.manual_download_dir.mkdir(parents=True, exist_ok=True)
         self.renamed_dir.mkdir(parents=True, exist_ok=True)
         
-        # Load data
+        # Load our data and previous progress
         self.downloads = self.load_manual_downloads()
         self.progress = self.load_progress()
         
-        # Track processed files to avoid re-processing
+        # Track which files we've already processed to avoid doing work twice
+        # Like keeping a "done" pile separate from the "to do" pile
         self.processed_files = set()
         if 'processed_files' in self.progress:
             self.processed_files = set(self.progress['processed_files'])
         
-        # Stats
+        # Keep score of our progress
+        # Like having a dashboard showing how much work is left
         self.stats = {
             'total': len(self.downloads),
             'downloaded': 0,
@@ -79,7 +107,7 @@ class ManualDownloadHelper:
             'pending': 0
         }
         
-        # Calculate initial stats from progress
+        # Calculate current stats based on what we've already done
         self.update_stats_from_progress()
 
     def load_manual_downloads(self):
@@ -207,7 +235,19 @@ class ManualDownloadHelper:
         return filename
 
     def display_urls_for_batch(self, urls, batch_info, start_idx):
-        """Display URLs for manual copying (Docker-compatible version)"""
+        """
+        Display URLs for manual downloading in a user-friendly way.
+        
+        This is like creating a custom shopping list with helpful features.
+        Instead of just giving you a boring text list of URLs, we create:
+        - A nice web page you can use to open multiple tabs at once
+        - Checkboxes to track what you've downloaded
+        - Batch navigation so you're not overwhelmed
+        - Progress tracking that saves automatically
+        
+        Think of it like having a smart assistant that makes tedious manual
+        work as easy and organized as possible.
+        """
         print(f"\n" + "="*60)
         print(f"📋 MANUAL DOWNLOAD BATCH")
         print("="*60)
@@ -215,6 +255,7 @@ class ManualDownloadHelper:
         print("")
         
         # Get ALL pending downloads for HTML generation
+        # We need the full list to create proper batch navigation
         all_pending = []
         for download in self.downloads:
             pub_id = download['pub_id']
@@ -895,17 +936,27 @@ class ManualDownloadHelper:
         print("="*60)
 
     def scan_manual_folder(self):
-        """Scan manual folder for new PDF files"""
+        """
+        Look for new PDF files that have been manually downloaded.
+        
+        This is like checking your downloads folder to see what new files
+        have appeared since the last time you looked. We keep track of which
+        files we've already processed so we don't rename the same file twice.
+        
+        Think of it like having a smart inbox that only shows you new mail.
+        """
         new_files = []
         existing_files = list(self.manual_download_dir.glob("*.pdf"))
         
+        # Check each PDF file to see if it's new
         for pdf_file in existing_files:
             if pdf_file.name not in self.processed_files:
                 new_files.append(pdf_file)
         
+        # Give user feedback about what we found
         if new_files:
             print(f"\n🔍 Found {len(new_files)} new PDF(s) in manual folder:")
-            for f in new_files[:5]:  # Show first 5
+            for f in new_files[:5]:  # Show first 5 to avoid overwhelming output
                 print(f"   - {f.name}")
             if len(new_files) > 5:
                 print(f"   ... and {len(new_files) - 5} more")
@@ -913,10 +964,25 @@ class ManualDownloadHelper:
         return new_files
 
     def rename_downloaded_files(self, batch_downloads):
-        """Rename downloaded files to standard format"""
+        """
+        Help rename manually downloaded files to match our naming system.
+        
+        This is like having a filing assistant who helps you organize your
+        downloads. When you download files manually, they often have messy
+        names like "download.pdf" or "fulltext.pdf". This function:
+        
+        1. Finds all the new files you've downloaded
+        2. Shows you which publications still need files
+        3. Asks you to match each file to the right publication
+        4. Renames the file using our standard naming convention
+        5. Moves it to the properly organized folder
+        
+        Think of it like having someone help you sort a pile of documents
+        into the right filing cabinets with proper labels.
+        """
         print("\n📝 Checking for downloaded files to rename...")
         
-        # Scan for new files
+        # Look for new files in the manual download folder
         new_files = self.scan_manual_folder()
         
         if not new_files:
@@ -925,11 +991,12 @@ class ManualDownloadHelper:
         
         renamed_count = 0
         
-        # For each new file, try to match with batch
+        # For each new file, help the user match it to the right publication
         for pdf_path in new_files:
             print(f"\n🔍 Processing: {pdf_path.name}")
             
-            # Show publications that need files
+            # Show publications that still need files
+            # Like showing a list of empty folders that need documents
             pending_pubs = []
             for i, download in enumerate(batch_downloads):
                 pub_id = download['pub_id']

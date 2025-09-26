@@ -83,33 +83,43 @@ class CoreFetcher:
         """
         Initialize the CORE fetcher with configuration from environment variables.
 
-        Sets up API credentials, creates necessary directories, and prepares
-        HTTP headers for API requests. CORE has strict rate limits, so proper
-        setup is crucial.
+        Think of this like preparing to visit a very strict, high-security library.
+        CORE (COnnecting REpositories) is like a librarian that manages access to
+        millions of research papers, but they're very particular about how you ask
+        for things and how often you can ask.
+
+        Unlike a casual bookstore where you can browse freely, CORE requires:
+        - Proper identification (API key)
+        - Polite, structured requests
+        - Patience between requests (rate limiting)
         """
-        # Get file paths from environment (like reading your shopping list)
+        # Get file paths from environment - our shopping list of papers to find
         self.input_file = os.getenv("PUBLICATIONS_FILE", "/app/data/publications.txt")
         self.output_dir = Path("/app/output/core")
         self.core_api_key = os.getenv('CORE_API_KEY', '')
 
         # Create the folder where we'll save downloaded PDFs
+        # Like organizing your briefcase before going to the library
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
 
         # Set up HTTP headers for CORE API
-        # CORE requires Bearer token authentication
+        # CORE requires Bearer token authentication - like showing your library card
+        # The "Bearer" part is like saying "I'm authorized to be here"
         self.base_url = "https://api.core.ac.uk/v3"
         self.headers = {
             'Authorization': f'Bearer {self.core_api_key}',
             'Content-Type': 'application/json'
         }
 
-        # Warn if no API key (CORE allows some requests without key but limits heavily)
+        # Warn if no API key - like trying to enter a library without membership
+        # CORE allows some requests without a key but severely limits how many
         if not self.core_api_key:
             logger.warning("No CORE API key provided - requests may be rate limited")
         else:
             logger.info("Using CORE API key for higher rate limits")
 
         # Track how many publications we process, find, download, etc.
+        # Like keeping a scorecard to see how successful our library visit is
         self.stats = {'processed': 0, 'found': 0, 'downloaded': 0, 'skipped': 0, 'failed': 0}
 
     def init_tracking_file(self, publications):
@@ -188,7 +198,18 @@ class CoreFetcher:
             return []
 
     def make_api_request_with_retry(self, url, params, max_retries=5):
-        """Make API request with exponential backoff retry for rate limits and server errors"""
+        """
+        Make API request with smart retry logic for rate limits and server errors.
+        
+        Think of this like dealing with a busy restaurant. Sometimes when you call,
+        they say "we're too busy right now, call back in 5 minutes" (rate limit).
+        Sometimes their phone system is broken (server error). This method handles
+        both situations by waiting and trying again, but not forever.
+        
+        We use "exponential backoff" - like if they say they're busy, we wait 5 minutes.
+        If they're still busy, we wait 10 minutes. Then 20 minutes. We get more patient
+        each time, but eventually give up if it's never going to work.
+        """
         for attempt in range(max_retries):
             try:
                 response = requests.get(url, headers=self.headers, params=params, timeout=15)
@@ -197,23 +218,27 @@ class CoreFetcher:
                 
             except requests.exceptions.HTTPError as e:
                 if e.response.status_code == 429:
-                    # Rate limited - exponential backoff
+                    # Rate limited - the server is saying "slow down, you're asking too fast"
+                    # Like a librarian saying "please wait, I'm helping other people too"
                     wait_time = min(60, (2 ** attempt) * 5)  # 5, 10, 20, max 60 seconds
                     logger.warning(f"Rate limited (429). Waiting {wait_time}s before retry {attempt + 1}/{max_retries}")
                     time.sleep(wait_time)
-                elif e.response.status_code >= 500:  # <-- ADD THIS
-                    # Server errors - retry with backoff
+                elif e.response.status_code >= 500:
+                    # Server errors - something is broken on their end
+                    # Like the library's computer system crashing
                     wait_time = min(30, (2 ** attempt) * 2)  # 2, 4, 8 seconds
                     logger.warning(f"Server error ({e.response.status_code}). Waiting {wait_time}s before retry {attempt + 1}/{max_retries}")
                     time.sleep(wait_time)
                 else:
                     # Other HTTP errors (4xx) - don't retry
+                    # Like being told "that book doesn't exist" - no point asking again
                     raise
             except Exception as e:
-                # Network errors, timeouts etc - could retry but let's just fail
+                # Network errors, timeouts etc - connection problems
                 logger.warning(f"Request failed: {e}")
                 return None
         
+        # We tried our best but it's not working
         logger.warning(f"Failed after {max_retries} retries")
         return None
 
@@ -316,10 +341,23 @@ class CoreFetcher:
         return len(intersection) / len(union) if union else 0
 
     def get_pdf_urls(self, work):
-        """Extract PDF URLs from CORE work"""
+        """
+        Extract PDF URLs from CORE work data.
+        
+        CORE is simpler than OpenAlex - it usually gives us just a few clear options
+        for where to find the PDF. Think of it like a librarian who has already
+        done the hard work of finding the best copies and just hands you a short
+        list of exactly where to look.
+        
+        We still rank the options by how likely they are to work:
+        - fullTextIdentifier: "Here's the official full text" (best option)
+        - downloadUrl: "Here's a direct download link" (good option)
+        - PDF links: "These other links might have PDFs" (worth trying)
+        """
         pdf_urls = []
         
-        # Check for fullText download URL
+        # Check for fullText download URL - this is CORE's "best bet"
+        # Like the librarian saying "this is definitely the right copy"
         if work.get('fullTextIdentifier'):
             pdf_urls.append({
                 'url': work['fullTextIdentifier'],
@@ -327,7 +365,8 @@ class CoreFetcher:
                 'priority': 90
             })
         
-        # Check for download URL
+        # Check for download URL - direct download link
+        # Like being told "click here to download immediately"
         if work.get('downloadUrl'):
             pdf_urls.append({
                 'url': work['downloadUrl'],
@@ -335,7 +374,8 @@ class CoreFetcher:
                 'priority': 85
             })
         
-        # Check links for PDFs
+        # Check other links that might contain PDFs
+        # Like checking "these other places might also have copies"
         for link in work.get('links', []):
             if link.get('url', '').endswith('.pdf'):
                 pdf_urls.append({
@@ -344,7 +384,7 @@ class CoreFetcher:
                     'priority': 80
                 })
         
-        # Sort by priority
+        # Sort by priority - try the best options first
         pdf_urls.sort(key=lambda x: x['priority'], reverse=True)
         return pdf_urls
 

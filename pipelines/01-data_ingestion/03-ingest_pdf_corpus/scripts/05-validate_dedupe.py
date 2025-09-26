@@ -66,44 +66,81 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class PDFValidator:
+    """
+    Validates and deduplicates all downloaded PDFs using multiple methods.
+    
+    Think of this like having a quality control inspector at a book warehouse.
+    After collecting books from many different suppliers (OpenAlex, CORE, etc.),
+    we need to:
+    
+    1. Check each book to make sure it's not corrupted (validation)
+    2. Remove duplicates when we accidentally got the same book from multiple suppliers
+    3. Pick the best copy when we have duplicates
+    4. Organize everything into "good" and "problematic" piles
+    
+    We use multiple ways to detect duplicates:
+    - Exact file matching (identical files)
+    - DOI matching (same research paper ID)
+    - Text similarity (same content, different files)
+    """
+    
     def __init__(self):
+        """
+        Set up the PDF validation and deduplication system.
+        
+        This is like organizing a quality control station with:
+        - Input bins (where PDFs come from different sources)
+        - Sorting areas (valid, invalid, duplicates)
+        - Reference materials (publication metadata)
+        - Quality tracking (statistics)
+        """
+        # Where to find our publication metadata (the master list)
         self.input_file = "/app/data/publications.txt"
+        
+        # All the places where we might have downloaded PDFs
+        # Like checking different warehouses for inventory
         self.source_dirs = [
-            "/app/output/openalex",
-            "/app/output/core", 
-            "/app/output/other",
-            "/app/output/manual",  # Added manual directory
-            "/app/output/manual_renamed"  # Added renamed manual directory
+            "/app/output/openalex",      # From OpenAlex database
+            "/app/output/core",          # From CORE database
+            "/app/output/other",         # From other sources (Unpaywall, PMC, arXiv)
+            "/app/output/manual",        # Manually downloaded files
+            "/app/output/manual_renamed" # Manually downloaded and properly named
         ]
-        self.valid_dir = "/app/output/valid_pdfs"
-        self.invalid_dir = "/app/output/invalid_pdfs" 
-        self.duplicates_dir = "/app/output/duplicate_pdfs"
+        
+        # Where to sort the PDFs after processing
+        # Like having labeled bins for different types of books
+        self.valid_dir = "/app/output/valid_pdfs"      # Good PDFs, ready to use
+        self.invalid_dir = "/app/output/invalid_pdfs"   # Corrupted or problematic PDFs
+        self.duplicates_dir = "/app/output/duplicate_pdfs"  # Extra copies we don't need
         self.output_dir = "/app/output"
         
-        # Create output directories
+        # Create the sorting bins if they don't exist
         for dir_path in [self.valid_dir, self.invalid_dir, self.duplicates_dir]:
             Path(dir_path).mkdir(parents=True, exist_ok=True)
         
-        # Load publication data
+        # Load our reference materials (publication metadata)
         self.publications = self.load_publications()
         self.doi_to_pubid = self.create_doi_mapping()
         
-        # Load manual download metadata
+        # Load information about manually downloaded files
         self.manual_metadata = self.load_manual_metadata()
         
-        # Track PDF fingerprints for deduplication
-        self.pdf_fingerprints = {}  # hash -> pdf_info
-        self.text_samples = {}  # filepath -> text_sample
+        # Set up our duplicate detection systems
+        # Like having different methods to check if books are the same
+        self.pdf_fingerprints = {}  # File content signatures
+        self.text_samples = {}      # Text excerpts for comparison
         
+        # Keep track of our quality control statistics
+        # Like a dashboard showing how well the sorting process is going
         self.stats = {
             'total_pdfs': 0,
             'valid_pdfs': 0,
             'invalid_pdfs': 0,
             'duplicates_removed': 0,
             'final_unique_pdfs': 0,
-            'hash_duplicates': 0,
-            'doi_duplicates': 0,
-            'text_duplicates': 0
+            'hash_duplicates': 0,    # Exact file duplicates
+            'doi_duplicates': 0,     # Same DOI duplicates
+            'text_duplicates': 0     # Similar content duplicates
         }
 
     def load_publications(self):
@@ -189,7 +226,21 @@ class PDFValidator:
         return doi
 
     def validate_pdf(self, pdf_path):
-        """Validate a single PDF file"""
+        """
+        Check if a PDF file is valid and extract useful information.
+        
+        This is like being a book inspector at a warehouse. For each book,
+        we need to check:
+        - Is it actually a complete book or just an empty cover?
+        - Can we open it and read it?
+        - Is it damaged or corrupted?
+        - What's the book about? (extract title, DOI, sample text)
+        - How can we identify it later? (create a unique fingerprint)
+        
+        We're pretty strict about what counts as "valid" because we want
+        to make sure researchers get useful, complete papers.
+        """
+        # Start with a report card for this PDF
         result = {
             'filepath': str(pdf_path),
             'filename': pdf_path.name,
@@ -197,34 +248,39 @@ class PDFValidator:
             'page_count': 0,
             'file_size_bytes': 0,
             'error': None,
-            'hash': None,
-            'extracted_doi': None,
-            'extracted_title': None,
-            'text_sample': None
+            'hash': None,                # Unique fingerprint for duplicate detection
+            'extracted_doi': None,       # Paper's unique ID if we can find it
+            'extracted_title': None,     # Paper title if we can extract it
+            'text_sample': None          # Sample text for similarity comparison
         }
         
         try:
-            # Check file size
+            # Check file size first - is this actually a substantial file?
+            # Like checking if a book feels suspiciously light
             file_size = pdf_path.stat().st_size
             result['file_size_bytes'] = file_size
             
-            if file_size < 1000:  # Less than 1KB
+            if file_size < 1000:  # Less than 1KB is definitely not a real paper
                 result['error'] = 'File too small (< 1KB)'
                 return result
             
-            # Calculate file hash for exact duplicate detection
+            # Create a unique fingerprint for this file
+            # Like taking a DNA sample to identify duplicates later
             result['hash'] = self.calculate_file_hash(pdf_path)
             
-            # Try to open with PyPDF2
+            # Try to open and read the PDF
+            # Like trying to open a book and flip through the pages
             with open(pdf_path, 'rb') as f:
                 pdf_reader = PyPDF2.PdfReader(f)
                 
-                # Check if encrypted
+                # Check if the PDF is password protected
+                # Like finding a locked diary - we can't use it
                 if pdf_reader.is_encrypted:
                     result['error'] = 'PDF is encrypted'
                     return result
                 
-                # Get page count
+                # Count the pages
+                # Research papers should have multiple pages
                 page_count = len(pdf_reader.pages)
                 result['page_count'] = page_count
                 
@@ -236,19 +292,24 @@ class PDFValidator:
                     result['error'] = f'PDF too short ({page_count} page)'
                     return result
                 
-                # Extract metadata
+                # Try to extract metadata (title, DOI, etc.)
+                # Like reading the book's title page and copyright info
                 metadata = self.extract_pdf_metadata(pdf_reader)
                 result['extracted_doi'] = metadata.get('doi')
                 result['extracted_title'] = metadata.get('title')
                 
-                # Extract text sample for similarity comparison
+                # Extract a sample of text for similarity comparison
+                # Like reading the first few paragraphs to understand what it's about
                 text_sample = self.extract_text_from_pdf(pdf_reader, max_chars=5000)
                 result['text_sample'] = text_sample
                 
+                # Make sure we can actually read meaningful text
+                # Sometimes PDFs are just scanned images with no extractable text
                 if not text_sample or len(text_sample.strip()) < 10:
                     result['error'] = 'Cannot extract meaningful text'
                     return result
                 
+                # If we made it this far, the PDF is good to use!
                 result['is_valid'] = True
                 
         except PyPDF2.errors.PdfReadError as e:
@@ -443,29 +504,46 @@ class PDFValidator:
         return identity
 
     def group_pdfs_by_identity(self, valid_pdfs):
-        """Group PDFs using multiple deduplication strategies"""
+        """
+        Group PDFs that represent the same research paper.
+        
+        This is like organizing a pile of books where you accidentally got
+        multiple copies of the same book from different stores. We need to:
+        
+        1. First pass: Group books that are obviously the same (same ISBN,
+           same file, same DOI)
+        2. Second pass: For remaining books, read a bit of each to see if
+           the content is the same even if the covers look different
+        
+        We use different confidence levels:
+        - 95%+: "These are definitely the same" (same DOI, same file)
+        - 85%+: "These are probably the same" (similar filenames)
+        - Text similarity: "Let me read both and compare"
+        """
         groups = defaultdict(list)
         text_similarity_candidates = []
         
         # First pass: Group by exact identifiers
+        # Like sorting books by ISBN number - if the ISBN matches, they're the same book
         for pdf_info in valid_pdfs:
             identity = self.identify_pdf(pdf_info)
             
             if identity['confidence'] >= 0.85:
-                # High confidence match
+                # High confidence match - we're pretty sure these are the same
                 groups[identity['key']].append(pdf_info)
             else:
-                # Low confidence - candidate for text similarity
+                # Low confidence - we need to check content similarity
                 text_similarity_candidates.append(pdf_info)
         
         # Second pass: Text similarity for remaining PDFs
+        # Like reading the first few paragraphs of each book to see if they're the same
         logger.info(f"Checking text similarity for {len(text_similarity_candidates)} PDFs...")
         
         for candidate in text_similarity_candidates:
             matched = False
             
             if candidate['text_sample']:
-                # Check against existing groups
+                # Compare this candidate's text with existing groups
                 for group_key, group_pdfs in groups.items():
                     if group_pdfs and group_pdfs[0].get('text_sample'):
                         similarity = self.calculate_text_similarity(
@@ -473,7 +551,7 @@ class PDFValidator:
                             group_pdfs[0]['text_sample']
                         )
                         
-                        if similarity >= 0.85:  # High similarity threshold
+                        if similarity >= 0.85:  # 85% text similarity = probably same paper
                             logger.info(f"  Text similarity match ({similarity:.2f}): "
                                       f"{candidate['filename']} -> {group_key}")
                             groups[group_key].append(candidate)
@@ -482,53 +560,71 @@ class PDFValidator:
                             break
             
             if not matched:
-                # Create new group
+                # This appears to be a unique document
                 unique_key = f"unique_{candidate['filename']}"
                 groups[unique_key].append(candidate)
         
         return groups
 
     def select_best_pdf(self, pdf_group):
-        """Select the best PDF from a group of duplicates"""
-        if len(pdf_group) == 1:
-            return pdf_group[0], []
+        """
+        Choose the best PDF when we have multiple copies of the same paper.
         
-        # Score each PDF
+        This is like choosing the best copy when you have the same book
+        from different stores. We prefer:
+        - Longer books (more pages = more complete)
+        - Bigger files (usually higher quality)
+        - Books with clear identification (DOI extracted)
+        - Books from reputable stores (OpenAlex > PMC > CORE)
+        - Properly organized books (not manually downloaded with messy names)
+        
+        Think of it like a scoring system where we give points for quality
+        indicators, then pick the highest-scoring copy.
+        """
+        if len(pdf_group) == 1:
+            return pdf_group[0], []  # Only one copy, so it's automatically the best
+        
+        # Score each PDF based on quality indicators
         scored_pdfs = []
         for pdf in pdf_group:
             score = 0
             
-            # Prefer more pages
+            # Prefer more pages (more complete content)
+            # Like preferring a complete book over a partial one
             score += pdf['page_count'] * 10
             
-            # Prefer larger file size (up to a point)
-            score += min(pdf['file_size_bytes'] / 100000, 50)  # Cap at 5MB
+            # Prefer larger file size up to a reasonable limit
+            # Bigger usually means higher quality, but not always
+            score += min(pdf['file_size_bytes'] / 100000, 50)  # Cap bonus at 5MB
             
-            # Prefer PDFs with extracted DOI
+            # Prefer PDFs where we successfully extracted the DOI
+            # This indicates good metadata and proper formatting
             if pdf.get('extracted_doi'):
                 score += 20
             
-            # Prefer non-manual sources (they have proper naming)
+            # Prefer non-manual sources because they have proper naming
+            # Manual downloads often have generic names like "download.pdf"
             if not pdf['filename'].startswith('manual_'):
                 score += 15
             
-            # Prefer PDFs from primary sources
+            # Prefer PDFs from more reliable sources
+            # Like preferring books from well-known, reputable publishers
             if 'openalex' in pdf['filepath'].lower():
-                score += 10
+                score += 10  # OpenAlex is very comprehensive and reliable
             elif 'pmc' in pdf['filepath'].lower():
-                score += 8
+                score += 8   # PubMed Central is government-run, very trustworthy
             elif 'core' in pdf['filepath'].lower():
-                score += 5
+                score += 5   # CORE is good but sometimes has quality issues
             
             scored_pdfs.append((pdf, score))
         
-        # Sort by score
+        # Sort by score (highest first) and pick the winner
         scored_pdfs.sort(key=lambda x: x[1], reverse=True)
         
         best_pdf = scored_pdfs[0][0]
-        duplicates = [pdf for pdf, _ in scored_pdfs[1:]]
+        duplicates = [pdf for pdf, _ in scored_pdfs[1:]]  # All the others are duplicates
         
-        # Log duplicate detection method
+        # Keep track of what type of duplicates we found for reporting
         if best_pdf.get('hash') == duplicates[0].get('hash') if duplicates else False:
             self.stats['hash_duplicates'] += len(duplicates)
         elif best_pdf.get('extracted_doi') or duplicates[0].get('extracted_doi') if duplicates else False:

@@ -85,18 +85,23 @@ class OpenAlexFetcher:
         HTTP headers for API requests. Like setting up a research library card
         and preparing your backpack before going to find books.
         """
-        # Get file paths from environment (like reading your shopping list)
+        # Get file paths from environment variables - like reading your shopping list
+        # The shopping list tells us which research papers we want to find and download
         self.input_file = os.getenv("PUBLICATIONS_FILE", "/app/data/publications.txt")
         self.output_dir = Path("/app/output/openalex")
+        
+        # Get our credentials for accessing the OpenAlex database
+        # Think of this like having a library card that gives you special privileges
         self.openalex_token = os.getenv("OPENALEX_TOKEN", "")
         self.email = os.getenv("EMAIL", "researcher@example.com")
 
         # Create the folder where we'll save downloaded PDFs
-        # Like making sure your downloads folder exists before starting
+        # Like making sure your downloads folder exists before you start shopping online
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
 
         # Set up HTTP headers for API requests
-        # This is like showing your library card and contact info when asking for books
+        # This is like introducing yourself politely when you ask the librarian for help
+        # We tell them who we are and give our contact info so they can help us better
         self.headers = {
             'User-Agent': f'PDFDownloader/1.0 (mailto:{self.email})',
         }
@@ -105,7 +110,7 @@ class OpenAlexFetcher:
             logger.info("Using OpenAlex API token for higher rate limits")
 
         # Track how many publications we process, find, download, etc.
-        # Like keeping score in a game
+        # Like keeping a scorecard during a game to see how well we're doing
         self.stats = {'processed': 0, 'found': 0, 'downloaded': 0, 'skipped': 0, 'failed': 0}
 
     def init_tracking_file(self, publications):
@@ -163,18 +168,26 @@ class OpenAlexFetcher:
         """
         Create a consistent, readable filename for the PDF.
 
-        This method builds filenames like: "10_1371_journal_pone_0123456_introduction_to_machine_learning_2023.pdf"
-        Using DOI, title words, and year to make files easy to identify.
+        Think of this like creating a smart filing system for your research papers.
+        Instead of naming files "paper1.pdf" or "download.pdf", we create descriptive names
+        that tell you exactly what the paper is about, like:
+        "10_1371_journal_pone_0123456_introduction_to_machine_learning_2023.pdf"
+
+        The filename includes:
+        - The DOI (like a paper's unique ID number)
+        - Key words from the title (so you know what it's about)
+        - Publication year (so you know how recent it is)
 
         Args:
-            pub_data: Dictionary with publication metadata
+            pub_data: Dictionary with publication metadata (like a paper's info card)
             openalex_id: OpenAlex identifier (currently not used in filename)
 
         Returns:
-            String filename ending in .pdf
+            String filename ending in .pdf that's easy to understand and organize
         """
         # Clean up the DOI for use in filename
-        # Remove URL prefixes and make it filesystem-safe
+        # DOIs are like ISBN numbers for books - they uniquely identify each paper
+        # But they come with messy URL parts that we need to remove for filenames
         doi = pub_data.get('doi', '').lower()
         doi = doi.replace('https://doi.org/', '').replace('http://dx.doi.org/', '')
         doi = doi.replace('doi:', '').strip('/')
@@ -182,17 +195,20 @@ class OpenAlexFetcher:
 
         # Take first 5 words of title to keep filename reasonable length
         # This is like using a book title's first few words as a nickname
+        # Instead of "A Comprehensive Study of Machine Learning Applications..."
+        # we get "comprehensive_study_machine_learning_applications"
         title = pub_data.get('title', '')
         title_words = self.normalize_text(title).split('_')[:5]
         title_part = '_'.join(title_words) if title_words else 'no_title'
 
-        # Get publication year
+        # Get publication year - helps organize papers chronologically
         year = pub_data.get('year_pub', '').strip() or 'no_year'
 
-        # Put it all together
+        # Put it all together like building a descriptive label
         filename = f"{doi}_{title_part}_{year}.pdf"
 
         # Make sure filename isn't too long for the filesystem
+        # Most filesystems have a 255 character limit, so we stay well under that
         if len(filename) > 200:
             filename = filename[:200] + ".pdf"
 
@@ -292,17 +308,23 @@ class OpenAlexFetcher:
         """
         Find all possible PDF download links from OpenAlex work data.
 
-        OpenAlex provides multiple sources for each paper. This method collects
-        them all and ranks them by reliability. It's like checking multiple
-        libraries and bookstores for the same book, then ranking them by
-        trustworthiness.
+        Think of this like being a detective looking for a specific book.
+        OpenAlex knows about many different places where the same paper might be available:
+        - The publisher's official website (most reliable, but often behind paywall)
+        - University repositories (usually free, good quality)
+        - Preprint servers like arXiv (free, but might be earlier versions)
+        - ResearchGate (free, but quality varies)
+
+        We collect ALL possible sources and rank them by how trustworthy they are,
+        like making a list of bookstores from "most likely to have what I want"
+        to "worth a try but probably won't work".
 
         Args:
-            work: OpenAlex work dictionary containing location data
+            work: OpenAlex work dictionary containing all the location data
 
         Returns:
             List of dictionaries with 'url', 'source', and 'priority' keys,
-            sorted by priority (highest first)
+            sorted by priority (highest first, so we try the best sources first)
         """
         pdf_urls = []
         seen_urls = set()  # Keep track of URLs we've already found
@@ -452,45 +474,67 @@ class OpenAlexFetcher:
         return pdf_urls
 
     def get_source_priority(self, source):
-        """Assign priority to different sources"""
+        """
+        Assign priority scores to different academic sources.
+        
+        Think of this like rating different stores based on how likely they are
+        to actually have what you want when you get there. Some stores are
+        reliable (always have good stuff, easy to access), while others are
+        hit-or-miss (might have it, but often want you to sign up first).
+        
+        Priority scale: 95 = "Almost always works" down to 70 = "Worth a try"
+        """
         if not source:
             return 70
         
         source_lower = source.lower()
         
-        # Highest priority for known open repositories
+        # Gold standard sources - like going to the official store
+        # These almost always work and provide high-quality PDFs
         if 'pmc' in source_lower or 'pubmed' in source_lower:
-            return 95
+            return 95  # PubMed Central - government-run, very reliable
         elif 'arxiv' in source_lower:
-            return 94
+            return 94  # arXiv - preprint server, super reliable for STEM papers
         elif 'biorxiv' in source_lower or 'medrxiv' in source_lower:
-            return 93
+            return 93  # bioRxiv/medRxiv - biology/medicine preprints, very good
         elif 'plos' in source_lower:
-            return 92
+            return 92  # PLOS - open access publisher, always free
         elif 'frontiers' in source_lower:
-            return 91
+            return 91  # Frontiers - another reliable open access publisher
+            
+        # Good commercial sources with open access versions
         elif 'nature' in source_lower and 'open' in source_lower:
-            return 90
+            return 90  # Nature Open Access - high quality when available
         elif 'springer' in source_lower and 'open' in source_lower:
-            return 89
+            return 89  # Springer Open - good quality, legitimate
+            
+        # Decent open access publishers
         elif 'mdpi' in source_lower:
-            return 88
+            return 88  # MDPI - legitimate publisher, usually works
         elif 'hindawi' in source_lower:
-            return 87
+            return 87  # Hindawi - another legitimate open access publisher
+            
+        # University and institutional repositories
+        # Like borrowing from a friend's university library
         elif 'repository' in source_lower or 'archive' in source_lower:
-            return 85
+            return 85  # Institutional repositories - usually good
         elif 'university' in source_lower or '.edu' in source_lower:
-            return 84
+            return 84  # University websites - generally trustworthy
+            
+        # Data repositories - good for supplementary materials
         elif 'zenodo' in source_lower:
-            return 83
+            return 83  # Zenodo - CERN-backed repository, very reliable
         elif 'figshare' in source_lower:
-            return 82
+            return 82  # Figshare - academic data sharing, usually works
+            
+        # Social academic networks - hit or miss
+        # Like asking a colleague if they have a copy
         elif 'researchgate' in source_lower:
-            return 75  # Often requires login
+            return 75  # ResearchGate - often requires login, but sometimes works
         elif 'academia.edu' in source_lower:
-            return 74  # Often requires login
+            return 74  # Academia.edu - similar issues to ResearchGate
         else:
-            return 70
+            return 70  # Unknown source - worth trying but don't expect much
 
     def download_pdf(self, pdf_info, filename):
         """Download PDF from URL with better content type detection"""

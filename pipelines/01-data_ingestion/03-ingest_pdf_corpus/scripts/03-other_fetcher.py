@@ -67,19 +67,40 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class OtherSourcesFetcher:
+    """
+    Fetcher for additional open access sources beyond OpenAlex and CORE.
+    
+    Think of this like having a few more specialized bookstores to check
+    after visiting the main library and university bookstore. These are
+    smaller, more focused places that might have exactly what you need:
+    - Unpaywall: Like a service that tells you "hey, this book is free here!"
+    - PubMed Central: The government's free medical research library
+    - arXiv: Where researchers share early versions of their work for free
+    """
+    
     def __init__(self):
+        """
+        Set up our connections to various free academic sources.
+        
+        Unlike the previous fetchers that focused on big databases,
+        this one is like having a collection of specialized search tools
+        for finding free versions of research papers.
+        """
+        # Get our shopping list of papers to find
         self.input_file = os.getenv("PUBLICATIONS_FILE", "/app/data/publications.txt")
         self.output_dir = Path("/app/output/other")
         self.email = os.getenv('EMAIL', 'researcher@example.com')
         
-        # Create output directory
+        # Create our storage folder
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
         
-        # API setup
+        # Set up polite headers for API requests
+        # Like introducing yourself when you visit each specialized shop
         self.headers = {
             'User-Agent': f'PDFDownloader/1.0 (mailto:{self.email})',
         }
         
+        # Keep score of our success with these alternative sources
         self.stats = {'processed': 0, 'found': 0, 'downloaded': 0, 'skipped': 0, 'failed': 0}
 
     def init_tracking_file(self, publications):
@@ -158,13 +179,27 @@ class OtherSourcesFetcher:
             return []
 
     def search_unpaywall(self, pub_data):
-        """Search Unpaywall for open access PDFs"""
+        """
+        Search Unpaywall for open access PDFs.
+        
+        Unpaywall is like having a friend who knows all the places where
+        research papers are available for free. You give them a DOI (the paper's
+        unique ID number) and they tell you "Oh yeah, that paper is available
+        free here, here, and here!"
+        
+        It's especially good because it knows about:
+        - Author's personal websites where they posted free copies
+        - University repositories where the research was done
+        - Government databases for publicly funded research
+        """
         doi = pub_data.get('doi', '').strip()
         if not doi:
-            return None
+            return None  # Can't search without a DOI - like not having the book's ISBN
         
         try:
-            # Clean DOI
+            # Clean up the DOI for the API request
+            # DOIs come in messy formats like "https://doi.org/10.1234/abcd"
+            # but Unpaywall just wants the "10.1234/abcd" part
             clean_doi = doi.replace('https://doi.org/', '').replace('http://dx.doi.org/', '')
             clean_doi = clean_doi.replace('doi:', '').strip('/')
             
@@ -175,7 +210,8 @@ class OtherSourcesFetcher:
             
             data = response.json()
             
-            # Check if there are open access locations
+            # Check if Unpaywall found any free copies
+            # 'is_oa' means "is open access" - basically "is this free somewhere?"
             if data.get('is_oa') and data.get('oa_locations'):
                 for location in data['oa_locations']:
                     if location.get('url_for_pdf'):
@@ -185,28 +221,40 @@ class OtherSourcesFetcher:
                             'priority': 85
                         }
             
-            return None
+            return None  # No free copies found
             
         except Exception as e:
             logger.warning(f"Unpaywall search failed: {e}")
             return None
 
     def search_pmc(self, pub_data):
-        """Search PMC for open access PDFs"""
-        # Try by DOI first
+        """
+        Search PubMed Central (PMC) for open access PDFs.
+        
+        PMC is like the National Library of Medicine - it's run by the US government
+        and contains millions of free research papers, especially in medicine and
+        life sciences. If a paper is in PMC, it's definitely free and legal to download.
+        
+        We try two approaches:
+        1. Search by DOI (the paper's ID number) - most reliable
+        2. Search by title and year - backup method when DOI doesn't work
+        """
+        # Try by DOI first - most reliable method
+        # Like looking up a book by its ISBN number
         doi = pub_data.get('doi', '').strip()
         if doi:
             result = self.search_pmc_by_doi(doi)
             if result:
                 return result
         
-        # Try by title if no DOI success
+        # Try by title if DOI search didn't work
+        # Like looking up a book by title when you don't know the ISBN
         title = pub_data.get('title', '').strip()
         year = pub_data.get('year_pub', '').strip()
         if title:
             return self.search_pmc_by_title(title, year)
         
-        return None
+        return None  # Not found in PMC
 
     def search_pmc_by_doi(self, doi):
         """Search PMC by DOI"""
@@ -299,26 +347,41 @@ class OtherSourcesFetcher:
             return None
 
     def search_arxiv(self, pub_data):
-        """Search arXiv for papers"""
+        """
+        Search arXiv for papers.
+        
+        arXiv is like a giant bulletin board where researchers post early versions
+        of their papers before official publication. It's especially popular in:
+        - Physics and astronomy
+        - Mathematics
+        - Computer science
+        - Some areas of biology
+        
+        The papers here are "preprints" - think of them like rough drafts that
+        authors share to get feedback. They're usually very close to the final
+        published version and completely free to download.
+        """
         title = pub_data.get('title', '').strip()
         if not title:
-            return None
+            return None  # Can't search without a title
         
         try:
-            # arXiv search
+            # Search arXiv by title
+            # arXiv has a simple search API that returns XML
             url = "http://export.arxiv.org/api/query"
             params = {
-                'search_query': f'ti:"{title}"',
+                'search_query': f'ti:"{title}"',  # 'ti:' means "title:"
                 'max_results': 5
             }
             
             response = requests.get(url, params=params, timeout=10)
             response.raise_for_status()
             
-            # Parse XML response (simplified)
+            # Parse XML response (simplified approach)
+            # arXiv returns XML instead of JSON, so we use basic text parsing
             content = response.text
             if '<entry>' in content:
-                # Extract first PDF link
+                # Look for PDF download links in the XML
                 import re
                 pdf_match = re.search(r'<link title="pdf" href="([^"]+)"', content)
                 if pdf_match:
@@ -326,10 +389,10 @@ class OtherSourcesFetcher:
                     return {
                         'url': pdf_url,
                         'source': 'arxiv',
-                        'priority': 90
+                        'priority': 90  # High priority - arXiv is very reliable
                     }
             
-            return None
+            return None  # No results found
             
         except Exception as e:
             logger.warning(f"arXiv search failed: {e}")
@@ -349,25 +412,37 @@ class OtherSourcesFetcher:
         return len(intersection) / len(union) if union else 0
 
     def search_all_sources(self, pub_data):
-        """Search all other sources for PDFs"""
+        """
+        Search all our alternative sources for PDFs.
+        
+        This is like asking all your different friends if they know where
+        to find a particular book for free. We ask everyone, collect all
+        their suggestions, then try them in order of how reliable each
+        friend usually is.
+        
+        Search order:
+        1. Unpaywall - "Do you know anywhere this is free?"
+        2. PMC - "Is it in the government medical library?"
+        3. arXiv - "Did the authors post an early version?"
+        """
         sources = []
         
-        # Try Unpaywall (best for DOI-based search)
+        # Try Unpaywall first - best for discovering free copies anywhere
         unpaywall_result = self.search_unpaywall(pub_data)
         if unpaywall_result:
             sources.append(unpaywall_result)
         
-        # Try PMC
+        # Try PMC - great for medical/life science papers
         pmc_result = self.search_pmc(pub_data)
         if pmc_result:
             sources.append(pmc_result)
         
-        # Try arXiv for preprints
+        # Try arXiv - excellent for STEM preprints
         arxiv_result = self.search_arxiv(pub_data)
         if arxiv_result:
             sources.append(arxiv_result)
         
-        # Sort by priority
+        # Sort by priority - try the most reliable sources first
         sources.sort(key=lambda x: x['priority'], reverse=True)
         return sources
 

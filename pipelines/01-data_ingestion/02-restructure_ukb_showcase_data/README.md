@@ -13,12 +13,12 @@ This pipeline restructures UK Biobank showcase data by linking fields with categ
 
 | Parameter | Default | File | Method/Line | Description |
 |-----------|---------|------|-------------|-------------|
-| USE_COMPREHENSIVE_TRACKING | True | process_showcase.py | main() L20 | Enables detailed acronym tracking and validation |
-| USE_EMBEDDINGS | True | process_showcase_meta.py | main() L27 | Enables SPECTER 2 embedding-based acronym selection |
-| MAX_ACRONYMS_PER_TITLE | 4 | process_showcase_meta.py | META_INVENTORY_CFG L32 | Maximum acronyms to replace per field title |
-| SIMILARITY_THRESHOLD | 0.65 | process_showcase_meta.py | META_INVENTORY_CFG L63 | Minimum embedding similarity for acronym acceptance |
-| HIGH_CONFIDENCE_THRESHOLD | 0.91 | process_showcase_meta.py | META_INVENTORY_CFG L64 | Auto-accept threshold for high-confidence mappings |
-| EMBEDDING_BATCH_SIZE | 128 | process_showcase_meta.py | META_INVENTORY_CFG L62 | Batch size for embedding computation |
+| USE_COMPREHENSIVE_TRACKING | True | process_showcase_meta.py | main() L89 | Enables detailed acronym tracking and validation |
+| USE_EMBEDDINGS | True | process_showcase_meta.py | main() L90 | Enables SPECTER 2 embedding-based acronym selection |
+| MAX_ACRONYMS_PER_TITLE | [1,2,3,4] | process_showcase_meta.py | META_INVENTORY_CFG L95 | Maximum acronyms to replace per field title |
+| SIMILARITY_THRESHOLD | 0.65 | process_showcase_meta.py | META_INVENTORY_CFG L135 | Minimum embedding similarity for acronym acceptance |
+| HIGH_CONFIDENCE_THRESHOLD | 0.91 | process_showcase_meta.py | META_INVENTORY_CFG L136 | Auto-accept threshold for high-confidence mappings |
+| EMBEDDING_BATCH_SIZE | 128 | process_showcase_meta.py | META_INVENTORY_CFG L134 | Batch size for embedding computation |
 
 ## 🎲 Seeds and Reproducibility
 
@@ -42,7 +42,6 @@ No explicit random seeds are set as the processing is deterministic based on inp
 2. **field_category_check.py** - Data integrity validation
 3. **field_check.py** - Category summary generation
 4. **ai_consortium_validation.py** - AI-powered acronym validation (optional)
-5. **process_showcase.py** - Legacy MRCONSO processing (deprecated)
 
 ### Script Execution:
 ```bash
@@ -51,9 +50,6 @@ docker compose up ukb-meta-processor-gpu
 
 # Alternative: CPU-only Meta-Inventory processing
 docker compose up ukb-meta-processor
-
-# Legacy: MRCONSO processing (deprecated)
-docker compose up ukb-processor
 
 # Validation and reporting
 docker compose up field-category-check
@@ -83,8 +79,8 @@ cd pipelines/01-data_ingestion/02-restructure_ukb_showcase_data
 # Build and run with Meta-Inventory processing (GPU)
 docker compose up --build ukb-meta-processor-gpu
 
-# Or run MRCONSO processing (CPU)
-docker compose up --build ukb-processor
+# Or run CPU-only Meta-Inventory processing
+docker compose up --build ukb-meta-processor
 
 # View processing logs
 docker compose logs -f ukb-meta-processor-gpu
@@ -111,8 +107,7 @@ docker compose run ai-consortium
 ├── requirements.txt             # Python dependencies
 ├── README.md                    # This documentation
 ├── scripts/
-│   ├── process_showcase.py      # Main MRCONSO processing
-│   ├── process_showcase_meta.py # Meta-Inventory with embeddings
+│   ├── process_showcase_meta.py # Meta-Inventory processing with SPECTER 2 embeddings
 │   ├── field_check.py           # Category summary generation
 │   ├── field_category_check.py  # Data integrity validation
 │   └── ai_consortium_validation.py # AI-powered validation
@@ -181,10 +176,10 @@ OUTPUT_PATH=/output
 
 - Processing time varies based on input size and embedding usage (5-30 minutes)
 - GPU acceleration strongly recommended for Meta-Inventory processing with SPECTER 2
-- Meta-Inventory provides higher quality acronym mappings than legacy MRCONSO approach
+- Meta-Inventory provides high-quality acronym mappings using semantic similarity
 - Output files can be large (>100MB) depending on UK Biobank data size
 - Embedding cache persists between runs for efficiency
-- MRCONSO-based processing (process_showcase.py) is deprecated - use Meta-Inventory instead
+- Multi-column acronym generation creates all possible combinations for flexibility
 
 ---
 ✨ Pipeline ready for execution
