@@ -1,10 +1,10 @@
-# 🔄 The Luddite Loop: Core–Periphery Analysis of UK Biobank Research  
+## 🔄 The Luddite Loop: Core–Periphery Analysis of UK Biobank Research  
 
 > *How medical conservatism trapped 8,553 studies in just 50 features*  
 
 ---
 
-# 🚧 **STATUS: PENDING – Dissertation Work in Progress** 🚧  
+## 🚧 **STATUS: PENDING – Dissertation Work in Progress** 🚧  
 
 ---
 
