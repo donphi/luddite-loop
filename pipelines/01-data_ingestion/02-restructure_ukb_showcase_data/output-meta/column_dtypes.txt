@@ -52,7 +52,21 @@ ENCODING.TXT COLUMNS:
 FINAL FIELDS COLUMNS:
   field_id: Int64
   title: object
-  acr_abb: string
+  acr_abb_1: string
+  acr_abb_2: string
+  acr_abb_3: string
+  acr_abb_4: string
+  acr_abb_5: string
+  acr_abb_6: string
+  acr_abb_7: string
+  acr_abb_8: string
+  acr_abb_9: string
+  acr_abb_10: string
+  acr_abb_11: string
+  acr_abb_12: string
+  acr_abb_13: string
+  acr_abb_14: string
+  acr_abb_15: string
   category_id: int64
   category_title: object
   availability: Int64
@@ -93,7 +107,21 @@ FINAL FIELDS COLUMNS:
 FIELD CODEBOOK COLUMNS:
   field_id: Int64
   title: string
-  acr_abb: string
+  acr_abb_1: string
+  acr_abb_2: string
+  acr_abb_3: string
+  acr_abb_4: string
+  acr_abb_5: string
+  acr_abb_6: string
+  acr_abb_7: string
+  acr_abb_8: string
+  acr_abb_9: string
+  acr_abb_10: string
+  acr_abb_11: string
+  acr_abb_12: string
+  acr_abb_13: string
+  acr_abb_14: string
+  acr_abb_15: string
   encoding_id: Int64
   coding: string
   meaning: string

@@ -47,7 +47,22 @@ services:
     command: python scripts/03-other_fetcher.py
     profiles: ["stage3"]
 
-  # Stage 4: PDF Validation and Deduplication
+  # Stage 4: Manual Download Helper (Docker Interactive)
+  manual-helper:
+    build: .
+    env_file: [.env]
+    working_dir: /app
+    stdin_open: true  # Keep STDIN open for interactive CLI
+    tty: true         # Allocate pseudo-TTY for interactive session
+    volumes:
+      - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python scripts/04-manual_download_helper.py
+    profiles: ["stage4"]
+
+  # Stage 5: PDF Validation and Deduplication
   validator:
     build: .
     env_file: [.env]
@@ -57,14 +72,44 @@ services:
       - ./output:/app/output
     environment:
       - PYTHONUNBUFFERED=1
-    command: python scripts/04-validate_dedupe.py
-    profiles: ["stage4"]
+    command: python scripts/05-validate_dedupe.py
+    profiles: ["stage5"]
 
-  # Run all stages sequentially (optional convenience)
-  full-pipeline:
+  # Run automated stages only (1-3) plus initial validation
+  auto:
     build: .
     env_file: [.env]
     working_dir: /app
+    volumes:
+      - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
+      - ./output:/app/output
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      sh -c "
+        echo 'Starting automated PDF download pipeline...' &&
+        python scripts/01-openalex_fetcher.py &&
+        echo 'OpenAlex stage complete. Starting CORE...' &&
+        python scripts/02-core_fetcher.py &&
+        echo 'CORE stage complete. Starting other sources...' &&
+        python scripts/03-other_fetcher.py &&
+        echo 'Other sources complete. Running initial validation...' &&
+        python scripts/05-validate_dedupe.py &&
+        echo '' &&
+        echo '================================================' &&
+        echo 'Automated pipeline complete!' &&
+        echo 'Check ./output/manual_download.txt for URLs that need manual download' &&
+        echo '================================================'
+      "
+    profiles: ["automated"]
+
+  # Full pipeline with manual step
+  full:
+    build: .
+    env_file: [.env]
+    working_dir: /app
+    stdin_open: true  
+    tty: true
     volumes:
       - ../01-ingest_ukb_showcase_data/input/publications.txt:/app/data/publications.txt:ro
       - ./output:/app/output
@@ -78,8 +123,17 @@ services:
         python scripts/02-core_fetcher.py &&
         echo 'CORE stage complete. Starting other sources...' &&
         python scripts/03-other_fetcher.py &&
-        echo 'Other sources complete. Starting validation...' &&
-        python scripts/04-validate_dedupe.py &&
-        echo 'Pipeline complete!'
+        echo 'Other sources complete. Running initial validation...' &&
+        python scripts/05-validate_dedupe.py &&
+        echo '' &&
+        echo '================================================' &&
+        echo 'Starting manual download helper...' &&
+        echo '================================================' &&
+        python scripts/04-manual_download_helper.py &&
+        echo 'Manual downloads complete. Re-running validation...' &&
+        python scripts/05-validate_dedupe.py &&
+        echo '================================================' &&
+        echo 'Full pipeline complete!' &&
+        echo '================================================'
       "
     profiles: ["full"]

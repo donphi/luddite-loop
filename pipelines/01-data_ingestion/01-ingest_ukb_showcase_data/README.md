@@ -28,12 +28,12 @@ This is a **manual data gathering process** and does not involve automated scrip
 1.  **field.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=1).
 2.  **encoding.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=2).
 3.  **category.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=3).
-4.  **ehierstring.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=4).
-5.  **ehierint.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=5).
+4.  **ehierstring.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=12).
+5.  **ehierint.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=11).
 6.  **esimpstring.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=6).
-7.  **esimpint.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=7).
-8.  **esimpreal.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=8).
-9.  **esimptime.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=9).
+7.  **esimpint.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=5).
+8.  **esimpreal.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=7).
+9.  **esimptime.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=20).
 10. **publications.txt**: Download from [UK Biobank Schema](https://biobank.ndph.ox.ac.uk/ukb/schema.cgi?id=19).
 11. **Metainventory_Version1.0.0.csv**: Download the Medical Abbreviation and Acronym Meta-Inventory from either:
     - [Columbia University Department of Biomedical Informatics](https://github.com/cumc/medical_abbreviations)

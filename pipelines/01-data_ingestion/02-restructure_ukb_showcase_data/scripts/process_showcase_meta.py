@@ -78,6 +78,7 @@ import torch
 from transformers import AutoModel, AutoTokenizer
 from sklearn.metrics.pairwise import cosine_similarity
 import hashlib
+from itertools import combinations
 
 try:
     import ahocorasick  # pip install pyahocorasick
@@ -91,11 +92,20 @@ USE_EMBEDDINGS = True  # Toggle for embedding-based selection
 # Meta-Inventory configuration
 META_INVENTORY_CFG = {
     # Matching parameters
-    "MAX_ACRONYMS_PER_TITLE": 4,  # Maximum acronyms to replace per title
+    "MAX_ACRONYMS_PER_TITLE": [1,2,3,4],  # Maximum acronyms to replace per title
+                                  # Can be an integer (original behavior with single acr_abb column)
+                                  # Or list/tuple like [1,2,3,4] to generate all combinations
+                                  # e.g., 4 = single column with up to 4 replacements
+                                  # [1,2,3,4] = multiple columns with all combinations up to 4
     "MIN_PHRASE_LEN": 2,          # Minimum phrase length to consider
     "MIN_ACRONYM_LEN": 2,          # Minimum acronym length
     "MAX_ACRONYM_LEN": 10,         # Maximum acronym length
     "SKIP_EMBEDDING_FOR_SINGLE_LETTERS": True,  # Single letters have poor embedding similarity
+
+    # Normalization parameters
+    "NORMALIZE_CONNECTORS": True,  # Normalize prepositions and articles for better matching
+    "CONNECTOR_WORDS": ['at', 'in', 'on', 'of', 'by', 'to', 'for', 'with', 'from', 'as', 'is', 'the', 'a', 'an'],
+    "NORMALIZE_NUMBERS": True,  # Convert "one" -> "1", "two" -> "2", etc.
     
     # Source priorities (higher = better) - used as fallback when embeddings unavailable
     "SOURCE_SCORES": {
@@ -287,8 +297,11 @@ class AcronymEmbeddingSelector:
         acronyms = [acr for acr, _ in acronym_candidates]
         source_scores = [score for _, score in acronym_candidates]
         
-        # Generate embeddings for long form and all candidates
-        texts_to_embed = [long_form] + acronyms
+        # Normalize the long form for better semantic matching
+        normalized_long_form = _norm_semantic(long_form) if META_INVENTORY_CFG.get('NORMALIZE_CONNECTORS', True) else long_form
+        
+        # Generate embeddings for normalized long form and all candidates
+        texts_to_embed = [normalized_long_form] + acronyms
         embeddings = self.embed_batch(texts_to_embed)
         
         long_embedding = embeddings[0:1]  # Keep as 2D array
@@ -451,6 +464,48 @@ def _norm(s: str):
     s = s.replace('-', ' ').replace('/', ' ')
     return ' '.join(s.split())
 
+def _norm_semantic(s: str) -> str:
+    """Normalize string for semantic comparison by removing connector words and normalizing numbers"""
+    if pd.isna(s) or s is None:
+        return None
+    
+    s = _norm(s)  # Apply basic normalization first
+    
+    cfg = META_INVENTORY_CFG
+    
+    if cfg.get('NORMALIZE_NUMBERS', True):
+        # Convert written numbers to digits
+        number_map = {
+            'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5',
+            'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'ten': '10',
+            'first': '1st', 'second': '2nd', 'third': '3rd', 'fourth': '4th', 'fifth': '5th'
+        }
+        for word, digit in number_map.items():
+            s = re.sub(r'\b' + word + r'\b', digit, s, flags=re.IGNORECASE)
+    
+    if cfg.get('NORMALIZE_CONNECTORS', True):
+        # Remove connector words but preserve word boundaries
+        connector_words = cfg.get('CONNECTOR_WORDS', [])
+        
+        # Split into words
+        words = s.split()
+        
+        # Filter out connector words while preserving important content
+        filtered_words = []
+        for i, word in enumerate(words):
+            # Keep the word if it's not a connector OR if it's critical for meaning
+            # (e.g., keep numbers and important medical terms)
+            if word not in connector_words or word.isdigit() or len(word) > 3:
+                filtered_words.append(word)
+        
+        # Rejoin, preserving at least minimal structure
+        s = ' '.join(filtered_words)
+    
+    # Clean up any extra spaces
+    s = ' '.join(s.split())
+    
+    return s
+
 def validate_acronym_match(acronym: str, phrase: str) -> bool:
     """Validate if an acronym is reasonable for a given phrase"""
     cfg = META_INVENTORY_CFG
@@ -504,6 +559,11 @@ def load_meta_inventory(meta_inv_file: Path) -> pd.DataFrame:
     meta_df['SF'] = meta_df['SF'].str.strip()
     meta_df['LF'] = meta_df['LF'].str.strip()
     meta_df['NormLF'] = meta_df['LF'].apply(_norm)
+
+    if META_INVENTORY_CFG.get('NORMALIZE_CONNECTORS', True):
+        meta_df['NormLF_Semantic'] = meta_df['NormLF'].apply(_norm_semantic)
+    else:
+        meta_df['NormLF_Semantic'] = meta_df['NormLF']
     
     if 'NormSF' not in meta_df.columns:
         meta_df['NormSF'] = meta_df['SF'].str.upper()
@@ -549,9 +609,10 @@ def build_comprehensive_meta_inventory_data(meta_df: pd.DataFrame, embedding_sel
         return {}, {}
     
     cfg = META_INVENTORY_CFG
-    
-    # Group by normalized long form
-    grouped = meta_df.groupby('NormLF')
+
+    # Group by semantic normalized long form for better matching
+    group_col = 'NormLF_Semantic' if 'NormLF_Semantic' in meta_df.columns else 'NormLF'
+    grouped = meta_df.groupby(group_col)
     
     full2candidates = {}
     full2best = {}
@@ -560,14 +621,17 @@ def build_comprehensive_meta_inventory_data(meta_df: pd.DataFrame, embedding_sel
     print("\n🔄 Processing phrase groups...")
     total_groups = len(grouped)
     
-    for i, (norm_phrase, group) in enumerate(grouped):
+    for i, (norm_phrase_semantic, group) in enumerate(grouped):
+        # Get all the original normalized forms that map to this semantic form
+        original_norm_phrases = group['NormLF'].unique()
+        
         if i % 100 == 0 and i > 0:
             print(f"  Processed {i}/{total_groups} phrase groups...")
         
-        if pd.isna(norm_phrase) or not norm_phrase:
+        if pd.isna(norm_phrase_semantic) or not norm_phrase_semantic:
             continue
         
-        if cfg['MIN_PHRASE_WORDS'] > 1 and ' ' not in norm_phrase:
+        if cfg['MIN_PHRASE_WORDS'] > 1 and ' ' not in norm_phrase_semantic:
             continue
         
         # Create candidate list
@@ -584,7 +648,7 @@ def build_comprehensive_meta_inventory_data(meta_df: pd.DataFrame, embedding_sel
             source = row.get('Source', 'Unknown')
             score = row.get('score', 50)
             
-            if not validate_acronym_match(acronym, norm_phrase):
+            if not validate_acronym_match(acronym, original_norm_phrases[0]):  # Validate against first original form
                 continue
             
             candidates.append((
@@ -599,13 +663,14 @@ def build_comprehensive_meta_inventory_data(meta_df: pd.DataFrame, embedding_sel
         if not candidates:
             continue
 
-        if norm_phrase in ['left', 'right']:
-            print(f"🔍 {norm_phrase}: candidates={[(c[0], c[5]) for c in candidates]}")
+        if norm_phrase_semantic in ['left', 'right']:
+            print(f"🔍 {norm_phrase_semantic}: candidates={[(c[0], c[5]) for c in candidates]}")
         
         embedding_selected = False
         # Use embedding selector if available and enabled
         if USE_EMBEDDINGS and embedding_selector and len(candidates) > 1:
-            best_acr, similarity = embedding_selector.process_phrase_group(norm_phrase, candidates)
+            # Use the semantic normalized form for embedding comparison
+            best_acr, similarity = embedding_selector.process_phrase_group(norm_phrase_semantic, candidates)
             if best_acr and similarity >= META_INVENTORY_CFG["SIMILARITY_THRESHOLD"]:
                 # Reorder candidates to put embedding-selected best first
                 candidates = sorted(candidates, 
@@ -619,9 +684,11 @@ def build_comprehensive_meta_inventory_data(meta_df: pd.DataFrame, embedding_sel
         # Keep only top N candidates
         candidates = candidates[:10]
         
-        full2candidates[norm_phrase] = candidates
-        if candidates:
-            full2best[norm_phrase] = candidates[0][0]
+        # Store mappings for all original normalized forms that map to this semantic form
+        for original_norm in original_norm_phrases:
+            full2candidates[original_norm] = candidates
+            if candidates:
+                full2best[original_norm] = candidates[0][0]
     
     print(f"  ✓ Created {len(full2best):,} unique phrase→acronym mappings")
     
@@ -637,41 +704,75 @@ def build_comprehensive_meta_inventory_data(meta_df: pd.DataFrame, embedding_sel
     
     return full2candidates, full2best
 
+
 def apply_acronyms_with_tracking(fields_df: pd.DataFrame, full2candidates: dict) -> tuple:
-    """Apply acronyms with comprehensive tracking and limit per title"""
+    """Apply acronyms with comprehensive tracking and limit per title
+    
+    If MAX_ACRONYMS_PER_TITLE is a list/tuple, generates all combinations.
+    If it's an integer, uses original single-column behavior.
+    """
     if not ahocorasick:
         print("⚠️ pyahocorasick required for substring matching!")
-        return pd.Series([""] * len(fields_df), dtype='string'), pd.DataFrame()
+        if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+            max_combos = sum(range(1, max(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE']) + 1))
+            empty_cols = {f'acr_abb_{i+1}': pd.Series([""] * len(fields_df), dtype='string') 
+                         for i in range(max_combos)}
+            return empty_cols, pd.DataFrame()
+        else:
+            return pd.Series([""] * len(fields_df), dtype='string'), pd.DataFrame()
     
     cfg = META_INVENTORY_CFG
     
-    # First, build the automaton with all phrases
+    # Determine if we're in multi-column mode
+    multi_column_mode = isinstance(cfg['MAX_ACRONYMS_PER_TITLE'], (list, tuple))
+    if multi_column_mode:
+        max_acronyms = max(cfg['MAX_ACRONYMS_PER_TITLE'])
+        # Calculate total columns needed (sum of 1 to max_acronyms)
+        total_columns = 2**max_acronyms - 1
+    else:
+        max_acronyms = cfg['MAX_ACRONYMS_PER_TITLE']
+        total_columns = 1
+    
+    # Build the automaton
     A = ahocorasick.Automaton()
     for full_phrase, candidates in full2candidates.items():
         if full_phrase and len(full_phrase) >= cfg['MIN_PHRASE_LEN']:
             A.add_word(full_phrase, (full_phrase, candidates))
     A.make_automaton()
     
-    applied = []
+    # Initialize result storage
+    if multi_column_mode:
+        all_results = {f'acr_abb_{i+1}': [] for i in range(total_columns)}
+    else:
+        applied = []
+    
     all_candidates_list = []
     
-    # Global mapping of phrases to their best acronyms (for consistency)
+    # Global mapping for consistency
     global_phrase_to_acronym = {}
     for phrase, candidates in full2candidates.items():
         if candidates:
-            global_phrase_to_acronym[phrase] = candidates[0][0]  # Best acronym is first
+            global_phrase_to_acronym[phrase] = candidates[0][0]
     
     for idx, row in fields_df.iterrows():
         title = row['title']
         field_id = row['field_id']
         
         if pd.isna(title):
-            applied.append("")
+            if multi_column_mode:
+                for col in all_results:
+                    all_results[col].append("")
+            else:
+                applied.append("")
             continue
         
         norm_title = _norm(str(title))
         if not norm_title:
-            applied.append("")
+            if multi_column_mode:
+                for col in all_results:
+                    all_results[col].append("")
+            else:
+                applied.append("")
             continue
         
         # Find ALL matches in this title
@@ -690,7 +791,11 @@ def apply_acronyms_with_tracking(fields_df: pd.DataFrame, full2candidates: dict)
             matches.append((start_pos, end_pos, matched_phrase, candidates))
         
         if not matches:
-            applied.append("")
+            if multi_column_mode:
+                for col in all_results:
+                    all_results[col].append("")
+            else:
+                applied.append("")
             continue
         
         # Sort by length (longest first) then by position
@@ -701,77 +806,133 @@ def apply_acronyms_with_tracking(fields_df: pd.DataFrame, full2candidates: dict)
         taken = [False] * len(norm_title)
         
         for start, end, phrase, candidates in matches:
-            # Check if this position is already taken
             if any(taken[i] for i in range(start, end + 1)):
                 continue
             
-            # Mark positions as taken
             for i in range(start, end + 1):
                 taken[i] = True
             
             chosen_matches.append((start, end, phrase, candidates))
             
-            # Limit number of replacements per title
-            if len(chosen_matches) >= cfg['MAX_ACRONYMS_PER_TITLE']:
+            if len(chosen_matches) >= max_acronyms:
                 break
         
         if not chosen_matches:
-            applied.append("")
+            if multi_column_mode:
+                for col in all_results:
+                    all_results[col].append("")
+            else:
+                applied.append("")
             continue
         
-        # Now apply the replacements to the original title
         # Sort by position for correct replacement
         chosen_matches.sort(key=lambda x: x[0])
         
-        # Build the replacement mapping
+        # Build replacement data
         replacements = []
         for start, end, phrase, candidates in chosen_matches:
             best_acronym = global_phrase_to_acronym.get(phrase)
             if best_acronym:
-                # Find the phrase in the original title (case-insensitive)
-                # Create a pattern that matches the phrase with flexible spacing
                 tokens = phrase.split()
                 pattern = r'\b' + r'[\s\-/]*'.join(re.escape(tok) for tok in tokens) + r'\b'
                 replacements.append((pattern, best_acronym, phrase, candidates))
         
-        # Apply replacements to original title
-        replaced_title = title
-        for pattern_str, acronym, phrase, candidates in replacements:
-            pattern = re.compile(pattern_str, re.IGNORECASE)
-            replaced_title = pattern.sub(acronym, replaced_title)
+        if multi_column_mode:
+            # Generate all combinations
+            column_idx = 0
+            for combo_size in range(1, min(len(replacements) + 1, max_acronyms + 1)):
+                for combo in combinations(range(len(replacements)), combo_size):
+                    if column_idx >= total_columns:  # Stop if we've filled all columns
+                        break
+                    # Apply this combination
+                    replaced_title = title
+                    for i in combo:
+                        pattern_str, acronym, phrase, candidates = replacements[i]
+                        pattern = re.compile(pattern_str, re.IGNORECASE)
+                        replaced_title = pattern.sub(acronym, replaced_title)
+                        
+                        # Track candidates for the first occurrence only
+                        if column_idx == 0:
+                            for rank, cand in enumerate(candidates[:5], 1):
+                                if len(cand) >= 6:
+                                    acr, cui, sab, tty, sty_list, score = cand
+                                    all_candidates_list.append({
+                                        'field_id': field_id,
+                                        'title': title,
+                                        'matched_phrase': phrase,
+                                        'replaced_title': replaced_title,
+                                        'candidate_acronym': acr,
+                                        'cui': cui,
+                                        'sab': sab,
+                                        'tty': tty,
+                                        'sty': '|'.join(sty_list) if sty_list else "",
+                                        'score': score,
+                                        'rank': rank,
+                                        'chosen': rank == 1,
+                                        'has_conflict': False,
+                                        'domain': 'medical'
+                                    })
+                    
+                    # Remove redundant patterns
+                    redundant_pattern = re.compile(r'\b(\w+)\s*\(\s*\1\s*\)', re.IGNORECASE)
+                    replaced_title = redundant_pattern.sub(r'\1', replaced_title)
+                    
+                    all_results[f'acr_abb_{column_idx + 1}'].append(
+                        replaced_title if replaced_title != title else ""
+                    )
+                    column_idx += 1
             
-            # Track all candidates for reporting
-            for rank, cand in enumerate(candidates[:5], 1):
-                if len(cand) >= 6:
-                    acr, cui, sab, tty, sty_list, score = cand
-                    all_candidates_list.append({
-                        'field_id': field_id,
-                        'title': title,
-                        'matched_phrase': phrase,
-                        'replaced_title': replaced_title,
-                        'candidate_acronym': acr,
-                        'cui': cui,
-                        'sab': sab,
-                        'tty': tty,
-                        'sty': '|'.join(sty_list) if sty_list else "",
-                        'score': score,
-                        'rank': rank,
-                        'chosen': rank == 1,
-                        'has_conflict': False,
-                        'domain': 'medical'
-                    })
+            # Fill remaining columns with empty strings
+            while column_idx < total_columns:
+                all_results[f'acr_abb_{column_idx + 1}'].append("")
+                column_idx += 1
         
-        # Remove redundant patterns like "BP (BP)"
-        redundant_pattern = re.compile(r'\b(\w+)\s*\(\s*\1\s*\)', re.IGNORECASE)
-        replaced_title = redundant_pattern.sub(r'\1', replaced_title)
-        
-        if replaced_title != title:
-            applied.append(replaced_title)
         else:
-            applied.append("")
+            # Original single-column behavior
+            replaced_title = title
+            for pattern_str, acronym, phrase, candidates in replacements:
+                pattern = re.compile(pattern_str, re.IGNORECASE)
+                replaced_title = pattern.sub(acronym, replaced_title)
+                
+                # Track all candidates for reporting
+                for rank, cand in enumerate(candidates[:5], 1):
+                    if len(cand) >= 6:
+                        acr, cui, sab, tty, sty_list, score = cand
+                        all_candidates_list.append({
+                            'field_id': field_id,
+                            'title': title,
+                            'matched_phrase': phrase,
+                            'replaced_title': replaced_title,
+                            'candidate_acronym': acr,
+                            'cui': cui,
+                            'sab': sab,
+                            'tty': tty,
+                            'sty': '|'.join(sty_list) if sty_list else "",
+                            'score': score,
+                            'rank': rank,
+                            'chosen': rank == 1,
+                            'has_conflict': False,
+                            'domain': 'medical'
+                        })
+            
+            # Remove redundant patterns
+            redundant_pattern = re.compile(r'\b(\w+)\s*\(\s*\1\s*\)', re.IGNORECASE)
+            replaced_title = redundant_pattern.sub(r'\1', replaced_title)
+            
+            if replaced_title != title:
+                applied.append(replaced_title)
+            else:
+                applied.append("")
     
     candidates_df = pd.DataFrame(all_candidates_list)
-    return pd.Series(applied, dtype='string'), candidates_df
+    
+    if multi_column_mode:
+        # Convert lists to Series
+        result_series = {col: pd.Series(data, dtype='string') 
+                        for col, data in all_results.items()}
+        return result_series, candidates_df
+    else:
+        return pd.Series(applied, dtype='string'), candidates_df
 
 # ----------------------------- dictionary helpers (unchanged) -----------------------------
 
@@ -914,9 +1075,18 @@ def main():
                 full2candidates, full2acr = build_comprehensive_meta_inventory_data(
                     meta_df, embedding_selector
                 )
-                fields_df['acr_abb'], candidates_df = apply_acronyms_with_tracking(
+                acr_result, candidates_df = apply_acronyms_with_tracking(
                     fields_df, full2candidates
                 )
+                
+                # Handle both single and multi-column modes
+                if isinstance(acr_result, dict):
+                    # Multi-column mode
+                    for col_name, col_data in acr_result.items():
+                        fields_df[col_name] = col_data
+                else:
+                    # Single-column mode
+                    fields_df['acr_abb'] = acr_result
                 
                 if not candidates_df.empty:
                     candidates_df.to_parquet(output_dir / 'acronym_candidates.parquet')
@@ -956,7 +1126,13 @@ def main():
         fields_df['acr_abb'] = pd.Series([""] * len(fields_df), dtype='string')
 
     # Move acr_abb column after title
-    fields_df = move_after(fields_df, 'title', ['acr_abb'])
+    if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+        max_val = max(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'])
+        total_cols = 2**max_val - 1
+        acr_cols = [f'acr_abb_{i+1}' for i in range(total_cols)]
+        fields_df = move_after(fields_df, 'title', acr_cols)
+    else:
+        fields_df = move_after(fields_df, 'title', ['acr_abb'])
 
     # ========== REST OF PROCESSING (unchanged) ==========
     # [Keep all the rest of the code unchanged - category joining, dictionary processing, saving outputs, etc.]
@@ -1021,8 +1197,16 @@ def main():
         'encoding_has_hierarchy','encoding_system','encoding_description'
     ]
     enriched = move_after(enriched, 'encoding_id', to_place)
-    enriched = move_after(enriched, 'title', ['acr_abb'])
-    enriched = reorder_columns(enriched, ['field_id','title','acr_abb','category_id','category_title'])
+
+    # Column order
+    if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+        max_val = max(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'])
+        total_cols = 2**max_val - 1
+        acr_cols = [f'acr_abb_{i+1}' for i in range(total_cols)]
+        first_cols = ['field_id', 'title'] + acr_cols + ['category_id', 'category_title']
+    else:
+        first_cols = ['field_id', 'title', 'acr_abb', 'category_id', 'category_title']
+    enriched = reorder_columns(enriched, first_cols)
     enriched = enriched.loc[:, ~enriched.columns.duplicated()]
 
     print("\n🧭 Building unified dictionary values…")
@@ -1054,7 +1238,15 @@ def main():
     enc_used = set(enriched['encoding_id'].dropna().unique().tolist())
     dictionary_values = dictionary_values[dictionary_values['encoding_id'].isin(enc_used)]
 
-    field_core = enriched[['field_id','title','acr_abb','encoding_id']].drop_duplicates()
+    if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+        max_val = max(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'])
+        total_cols = 2**max_val - 1
+        acr_cols = [f'acr_abb_{i+1}' for i in range(total_cols)]
+        # For codebook, you might want just the first column or all columns
+        field_core = enriched[['field_id','title'] + acr_cols + ['encoding_id']].drop_duplicates()
+    else:
+        field_core = enriched[['field_id','title','acr_abb','encoding_id']].drop_duplicates()
+
     field_codebook = field_core.merge(dictionary_values, on='encoding_id', how='left')
     
     field_codebook = field_codebook.merge(
@@ -1068,7 +1260,16 @@ def main():
     field_codebook['parent_id']   = pd.to_numeric(field_codebook['parent_id'], errors='coerce').astype('Int64')
     field_codebook['selectable']  = pd.to_numeric(field_codebook['selectable'], errors='coerce').fillna(0).astype('Int8')
 
-    for col in ['title','acr_abb','coding','meaning','encoding_system']:
+    cols_to_type = ['title','coding','meaning','encoding_system']
+    if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+        # Add all acr_abb columns
+        acr_cols = [c for c in field_codebook.columns if c.startswith('acr_abb_')]
+        cols_to_type.extend(acr_cols)
+    else:
+        if 'acr_abb' in field_codebook.columns:
+            cols_to_type.append('acr_abb')
+
+    for col in cols_to_type:
         if col in field_codebook.columns:
             field_codebook[col] = field_codebook[col].astype('string')
 
@@ -1119,38 +1320,68 @@ def main():
     no_category_fields = (enriched['category_title'] == 'No Category Assigned').sum()
     unmatched_fields = (enriched['category_title'] == 'Unmatched Category').sum()
 
-    if 'acr_abb' in enriched.columns:
-        abbr_matched = enriched['acr_abb'].fillna("").astype(str).str.len().gt(0).sum()
+    if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+        abbr_matched = enriched['acr_abb_1'].fillna("").astype(str).str.len().gt(0).sum()
     else:
-        abbr_matched = 0
+        abbr_matched = enriched.get('acr_abb', pd.Series([""] * len(enriched), dtype='string')).fillna("").astype(str).str.len().gt(0).sum()
     
     # Analyze acronym coverage
     print("\n📊 ACRONYM COVERAGE ANALYSIS")
     print("=" * 50)
 
     # Count unique acronyms captured
-    if 'acr_abb' in enriched.columns:
-        has_acronym = enriched['acr_abb'].fillna("").astype(str).str.len() > 0
+    if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+        has_acronym = enriched['acr_abb_1'].fillna("").astype(str).str.len() > 0
         matched_df = enriched[has_acronym].copy()
         
         unique_acronyms = set()
-        for title in matched_df['acr_abb']:
-            acronyms = re.findall(r'\b[A-Z]{2,10}\b', str(title))
-            unique_acronyms.update(acronyms)
+        for col in [c for c in enriched.columns if c.startswith('acr_abb_')]:
+            for title in matched_df[col]:
+                if pd.notna(title) and title:
+                    acronyms = re.findall(r'\b[A-Z]{2,10}\b', str(title))
+                    unique_acronyms.update(acronyms)
         
+        # ADD THE MISSING STATS OUTPUT:
         print(f"✓ Fields with replacements: {len(matched_df):,} / {total_fields:,} ({len(matched_df)/total_fields*100:.1f}%)")
         print(f"✓ Unique acronyms used: {len(unique_acronyms)}")
         print(f"✓ Top 20 acronyms: {sorted(list(unique_acronyms))[:20]}")
         
         no_acronym = enriched[~has_acronym].copy()
         print(f"\n✗ Fields without acronyms: {len(no_acronym):,}")
-        
+
         print("\nPotential missed opportunities (sample):")
         for _, row in no_acronym.head(20).iterrows():
             title = row['title']
             parens = re.findall(r'\(([A-Z]{2,10})\)', str(title))
             if parens:
                 print(f"  - '{title}' (contains: {parens})")
+        
+    else:  # Single-column mode
+        if 'acr_abb' in enriched.columns:
+            has_acronym = enriched['acr_abb'].fillna("").astype(str).str.len() > 0
+            matched_df = enriched[has_acronym].copy()  # ADD THIS LINE
+            
+            unique_acronyms = set()
+            for title in matched_df['acr_abb']:
+                acronyms = re.findall(r'\b[A-Z]{2,10}\b', str(title))
+                unique_acronyms.update(acronyms)
+            
+            print(f"✓ Fields with replacements: {len(matched_df):,} / {total_fields:,} ({len(matched_df)/total_fields*100:.1f}%)")
+            print(f"✓ Unique acronyms used: {len(unique_acronyms)}")
+            print(f"✓ Top 20 acronyms: {sorted(list(unique_acronyms))[:20]}")
+            
+            no_acronym = enriched[~has_acronym].copy()
+            print(f"\n✗ Fields without acronyms: {len(no_acronym):,}")
+            
+            print("\nPotential missed opportunities (sample):")
+            for _, row in no_acronym.head(20).iterrows():
+                title = row['title']
+                parens = re.findall(r'\(([A-Z]{2,10})\)', str(title))
+                if parens:
+                    print(f"  - '{title}' (contains: {parens})")
+        else:
+            # No acronym column exists
+            print("✗ No acronym columns found")
 
     print("\n📝 Exporting unique acronym mappings...")
     unique_mappings = {}
@@ -1242,7 +1473,12 @@ def main():
     # Generate human verification sample
     print("\n📋 Generating human verification sample...")
 
-    matched_acronyms = enriched[enriched['acr_abb'].fillna("").astype(str).str.len() > 0].copy()
+    if isinstance(META_INVENTORY_CFG['MAX_ACRONYMS_PER_TITLE'], (list, tuple)):
+        matched_acronyms = enriched[enriched['acr_abb_1'].fillna("").astype(str).str.len() > 0].copy()
+        # For verification, you might want to use the first column as reference
+        matched_acronyms['acr_abb'] = matched_acronyms['acr_abb_1']  # Create temp column for compatibility
+    else:
+        matched_acronyms = enriched[enriched['acr_abb'].fillna("").astype(str).str.len() > 0].copy()
 
     if len(matched_acronyms) > 0:
         if candidates_file.exists():

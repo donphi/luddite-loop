@@ -1,6 +1,6 @@
 ACRONYMS BY FREQUENCY
 ==================================================
-Total unique acronyms: 652
+Total unique acronyms: 587
 ==================================================
 
 
@@ -11,14 +11,6 @@ CS (10 phrases):
   - circumferential strain
   - congenital syphilis
   ... and 5 more
-
-AA (8 phrases):
-  - acetoacetate
-  - alopecia areata
-  - amino acid
-  - aortic aneurysm
-  - arteries
-  ... and 3 more
 
 AB (7 phrases):
   - abdomen
@@ -44,6 +36,14 @@ PA (7 phrases):
   - pantothenic acid
   ... and 2 more
 
+AA (6 phrases):
+  - acetoacetate
+  - alopecia areata
+  - aortic aneurysm
+  - ascending aorta
+  - reactive
+  ... and 1 more
+
 CA (6 phrases):
   - abnormalities
   - activity
@@ -58,22 +58,6 @@ PD (6 phrases):
   - parkinsonism
   - patients
   - personality disorders
-  ... and 1 more
-
-PO (6 phrases):
-  - administered
-  - parietal operculum
-  - parieto occipital
-  - post operative
-  - posterior
-  ... and 1 more
-
-SD (6 phrases):
-  - depletion
-  - diameter
-  - seborrhoeic dermatitis
-  - sexual dysfunction
-  - sleep disorders
   ... and 1 more
 
 SE (6 phrases):
@@ -91,13 +75,6 @@ AD (5 phrases):
   - anxiety disorders
   - atopic dermatitis
 
-AP (5 phrases):
-  - abdominal pain
-  - acute pancreatitis
-  - angina pectoris
-  - appendicitis
-  - appendix
-
 CD (5 phrases):
   - caudate
   - coeliac disease
@@ -111,13 +88,6 @@ CI (5 phrases):
   - cerebral infarction
   - cirrhosis
   - cochlear implant
-
-CP (5 phrases):
-  - cerebral peduncle
-  - chest pain
-  - choroid plexus
-  - classical
-  - process
 
 CT (5 phrases):
   - catalase
@@ -140,26 +110,12 @@ EM (5 phrases):
   - endometriosis
   - erythema multiforme
 
-IC (5 phrases):
-  - component
-  - insular cortex
-  - intercourse
-  - internal capsule
-  - intracranial
-
 ID (5 phrases):
   - identifier
   - immunodeficiency
   - infectious diseases
   - internal derangement
   - iodine deficiency
-
-RF (5 phrases):
-  - frequencies
-  - renal failure
-  - respiratory failure
-  - rheumatic fever
-  - rheumatoid factor
 
 SA (5 phrases):
   - saturday
@@ -168,48 +124,30 @@ SA (5 phrases):
   - sleep apnoea
   - status asthmaticus
 
-SF (5 phrases):
-  - saturated fat
-  - scarlet fever
-  - social functioning
-  - spotted fever
-  - superficial
+SD (5 phrases):
+  - depletion
+  - seborrhoeic dermatitis
+  - sexual dysfunction
+  - sleep disorders
+  - spontaneous delivery
 
-AL (4 phrases):
-  - albumin
-  - amyloidosis
-  - ligament
-  - primary
+AP (4 phrases):
+  - abdominal pain
+  - acute pancreatitis
+  - angina pectoris
+  - appendicitis
 
-CM (4 phrases):
-  - cardiac monitoring
-  - congenital malformation
-  - congenital malformations
-  - membranes
-
-CN (4 phrases):
-  - central nucleus
-  - copy number
-  - cranial nerve
-  - creatinine
+CP (4 phrases):
+  - cerebral peduncle
+  - chest pain
+  - choroid plexus
+  - process
 
 DD (4 phrases):
   - delusional disorder
   - disc diameter
   - disorders
   - diverticular disease
-
-FA (4 phrases):
-  - fatty acid
-  - fatty acids
-  - femoral
-  - fibrosing alveolitis
-
-HA (4 phrases):
-  - headache
-  - hearing aid
-  - hospital admission
-  - hyperalimentation
 
 HD (4 phrases):
   - haemolytic disease
@@ -223,10 +161,16 @@ HT (4 phrases):
   - hypothermia
   - hypothyroidism
 
+IC (4 phrases):
+  - component
+  - intercourse
+  - internal capsule
+  - intracranial
+
 IP (4 phrases):
   - in patient
   - inpatient
-  - particles
+  - patient
   - peripheral
 
 LV (4 phrases):
@@ -247,12 +191,6 @@ MI (4 phrases):
   - meconium ileus
   - myocardial infarction
 
-OM (4 phrases):
-  - oral mucosa
-  - osteomalacia
-  - osteomyelitis
-  - otitis media
-
 OP (4 phrases):
   - operation
   - operative
@@ -265,11 +203,11 @@ PC (4 phrases):
   - phosphatidylcholines
   - principal components
 
-PN (4 phrases):
-  - pneumonia
-  - polyarteritis nodosa
-  - postnatal
-  - streptococcus pneumoniae
+PO (4 phrases):
+  - administered
+  - parieto occipital
+  - posterior
+  - pressure
 
 PR (4 phrases):
   - pain relief
@@ -277,23 +215,17 @@ PR (4 phrases):
   - pregnant
   - release
 
-PT (4 phrases):
-  - patient
-  - planum temporale
-  - protein
-  - proximal
+RF (4 phrases):
+  - renal failure
+  - respiratory failure
+  - rheumatic fever
+  - rheumatoid factor
 
-PV (4 phrases):
-  - partial volume
-  - peripheral vascular
-  - plasmodium vivax
-  - pulmonary valve
-
-ST (4 phrases):
-  - sore throat
-  - standard
-  - stomach
-  - stria terminalis
+SF (4 phrases):
+  - saturated fat
+  - scarlet fever
+  - spotted fever
+  - superficial
 
 TE (4 phrases):
   - echo time
@@ -301,40 +233,15 @@ TE (4 phrases):
   - tetanus
   - toxic encephalopathy
 
-AF (3 phrases):
-  - abdominal fat
-  - amniotic fluid
-  - factors
-
-AM (3 phrases):
-  - alveolar
-  - amygdaloid
-  - morning
-
-BD (3 phrases):
-  - bile ducts
-  - bone density
-  - brain damage
-
-BM (3 phrases):
-  - bacterial meningitis
-  - bowel movement
-  - breast milk
+AL (3 phrases):
+  - albumin
+  - amyloidosis
+  - primary
 
 BP (3 phrases):
   - bacterial pneumonia
   - bipolar
   - blood pressure
-
-BW (3 phrases):
-  - birth weight
-  - body weight
-  - bodyweight
-
-CC (3 phrases):
-  - common cold
-  - corpus callosum
-  - critical care
 
 CE (3 phrases):
   - central
@@ -351,100 +258,90 @@ CL (3 phrases):
   - cleft lip
   - contact lens
 
+CM (3 phrases):
+  - cardiac monitoring
+  - congenital malformation
+  - congenital malformations
+
+CN (3 phrases):
+  - central nucleus
+  - cranial nerve
+  - creatinine
+
 ED (3 phrases):
   - deprivation
   - end diastole
   - energy density
+
+FA (3 phrases):
+  - fatty acids
+  - femoral
+  - fibrosing alveolitis
 
 FF (3 phrases):
   - fat fraction
   - fat free
   - feeding
 
-FL (3 phrases):
-  - fluoxetine
-  - flutter
-  - frontal lobe
-
-FT (3 phrases):
-  - fallopian tube
-  - freeze thaw
-  - full time
-
-IS (3 phrases):
-  - intraspinal
-  - ischaemic
-  - ischaemic stroke
-
-LD (3 phrases):
-  - limited
-  - liver disease
-  - long distance
+HA (3 phrases):
+  - headache
+  - hearing aid
+  - hyperalimentation
 
 LE (3 phrases):
   - life events
   - low energy
   - lupus erythematosus
 
-LP (3 phrases):
-  - lichen planus
-  - lipoprotein particles
-  - low protein
-
-ME (3 phrases):
-  - middle ear
-  - moderate exercise
-  - myalgic encephalomyelitis
-
 MG (3 phrases):
   - magnesium
   - mean gradient
   - myasthenia gravis
-
-NS (3 phrases):
-  - nephrotic syndrome
-  - nervous system
-  - sedentary
 
 OB (3 phrases):
   - obesity
   - obstetric
   - obstetrical
 
+OM (3 phrases):
+  - osteomalacia
+  - osteomyelitis
+  - otitis media
+
 PE (3 phrases):
   - pleural effusion
   - pulmonary embolism
   - pulmonary oedema
 
-PP (3 phrases):
-  - peak to peak
-  - pleural plaque
-  - pulse pressure
+PN (3 phrases):
+  - pneumonia
+  - polyarteritis nodosa
+  - postnatal
 
 PU (3 phrases):
   - peptic ulcer
   - proteinuria
   - putamen
 
+PV (3 phrases):
+  - peripheral vascular
+  - plasmodium vivax
+  - pulmonary valve
+
 RA (3 phrases):
   - arterial
   - right atrial
   - right atrium
 
-S. (3 phrases):
-  - salmonella
-  - staphylococcus
-  - streptococcus
-
-SC (3 phrases):
-  - sickle cell
-  - spinal cord
-  - subcutaneous
-
 SH (3 phrases):
   - hypotension
   - secondary hypertension
   - sitting height
+
+ST (3 phrases):
+  - standard
+  - stomach
+  - stria terminalis
 
 STD (3 phrases):
   - sexually transmitted disease
@@ -494,9 +391,9 @@ ACC (2 phrases):
   - acceleration
   - accommodation
 
-AG (2 phrases):
-  - angular gyrus
-  - antigen
+AF (2 phrases):
+  - abdominal fat
+  - factors
 
 AH (2 phrases):
   - acute hepatitis
@@ -510,6 +407,10 @@ AN (2 phrases):
   - acanthosis nigricans
   - aneurysm
 
+APO (2 phrases):
+  - apolipoprotein
+  - apolipoprotein a
+
 AR (2 phrases):
   - allergic rhinitis
   - arrhythmia
@@ -518,25 +419,17 @@ AS (2 phrases):
   - arterial stiffness
   - artificial sweetener
 
-AT (2 phrases):
-  - adipose tissue
-  - atresia
-
 AV (2 phrases):
   - atrioventricular
   - average
 
-BG (2 phrases):
-  - background
-  - basal ganglia
+BD (2 phrases):
+  - bone density
+  - brain damage
 
 BL (2 phrases):
   - bilateral
   - blood loss
-
-BR (2 phrases):
-  - bathroom
-  - bilirubin
 
 BS (2 phrases):
   - brain stem
@@ -546,17 +439,21 @@ BT (2 phrases):
   - bedtime
   - blood type
 
+BW (2 phrases):
+  - birth weight
+  - bodyweight
+
 C/S (2 phrases):
   - caesarean section
   - caesarian section
 
+CC (2 phrases):
+  - common cold
+  - corpus callosum
+
 CHO (2 phrases):
   - carbohydrate
   - cholesterol
-
-CNS (2 phrases):
-  - central nervous system
-  - cranial nerves
 
 CO (2 phrases):
   - concentration
@@ -590,29 +487,25 @@ DX (2 phrases):
   - diagnosis
   - diagnostic
 
-EXT (2 phrases):
-  - exercise test
-  - extremities
-
-FC (2 phrases):
-  - free cholesterol
-  - frontal
-
 FH (2 phrases):
   - family history
   - femoral hernia
+
+FL (2 phrases):
+  - fluoxetine
+  - frontal lobe
 
 FM (2 phrases):
   - face mask
   - fat mass
 
+FT (2 phrases):
+  - freeze thaw
+  - full time
+
 G-U (2 phrases):
   - gastric ulcer
   - genito urinary
-
-GC (2 phrases):
-  - ganglion cell
-  - gonococcal
 
 HC (2 phrases):
   - hip circumference
@@ -621,10 +514,6 @@ HC (2 phrases):
 HF (2 phrases):
   - heart failure
   - high fat
-
-HG (2 phrases):
-  - hand grip
-  - heschl's gyrus
 
 HM (2 phrases):
   - heavy metal
@@ -658,6 +547,10 @@ IQ (2 phrases):
   - image quality
   - intelligence
 
+IS (2 phrases):
+  - ischaemic
+  - ischaemic stroke
+
 LB (2 phrases):
   - live birth
   - live births
@@ -666,13 +559,17 @@ LC (2 phrases):
   - low calorie
   - lung cancer
 
-LI (2 phrases):
-  - lactose intolerance
-  - large intestine
+LD (2 phrases):
+  - liver disease
+  - long distance
 
 LL (2 phrases):
   - lesions
   - lower limb
+
+LP (2 phrases):
+  - lichen planus
+  - low protein
 
 LVEDV (2 phrases):
   - left ventricular end diastolic volume
@@ -690,6 +587,10 @@ MD (2 phrases):
   - diseases
   - movement disorders
 
+ME (2 phrases):
+  - middle ear
+  - moderate exercise
+
 ML (2 phrases):
   - medial lemniscus
   - molecular layer
@@ -697,10 +598,6 @@ ML (2 phrases):
 MS (2 phrases):
   - microsatellites
   - multiple sclerosis
-
-MV (2 phrases):
-  - mitral valve
-  - muscle volume
 
 ND (2 phrases):
   - discharge
@@ -713,6 +610,10 @@ NEC (2 phrases):
 NR (2 phrases):
   - nerve root
   - response
+
+NS (2 phrases):
+  - nephrotic syndrome
+  - sedentary
 
 OC (2 phrases):
   - oral contraceptive
@@ -729,14 +630,6 @@ OE (2 phrases):
 ON (2 phrases):
   - optic neuritis
   - osteonecrosis
-
-OO (2 phrases):
-  - olive oil
-  - oophorectomy
-
-P1 (2 phrases):
-  - day of birth
-  - positive
 
 PF (2 phrases):
   - physical functioning
@@ -758,49 +651,29 @@ PS (2 phrases):
   - psoriasis
   - symptoms
 
-RD (2 phrases):
-  - renal disease
-  - respiratory distress
-
-RE (2 phrases):
-  - repeated
-  - retinol equivalents
+PT (2 phrases):
+  - protein
+  - proximal
 
 REC (2 phrases):
   - recommended
   - recreational
 
-RI (2 phrases):
-  - reflection index
-  - refractive index
-
-RS (2 phrases):
-  - resolution
-  - respiratory system
-
 RV (2 phrases):
   - right ventricle
   - right ventricular
 
-SG (2 phrases):
-  - salivary glands
-  - subgroup
+S. (2 phrases):
+  - salmonella
+  - streptococcus
 
-SI (2 phrases):
-  - interval
-  - small intestine
-
-SL (2 phrases):
-  - sound level
-  - sphingolipid
+SC (2 phrases):
+  - sickle cell
+  - subcutaneous
 
 SM (2 phrases):
   - skimmed milk
   - systolic
-
-SMA (2 phrases):
-  - spinal muscular atrophy
-  - supplementary motor cortex
 
 SP (2 phrases):
   - phosphorus
@@ -822,10 +695,6 @@ SW (2 phrases):
   - sleep walking
   - soap and water
 
-T2 (2 phrases):
-  - degrees c
-  - minutes
-
 T3 (2 phrases):
   - 3 months
   - treatment
@@ -841,14 +710,6 @@ TL (2 phrases):
 TPR (2 phrases):
   - temperature
   - total peripheral resistance
-
-TR (2 phrases):
-  - trachea
-  - transformed
-
-TS (2 phrases):
-  - tobacco smoke
-  - turner's syndrome
 
 US (2 phrases):
   - ultrasound
@@ -877,9 +738,6 @@ WG (2 phrases):
 3HB (1 phrases):
   - 3 hydroxybutyrate
 
-AAA (1 phrases):
-  - aromatic amino acid
-
 AAD (1 phrases):
   - alpha 1 antitrypsin deficiency
 
@@ -889,14 +747,14 @@ AAP (1 phrases):
 AAT (1 phrases):
   - aspartate aminotransferase
 
-ABB (1 phrases):
-  - acid base balance
-
 ACD (1 phrases):
   - allergic contact dermatitis
 
 AFIB (1 phrases):
   - atrial fibrillation
+
+AG (1 phrases):
+  - antigen
 
 AHA (1 phrases):
   - acquired haemolytic anaemia
@@ -910,9 +768,6 @@ AI (1 phrases):
 AIX (1 phrases):
   - augmentation index
 
-AKA (1 phrases):
-  - also known as
-
 ALAT (1 phrases):
   - alanine aminotransferase
 
@@ -925,23 +780,17 @@ ALK (1 phrases):
 ALRI (1 phrases):
   - acute lower respiratory infection
 
+AM (1 phrases):
+  - morning
+
 AMD (1 phrases):
   - age related macular degeneration
-
-ANS (1 phrases):
-  - autonomic nervous system
 
 AOV (1 phrases):
   - aortic valve
 
 APH (1 phrases):
   - antepartum haemorrhage
-
-APO (1 phrases):
-  - apolipoprotein
-
-APOA (1 phrases):
-  - apolipoprotein a
 
 APOB (1 phrases):
   - apolipoprotein b
@@ -958,14 +807,14 @@ ART (1 phrases):
 ASA (1 phrases):
   - ascorbic acid
 
-ASI (1 phrases):
-  - arterial stiffness index
-
 ASP (1 phrases):
   - ankylosing spondylitis
 
 AST (1 phrases):
   - astigmatism
+
+AT (1 phrases):
+  - atresia
 
 ATH (1 phrases):
   - atherosclerosis
@@ -994,12 +843,6 @@ BC (1 phrases):
 BCA (1 phrases):
   - breast cancer
 
-BCAA (1 phrases):
-  - branched chain amino acid
-
-BCAAS (1 phrases):
-  - branched chain amino acids
-
 BCS (1 phrases):
   - breast cancer screening
 
@@ -1015,8 +858,14 @@ BFM (1 phrases):
 BFP (1 phrases):
   - body fat percentage
 
+BG (1 phrases):
+  - background
+
 BI (1 phrases):
   - indices
+
+BM (1 phrases):
+  - bacterial meningitis
 
 BMC (1 phrases):
   - bone mineral content
@@ -1039,6 +888,9 @@ BPAD (1 phrases):
 BPD (1 phrases):
   - bipolar disorder
 
+BR (1 phrases):
+  - bathroom
+
 BSA (1 phrases):
   - body surface area
 
@@ -1054,14 +906,8 @@ CAD (1 phrases):
 CB (1 phrases):
   - chronic bronchitis
 
-CBS (1 phrases):
-  - cannabinoids
-
 CDR (1 phrases):
   - cup to disc ratio
-
-CEA (1 phrases):
-  - centre edge angle
 
 CF (1 phrases):
   - function
@@ -1074,9 +920,6 @@ CFTR (1 phrases):
 
 CG (1 phrases):
   - cingulate gyrus
-
-CGM (1 phrases):
-  - cortical grey matter
 
 CHR (1 phrases):
   - chromosomes
@@ -1096,14 +939,14 @@ CMJ (1 phrases):
 CMP (1 phrases):
   - cardiomyopathy
 
-CMS (1 phrases):
-  - chylomicrons
-
 CMV (1 phrases):
   - cytomegaloviral
 
 CNR (1 phrases):
   - contrast to noise ratio
+
+CNS (1 phrases):
+  - central nervous system
 
 COD (1 phrases):
   - cause of death
@@ -1119,9 +962,6 @@ CRP (1 phrases):
 
 CRPS (1 phrases):
   - complex regional pain syndrome
-
-CSD (1 phrases):
-  - distribution
 
 CST (1 phrases):
   - corticospinal tract
@@ -1146,9 +986,6 @@ DBIL (1 phrases):
 
 DBP (1 phrases):
   - diastolic blood pressure
-
-DC (1 phrases):
-  - distensibility
 
 DDA (1 phrases):
   - doctor diagnosed asthma
@@ -1237,9 +1074,6 @@ EOC (1 phrases):
 EP (1 phrases):
   - ectopic pregnancy
 
-ER (1 phrases):
-  - erythrocyte
-
 ES (1 phrases):
   - end systole
 
@@ -1252,9 +1086,6 @@ ESRD (1 phrases):
 ESV (1 phrases):
   - end systolic volume
 
-ET (1 phrases):
-  - eustachian tube
-
 EVOO (1 phrases):
   - extra virgin olive oil
 
@@ -1264,20 +1095,23 @@ EX (1 phrases):
 EXP (1 phrases):
   - experimental
 
+EXT (1 phrases):
+  - exercise test
+
 F1 (1 phrases):
   - frequency
 
 F8 (1 phrases):
   - factor viii
 
-FEV1.0 (1 phrases):
+FC (1 phrases):
+  - free cholesterol
+
+FEV1 (1 phrases):
   - forced expiratory volume in 1 second
 
 FFM (1 phrases):
   - fat free mass
-
-FG (1 phrases):
-  - fusiform gyrus
 
 FLU (1 phrases):
   - influenza virus
@@ -1315,11 +1149,8 @@ G-A (1 phrases):
 GA (1 phrases):
   - general
 
-GAG (1 phrases):
-  - glycosaminoglycan
-
-GB (1 phrases):
-  - gallbladder
+GC (1 phrases):
+  - gonococcal
 
 GCC (1 phrases):
   - genu of corpus callosum
@@ -1366,9 +1197,6 @@ GS (1 phrases):
 GT (1 phrases):
   - green tea
 
-GUS (1 phrases):
-  - genito urinary system
-
 H.P. (1 phrases):
   - helicobacter pylori
 
@@ -1402,6 +1230,9 @@ HDL-C (1 phrases):
 HEM (1 phrases):
   - haemorrhage
 
+HG (1 phrases):
+  - hand grip
+
 HGS (1 phrases):
   - hand grip strength
 
@@ -1416,9 +1247,6 @@ HHV-7 (1 phrases):
 
 HI (1 phrases):
   - histidine
-
-HIB (1 phrases):
-  - haemophilus influenzae
 
 HIP (1 phrases):
   - hippocampus
@@ -1471,9 +1299,6 @@ HYP (1 phrases):
 HZ (1 phrases):
   - herpes zoster
 
-I/CB (1 phrases):
-  - iris and ciliary body
-
 IBS (1 phrases):
   - irritable bowel syndrome
 
@@ -1492,15 +1317,6 @@ IDA (1 phrases):
 IDDM (1 phrases):
   - insulin dependent diabetes mellitus
 
-IE (1 phrases):
-  - inner ear
-
-IFG (1 phrases):
-  - inferior frontal gyrus
-
-IFOF (1 phrases):
-  - inferior fronto occipital fasciculus
-
 IH (1 phrases):
   - inguinal hernia
 
@@ -1516,9 +1332,6 @@ IN (1 phrases):
 IND (1 phrases):
   - indeterminate
 
-INL (1 phrases):
-  - inner nuclear layer
-
 INT (1 phrases):
   - interference
 
@@ -1528,17 +1341,11 @@ IO (1 phrases):
 IPF (1 phrases):
   - idiopathic pulmonary fibrosis
 
-IPL (1 phrases):
-  - inner plexiform layer
-
 IR (1 phrases):
   - reaction
 
 IRF (1 phrases):
   - immature reticulocyte fraction
-
-ITG (1 phrases):
-  - inferior temporal gyrus
 
 IVD (1 phrases):
   - intervertebral disk
@@ -1561,20 +1368,11 @@ KOC (1 phrases):
 KSHV (1 phrases):
   - kaposi's sarcoma associated herpesvirus
 
-KV (1 phrases):
-  - kidney volume
-
 L (1 phrases):
   - left
 
 L3 (1 phrases):
   - infective
-
-LBBB (1 phrases):
-  - left bundle branch block
-
-LBW (1 phrases):
-  - low birth weight
 
 LDL-C (1 phrases):
   - low density lipoprotein cholesterol
@@ -1585,17 +1383,14 @@ LF (1 phrases):
 LH (1 phrases):
   - left hemisphere
 
+LI (1 phrases):
+  - lactose intolerance
+
 LM (1 phrases):
   - lean mass
 
 LMP (1 phrases):
   - last menstrual period
-
-LN (1 phrases):
-  - lymph nodes
-
-LOC (1 phrases):
-  - lateral occipital cortex
 
 LPA (1 phrases):
   - light physical activity
@@ -1648,9 +1443,6 @@ MCV (1 phrases):
 MDD (1 phrases):
   - major depression
 
-MFG (1 phrases):
-  - middle frontal gyrus
-
 MH (1 phrases):
   - mental health
 
@@ -1665,9 +1457,6 @@ MN (1 phrases):
 
 MND (1 phrases):
   - motor neurone disease
-
-MNJ (1 phrases):
-  - myoneural junction
 
 MP (1 phrases):
   - proteins
@@ -1699,17 +1488,14 @@ MT (1 phrases):
 MTB (1 phrases):
   - miliary tuberculosis
 
-MTG (1 phrases):
-  - middle temporal gyrus
-
 MUFAS (1 phrases):
   - monounsaturated fatty acids
 
+MV (1 phrases):
+  - mitral valve
+
 MWT (1 phrases):
   - myocardial wall thickness
-
-N/V (1 phrases):
-  - nausea vomiting
 
 N1 (1 phrases):
   - negative
@@ -1753,9 +1539,6 @@ NP (1 phrases):
 NRBC (1 phrases):
   - nucleated red blood cell
 
-NRY (1 phrases):
-  - y chromosome
-
 NTG (1 phrases):
   - non toxic goitre
 
@@ -1780,6 +1563,9 @@ OCT (1 phrases):
 OJ (1 phrases):
   - orange juice
 
+OO (1 phrases):
+  - olive oil
+
 OPD (1 phrases):
   - other personality disorders
 
@@ -1792,8 +1578,11 @@ OU (1 phrases):
 OX (1 phrases):
   - optic chiasm
 
-PCG (1 phrases):
-  - precentral gyrus
+P0 (1 phrases):
+  - day of birth
+
+P1 (1 phrases):
+  - positive
 
 PCM (1 phrases):
   - paracoccidioidomycosis
@@ -1825,9 +1614,6 @@ PG (1 phrases):
 PHE (1 phrases):
   - phenylalanine
 
-PHG (1 phrases):
-  - parahippocampal gyrus
-
 PHL (1 phrases):
   - phospholipids
 
@@ -1849,9 +1635,6 @@ PM (1 phrases):
 PM10 (1 phrases):
   - particulate matter
 
-PMNL (1 phrases):
-  - polymorphonuclear neutrophils
-
 PNP (1 phrases):
   - polyneuropathy
 
@@ -1863,6 +1646,9 @@ POAG (1 phrases):
 
 POC (1 phrases):
   - products of conception
+
+PP (1 phrases):
+  - pleural plaque
 
 PPH (1 phrases):
   - postpartum haemorrhage
@@ -1881,12 +1667,6 @@ PTA (1 phrases):
 
 PTD (1 phrases):
   - preterm delivery
-
-PTG (1 phrases):
-  - parathyroid gland
-
-PTR (1 phrases):
-  - pars triangularis
 
 PTX (1 phrases):
   - pneumothorax
@@ -1936,8 +1716,14 @@ RB (1 phrases):
 RBC (1 phrases):
   - red blood cell
 
+RD (1 phrases):
+  - respiratory distress
+
 RDS (1 phrases):
   - retinal detachments
+
+RE (1 phrases):
+  - repeated
 
 RET (1 phrases):
   - reticulocyte
@@ -1954,14 +1740,11 @@ RHO (1 phrases):
 RHR (1 phrases):
   - resting heart rate
 
-RHS (1 phrases):
-  - reticulohistiocytic system
+RI (1 phrases):
+  - refractive index
 
 RLS (1 phrases):
   - restless leg syndrome
-
-RNFLT (1 phrases):
-  - retinal nerve fibre layer thickness
 
 ROA (1 phrases):
   - radiographic osteoarthritis
@@ -1975,8 +1758,8 @@ RPE (1 phrases):
 RQ (1 phrases):
   - questionnaire
 
-RT (1 phrases):
-  - radiation
+RS (1 phrases):
+  - resolution
 
 RVEDV (1 phrases):
   - right ventricular end diastolic volume
@@ -1993,14 +1776,8 @@ RX (1 phrases):
 S-FA (1 phrases):
   - saturated fatty acids
 
-S4 (1 phrases):
-  - segment 4
-
-S5 (1 phrases):
-  - segment 5
-
-S6 (1 phrases):
-  - segment 6
+S/N (1 phrases):
+  - signal to noise ratio
 
 SAB (1 phrases):
   - spontaneous abortion
@@ -2020,9 +1797,6 @@ SBP (1 phrases):
 SCA (1 phrases):
   - sex chromosome abnormalities
 
-SCAT (1 phrases):
-  - subcutaneous adipose tissue
-
 SCF (1 phrases):
   - subcutaneous fat
 
@@ -2032,11 +1806,8 @@ SCH (1 phrases):
 SCP (1 phrases):
   - superior cerebellar peduncle
 
-SEM (1 phrases):
-  - eye movements
-
-SFG (1 phrases):
-  - superior frontal gyrus
+SI (1 phrases):
+  - interval
 
 SK (1 phrases):
   - seborrhoeic keratosis
@@ -2047,8 +1818,8 @@ SLE (1 phrases):
 SLF (1 phrases):
   - superior longitudinal fasciculus
 
-SMG (1 phrases):
-  - supramarginal gyrus
+SMA (1 phrases):
+  - spinal muscular atrophy
 
 SMR (1 phrases):
   - severe mental retardation
@@ -2062,26 +1833,17 @@ SN (1 phrases):
 SNHL (1 phrases):
   - sensorineural hearing loss
 
-SNR (1 phrases):
-  - signal to noise ratio
-
 SOB (1 phrases):
   - shortness of breath
 
 SOS (1 phrases):
   - speed of sound
 
-SPL (1 phrases):
-  - superior parietal lobule
-
 SRT (1 phrases):
   - speech reception threshold
 
 SSSS (1 phrases):
   - staphylococcal scalded skin syndrome
-
-STG (1 phrases):
-  - superior temporal gyrus
 
 SU (1 phrases):
   - sucrose
@@ -2095,14 +1857,14 @@ SX (1 phrases):
 SY (1 phrases):
   - syphilis
 
-T&A (1 phrases):
-  - tonsils and adenoids
-
 T-FA (1 phrases):
   - trans fatty acids
 
 T1D (1 phrases):
   - type 1 diabetes
+
+T2 (1 phrases):
+  - minutes
 
 T2D (1 phrases):
   - type 2 diabetes
@@ -2118,12 +1880,6 @@ TD (1 phrases):
 
 TFM (1 phrases):
   - total fat mass
-
-TG (1 phrases):
-  - triglyceride
-
-TGN (1 phrases):
-  - trigeminal nerve
 
 TGS (1 phrases):
   - triglycerides
@@ -2161,6 +1917,9 @@ TOX (1 phrases):
 TPL (1 phrases):
   - total phospholipids
 
+TS (1 phrases):
+  - turner's syndrome
+
 TT (1 phrases):
   - genotype
 
@@ -2185,13 +1944,10 @@ UL (1 phrases):
 URIS (1 phrases):
   - upper respiratory infections
 
-URT (1 phrases):
-  - upper respiratory tract
-
 UTI (1 phrases):
   - urinary tract
 
-UV-B (1 phrases):
+UV-A (1 phrases):
   - ultraviolet radiation
 
 V-CSF (1 phrases):
@@ -2242,26 +1998,17 @@ VPA (1 phrases):
 VR (1 phrases):
   - ventricular rate
 
-VST (1 phrases):
-  - ventral striatum
-
 VTE (1 phrases):
   - venous thromboembolic disease
 
 VV (1 phrases):
   - varicose veins
 
-VVI (1 phrases):
-  - ventricular
-
 VZV (1 phrases):
   - varicella zoster virus
 
 WBC (1 phrases):
   - white blood cell
-
-WBCS (1 phrases):
-  - white blood cells
 
 WBQ (1 phrases):
   - well being questionnaire
@@ -2271,9 +2018,6 @@ WI (1 phrases):
 
 WL (1 phrases):
   - workload
-
-WMHS (1 phrases):
-  - white matter hyperintensities
 
 WR (1 phrases):
   - white rice

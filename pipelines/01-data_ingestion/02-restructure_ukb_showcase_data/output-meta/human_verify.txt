@@ -1,6 +1,6 @@
 Human Verification Sample for Meta-Inventory Abbreviation Matching
-Total matched fields: 11,025
-Unique replacements: 997
+Total matched fields: 7,314
+Unique replacements: 869
 Sample size for 95% confidence (±5% error): 385
 Actual sample size: 385
 ================================================================================
@@ -9,388 +9,388 @@ Columns: # | Occurrences | Original Title | Modified Title | What Changed
 
 #	Count	Original Title	Modified Title	What Changed
 -	-----	--------------------------------------------------	--------------------------------------------------	------------------------------
-1	615x	Mean intensity of Lateral-Ventricle (▶left hemisphere◀)	Mean MI of LV (★LH★)	left hemisphere → LH
-2	92x	Sequencing Provider [200k ▶release◀]	Sequencing Provider [200k ★PR★]	release → PR
-3	90x	Date Q04 first reported (other ▶congenital malformations◀ of brain)	Date Q04 first reported (other ★CM★ of brain)	congenital malformations → CM
-4	74x	Total ▶triglycerides◀	Total ★TGS★	triglycerides → TGS
-5	53x	Seen doctor (GP) for nerves, anxiety, tension or ▶depression◀	Seen doctor (GP) for nerves, anxiety, tension or ★PD★	depression → PD
-6	51x	Manic/hyper ▶symptoms◀	Manic/hyper ★PS★	symptoms → PS
-7	47x	1gG ▶antigen◀ for Herpes Simplex virus-1	1gG ★AG★ for HSV-1	antigen → AG
-8	41x	Number of ▶pregnancy◀ terminations	Number of ★TP★ terminations	pregnancy → TP
-9	40x	Mean CBF in ▶cerebellum◀ in grey matter (right)	Mean CBF in ★CE★ in GM (R)	cerebellum → CE
-10	31x	White blood cell (leukocyte) count freeze-thaw cycles	WBC (leukocyte) count ★FT★ cycles	freeze thaw → FT
-11	27x	Total ▶fatty acids◀	Total ★FA★	fatty acids → FA
-12	26x	Heel ▶ultrasound◀ method	Heel ★US★ method	ultrasound → US
-13	20x	LV ▶circumferential strain◀ AHA 1	LV ★CS★ AHA 1	circumferential strain → CS
-14	19x	Believed safe to perform ▶abdominal◀ MRI scan	Believed safe to perform ★AB★ MRI scan	abdominal → AB
-15	19x	Weighted-mean FA in tract inferior ▶longitudinal◀ fasciculus (left)	WM FA in tract inferior ★T1★ fasciculus (L)	longitudinal → T1
-16	18x	Current eye ▶infection◀	IM eye ★MI★	infection → MI
-17	18x	Exome OQFE variant call file (VCF) ▶indices◀	Exome OQFE variant call file (VCF) ★BI★	indices → BI
-18	17x	LV mean ▶myocardial wall thickness◀ AHA 1	LV mean ★MWT★ AHA 1	myocardial wall thickness → MWT
-19	16x	Date I64 first reported (stroke, not specified as ▶haemorrhage◀ or infarction)	Date I64 first reported (stroke, not specified as ★HEM★ or infarction)	haemorrhage → HEM
-20	16x	Episodes containing "Method of ▶admission◀ to hospital" data (polymorphic)	Episodes containing "Method of ★T1★ to hospital" data (polymorphic)	admission → T1
-21	15x	Episodes containing "Level of ▶neonatal◀ care" data	Episodes containing "Level of ★NN★ care" data	neonatal → NN
-22	14x	Date A17 first reported (tuberculosis of ▶nervous system◀)	Date A17 first reported (TB of ★NS★)	nervous system → NS
-23	14x	Standard PRS for ▶hypertension◀ (HT)	ST PRS for ★HTN★ (HT)	hypertension → HTN
-24	14x	▶creatinine◀	★CN★	creatinine → CN
-25	12x	Number of days/week walked 10+ ▶minutes◀	Number of days/week walked 10+ ★T2★	minutes → T2
-26	12x	Started insulin within one year ▶diagnosis◀ of diabetes	Started IN within one year ★DX★ of diabetes	diagnosis → DX
-27	12x	rfMRI ▶component◀ amplitudes, dimension 25	rfMRI ★IC★ amplitudes, dimension 25	component → IC
-28	12x	Date L08 first reported (other local infections of skin and ▶subcutaneous◀ tissue)	Date L08 first reported (other local infections of skin and ★SC★ tissue)	subcutaneous → SC
-29	11x	▶quality◀ requirements achieved [200k release]	★SQ★ requirements achieved [200k PR]	quality → SQ
-30	11x	▶ascending aorta◀ maximum area	★AA★ maximum area	ascending aorta → AA
-31	10x	Recommended genomic ▶analysis◀ exclusions	REC genomic ★TA★ exclusions	analysis → TA
-32	10x	Calibration ▶coefficients◀ - x offset	Calibration ★KOC★ - x offset	coefficients → KOC
-33	10x	Episodes containing "▶operative◀ procedures - secondary OPCS4" data	Episodes containing "★OP★ procedures - AA ★OP★CS4" data	operative → OP
-34	10x	Stomach/▶abdominal pain◀ for 3+ months	ST/★AP★ for 3+ months	abdominal pain → AP
-35	10x	Date B08 first reported (other viral infections characterised by skin and mucous membrane ▶lesions◀, not elsewhere classified)	Date B08 first reported (other viral infections characterised by skin and MM ★LL★, NEC)	lesions → LL
-36	10x	High ▶light scatter◀ reticulocyte percentage	High ★SSC★ RET PC	light scatter → SSC
-37	10x	Date B43 first reported (chromomycosis and phaeomycotic ▶abscess◀)	Date B43 first reported (chromomycosis and phaeomycotic ★PA★)	abscess → PA
-38	10x	▶nucleated red blood cell◀ count	★NRBC★ count	nucleated red blood cell → NRBC
-39	10x	3mm ▶asymmetry index◀ unreliable (left)	3mm ★AI★ unreliable (L)	asymmetry index → AI
-40	10x	▶monocyte◀ count	★MC★ count	monocyte → MC
-41	9x	▶lipoprotein◀ A	★LPP★ A	lipoprotein → LPP
-42	9x	Number of days/week of moderate ▶physical activity◀ 10+ minutes	Number of days/week of moderate ★PA★ 10+ T2	physical activity → PA
-43	9x	Episodes containing "Date of ▶discharge◀ from hospital" data	Episodes containing "Date of ★ND★ from hospital" data	discharge → ND
-44	9x	▶arterial◀ pulse-wave stiffness device ID	★RA★ PW stiffness device ID	arterial → RA
-45	9x	Mean FA in ▶genu of corpus callosum◀ on FA skeleton	Mean FA in ★GCC★ on FA skeleton	genu of corpus callosum → GCC
-46	9x	Age ▶emphysema◀/chronic bronchitis diagnosed	Age ★EM★/CB diagnosed	emphysema → EM
-47	8x	Date G57 first reported (mononeuropathies of ▶lower limb◀)	Date G57 first reported (mononeuropathies of ★LL★)	lower limb → LL
-48	8x	Area of G-cingul-Post-▶ventral◀ (left hemisphere)	Area of G-cingul-Post-★VP★ (LH)	ventral → VP
-49	8x	Standard PRS for ▶osteoporosis◀ (OP)	ST PRS for ★OP★	osteoporosis → OP
-50	8x	▶general◀ pain for 3+ months	★GA★ pain for 3+ months	general → GA
-51	8x	Intra-ocular pressure (IOP) method (right)	★IOP★ method (R)	intra ocular pressure → IOP
-52	8x	momp D antigen for ▶chlamydia trachomatis◀	momp D AG for ★CT★	chlamydia trachomatis → CT
-53	8x	Date E43 first reported (unspecified severe protein-energy malnutrition)	Date E43 first reported (unspecified severe ★PEM★)	protein energy malnutrition → PEM
-54	8x	CagA antigen for ▶helicobacter pylori◀	CagA AG for ★H.P.★	helicobacter pylori → H.P.
-55	7x	▶total protein◀	★TP★	total protein → TP
-56	7x	ECG during ▶exercise◀ duration	ECG during ★EX★ D.	exercise → EX
-57	7x	▶testosterone◀	★TE★	testosterone → TE
-58	7x	Attempted fluid ▶intelligence◀ (FI) test.	Attempted fluid ★IQ★ (FI) test.	intelligence → IQ
-59	7x	▶aspartate aminotransferase◀	★AAT★	aspartate aminotransferase → AAT
-60	7x	▶apolipoprotein a◀	★APOA★	apolipoprotein a → APOA
-61	7x	LV ▶longitudinal strain◀ Segment 1	LV ★LS★ Segment 1	longitudinal strain → LS
-62	7x	When invitation to complete online cognitive ▶function◀ questionnaire sent	When invitation to CR online cognitive ★CF★ RQ sent	function → CF
-63	7x	▶oestradiol◀	★OE★	oestradiol → OE
-64	7x	▶polyunsaturated fatty acids◀	★PUFAS★	polyunsaturated fatty acids → PUFAS
-65	6x	▶exposure◀ to tobacco smoke at home	★SE★ to TS at home	exposure → SE
-66	6x	Liver PDFF (▶fat fraction◀)	Liver PD★FF★ (★FF★)	fat fraction → FF
-67	6x	Date L67 first reported (hair colour and hair shaft ▶abnormalities◀)	Date L67 first reported (hair colour and hair shaft ★CA★)	abnormalities → CA
-68	6x	Date H71 first reported (cholesteatoma of ▶middle ear◀)	Date H71 first reported (cholesteatoma of ★ME★)	middle ear → ME
-69	6x	Date M35 first reported (other systemic involvement of ▶connective tissue◀)	Date M35 first reported (other systemic involvement of ★CT★)	connective tissue → CT
-70	6x	Date E00 first reported (congenital iodine-deficiency syndrome)	Date E00 first reported (congenital ★ID★ WS)	iodine deficiency → ID
-71	6x	Heel ▶broadband ultrasound attenuation◀ (BUA), manual entry	Heel ★BUA★, manual entry	broadband ultrasound attenuation → BUA
-72	6x	Coronal (LVOT) aortic annulus at end-diastole	Coronal (LVOT) aortic annulus at ★ED★	end diastole → ED
-73	6x	Total Phospholipids in ▶lipoprotein particles◀	TPL in ★LP★	lipoprotein particles → LP
-74	6x	▶birth weight◀ known	★BW★ known	birth weight → BW
-75	6x	Date I63 first reported (▶cerebral infarction◀)	Date I63 first reported (★CI★)	cerebral infarction → CI
-76	6x	Date N10 first reported (acute tubulo-interstitial nephritis)	Date N10 first reported (acute ★TIN★)	tubulo interstitial nephritis → TIN
-77	6x	Date G06 first reported (intracranial and ▶intraspinal◀ abscess and granuloma)	Date G06 first reported (IC and ★IS★ PA and GR)	intraspinal → IS
-78	6x	Date K82 first reported (other diseases of ▶gallbladder◀)	Date K82 first reported (other MD of ★GB★)	gallbladder → GB
-79	6x	Date E13 first reported (other specified ▶diabetes mellitus◀)	Date E13 first reported (other specified ★DM★)	diabetes mellitus → DM
-80	6x	▶carbohydrate◀ 	★CHO★ 	carbohydrate → CHO
-81	6x	Volume of grey matter in ▶middle temporal gyrus◀, anterior division (left)	Volume of GM in ★MTG★, AH division (L)	middle temporal gyrus → MTG
-82	5x	▶total volume◀ of peri-ventricular white matter hyperintensities	★TV★ of peri-VVI WMHS	total volume → TV
-83	5x	▶immature reticulocyte fraction◀	★IRF★	immature reticulocyte fraction → IRF
-84	5x	Anterior thigh fat-free ▶muscle volume◀ (right)	AH thigh FF ★MV★ (R)	muscle volume → MV
-85	5x	▶mean corpuscular haemoglobin◀	★MCH★	mean corpuscular haemoglobin → MCH
-86	5x	▶platelet distribution width◀	★PDW★	platelet distribution width → PDW
-87	5x	Self-reported date of a ▶positive◀ COVID-19 test result	Self-reported date of a ★P1★ COVID-19 test result	positive → P1
-88	5x	▶saturated fatty acids◀	★S-FA★	saturated fatty acids → S-FA
-89	5x	Doctor diagnosed ▶cystic fibrosis◀	Doctor diagnosed ★CFTR★	cystic fibrosis → CFTR
-90	5x	▶sedentary◀ - Day hour average	★NS★ - Day hour AV	sedentary → NS
-91	5x	Anterior thigh fat-free muscle volume (right)	AH thigh ★FF★ MV (R)	fat free → FF
-92	5x	Underlying (▶primary◀) cause of death: ICD10	Underlying (★AL★) COD: ICD10	primary → AL
-93	5x	Doctor diagnosed ▶bronchiectasis◀	Doctor diagnosed ★BE★	bronchiectasis → BE
-94	5x	Lifetime number of ▶panic attacks◀	Lifetime number of ★PA★	panic attacks → PA
-95	5x	Red blood cell (erythrocyte) ▶distribution◀ width	RBC (ER) ★CSD★ width	distribution → CSD
-96	5x	Doctor diagnosed ▶sarcoidosis◀	Doctor diagnosed ★SAR★	sarcoidosis → SAR
-97	5x	▶docosahexaenoic acid◀	★DHA★	docosahexaenoic acid → DHA
-98	5x	Currently suffering from ▶hearing loss◀	Currently suffering from ★HL★	hearing loss → HL
-99	5x	▶apolipoprotein◀ A1	★APO★ A1	apolipoprotein → APO
-100	4x	Standard PRS for ▶ulcerative colitis◀ (UC)	ST PRS for ★U.C.★ (UC)	ulcerative colitis → U.C.
-101	4x	Date I40 first reported (acute ▶myocarditis◀)	Date I40 first reported (acute ★MC★)	myocarditis → MC
-102	4x	Standard PRS for ▶atrial fibrillation◀ (AF)	ST PRS for ★AFIB★ (AF)	atrial fibrillation → AFIB
-103	4x	Volume of grey matter in ▶inferior frontal gyrus◀, pars triangularis (left)	Volume of GM in ★IFG★, PTR (L)	inferior frontal gyrus → IFG
-104	4x	Date Q86 first reported (▶congenital malformation◀ syndromes due to known exogenous causes, not elsewhere classified)	Date Q86 first reported (★CM★ syndromes due to known exogenous causes, NEC)	congenital malformation → CM
-105	4x	Date F40 first reported (phobic ▶anxiety disorders◀)	Date F40 first reported (phobic ★AD★)	anxiety disorders → AD
-106	4x	Median magnetic susceptibility in ▶substantia nigra◀ (left)	Median magnetic susceptibility in ★SN★ (L)	substantia nigra → SN
-107	4x	Date Q97 first reported (other ▶sex chromosome abnormalities◀, female phenotype, not elsewhere classified)	Date Q97 first reported (other ★SCA★, female phenotype, NEC)	sex chromosome abnormalities → SCA
-108	4x	Date G08 first reported (intracranial and intraspinal phlebitis and ▶thrombophlebitis◀)	Date G08 first reported (IC and IS phlebitis and ★TP★)	thrombophlebitis → TP
-109	4x	▶disc diameter◀ after inverse rank normal transformation (left)	★DD★ after inverse rank normal transformation (L)	disc diameter → DD
-110	4x	Age first had sexual ▶intercourse◀	Age first had sexual ★IC★	intercourse → IC
-111	4x	Date K36 first reported (other ▶appendicitis◀)	Date K36 first reported (other ★AP★)	appendicitis → AP
-112	4x	Date I12 first reported (hypertensive ▶renal disease◀)	Date I12 first reported (HTN ★RD★)	renal disease → RD
-113	4x	Vertical ▶cup to disc ratio◀ (VCDR) regressed and transformed (left)	Vertical ★CDR★ (V★CDR★) regressed and TR (L)	cup to disc ratio → CDR
-114	4x	Date G46 first reported (vascular syndromes of brain in ▶cerebrovascular diseases◀)	Date G46 first reported (V1 syndromes of brain in ★CVD★)	cerebrovascular diseases → CVD
-115	4x	Date F54 first reported (psychological and behavioural ▶factors◀ associated with disorders or diseases classified elsewhere)	Date F54 first reported (psychological and behavioural ★AF★ associated with DD or MD classified elsewhere)	factors → AF
-116	4x	▶magnesium◀ 	★MG★ 	magnesium → MG
-117	4x	Mean CBF in ▶frontal lobe◀ in grey matter (right)	Mean CBF in ★FL★ in GM (R)	frontal lobe → FL
-118	4x	▶caffeine◀ drink within last hour	★CA★ drink within last hour	caffeine → CA
-119	4x	Date E67 first reported (other ▶hyperalimentation◀)	Date E67 first reported (other ★HA★)	hyperalimentation → HA
-120	4x	Date B99 first reported (other and unspecified ▶infectious diseases◀)	Date B99 first reported (other and unspecified ★ID★)	infectious diseases → ID
-121	4x	Standard PRS for ▶psoriasis◀ (PSO)	ST PRS for ★PS★ (★PS★O)	psoriasis → PS
-122	4x	▶mitochondrial◀ genotype results	★MT★ TT results	mitochondrial → MT
-123	4x	Diagnosed with ▶coeliac disease◀ or gluten sensitivity	Diagnosed with ★CD★ or gluten SE	coeliac disease → CD
-124	4x	Date P55 first reported (▶haemolytic disease◀ of foetus and newborn)	Date P55 first reported (★HD★ of foetus and NB)	haemolytic disease → HD
-125	4x	Date J90 first reported (▶pleural effusion◀, not elsewhere classified)	Date J90 first reported (★PE★, NEC)	pleural effusion → PE
-126	4x	Date J09 first reported (influenza due to certain identified ▶influenza virus◀)	Date J09 first reported (influenza due to certain identified ★FLU★)	influenza virus → FLU
-127	4x	Date H72 first reported (perforation of ▶tympanic membrane◀)	Date H72 first reported (perforation of ★TM★)	tympanic membrane → TM
-128	4x	Date of ▶myocardial infarction◀	Date of ★MI★	myocardial infarction → MI
-129	4x	Date G56 first reported (mononeuropathies of ▶upper limb◀)	Date G56 first reported (mononeuropathies of ★UL★)	upper limb → UL
-130	4x	Standard PRS for ▶schizophrenia◀ (SCZ)	ST PRS for ★SCH★ (SCZ)	schizophrenia → SCH
-131	4x	Date of ▶intracerebral haemorrhage◀	Date of ★ICH★	intracerebral haemorrhage → ICH
-132	4x	Mean CBF in ▶temporal lobe◀ in grey matter (right)	Mean CBF in ★TL★ in GM (R)	temporal lobe → TL
-133	4x	Date Q35 first reported (▶cleft palate◀)	Date Q35 first reported (★CLP★)	cleft palate → CLP
-134	4x	Date I06 first reported (rheumatic ▶aortic valve◀ diseases)	Date I06 first reported (rheumatic ★AOV★ MD)	aortic valve → AOV
-135	4x	Date L72 first reported (▶follicular◀ cysts of skin and subcutaneous tissue)	Date L72 first reported (★FO★ cysts of skin and SC tissue)	follicular → FO
-136	4x	▶protein◀ 	★PT★ 	protein → PT
-137	3x	Doctor diagnosed ▶fibrosing alveolitis◀/unspecified alveolitis	Doctor diagnosed ★FA★/unspecified alveolitis	fibrosing alveolitis → FA
-138	3x	Hair colour (▶natural◀, before greying)	Hair colour (★NK★, before greying)	natural → NK
-139	3x	Ever taken ▶oral contraceptive pill◀	Ever taken ★OCP★	oral contraceptive pill → OCP
-140	3x	Intake of ▶artificial sweetener◀ added to coffee	Intake of ★AS★ added to coffee	artificial sweetener → AS
-141	3x	RV ▶ejection fraction◀	RV ★EF★	ejection fraction → EF
-142	3x	Long-term/recurrent antibiotics as child or teenager	★LT★/recurrent AB as child or teenager	long term → LT
-143	3x	▶cardiac output◀ during PWA - PVR	★QT★ during PWA - PVR	cardiac output → QT
-144	3x	Frequency of discomfort/pain in ▶abdomen◀ in last 3 months	F1 of discomfort/pain in ★AB★ in last T3	abdomen → AB
-145	3x	▶left ventricular outflow tract◀ images - DICOM	★LVOT★ images - DICOM	left ventricular outflow tract → LVOT
+1	404x	Volume of Cortex (▶right hemisphere◀)	Volume of Cortex (★RH★)	right hemisphere → RH
+2	357x	▶thickness◀ of butter/margarine spread on sliced bread	★TH★ of butter/margarine spread on sliced bread	thickness → TH
+3	243x	Weighted-mean FA in tract acoustic radiation (left)	★WM★ FA in tract acoustic radiation (left)	weighted mean → WM
+4	165x	Fractured heel (▶right◀)	Fractured heel (★R★)	right → R
+5	151x	Mean CBF in cortex in ▶grey matter◀	Mean CBF in cortex in ★GM★	grey matter → GM
+6	106x	▶average◀ total household income before tax	★AV★ total household income before tax	average → AV
+7	71x	▶fraction◀ of day affected during worst episode of depression	★LF★ of day affected during worst episode of depression	fraction → LF
+8	62x	▶phospholipids◀ in VLDL	★PHL★ in VLDL	phospholipids → PHL
+9	51x	Sex inference X probe-▶intensity◀	Sex inference X probe-★MI★	intensity → MI
+10	49x	Manic/hyper ▶symptoms◀	Manic/hyper ★PS★	symptoms → PS
+11	48x	Leg fat ▶percentage◀ (right)	Leg fat ★PC★ (right)	percentage → PC
+12	45x	Seen doctor (GP) for nerves, anxiety, tension or ▶depression◀	Seen doctor (GP) for nerves, anxiety, tension or ★PD★	depression → PD
+13	23x	Number of ▶pregnancy◀ terminations	Number of ★TP★ terminations	pregnancy → TP
+14	22x	ECG, ▶heart rate◀	ECG, ★HR★	heart rate → HR
+15	20x	Home location at assessment - east co-ordinate (100m ▶resolution◀)	Home location at assessment - east co-ordinate (100m ★RS★)	resolution → RS
+16	20x	Date P00 first reported (foetus and ▶newborn◀ affected by maternal conditions that may be unrelated to present pregnancy)	Date P00 first reported (foetus and ★NB★ affected by maternal conditions that may be unrelated to present pregnancy)	newborn → NB
+17	19x	Trunk ▶bone area◀	Trunk ★BA★	bone area → BA
+18	18x	Mean FA in ▶superior cerebellar peduncle◀ on FA skeleton (right)	Mean FA in ★SCP★ on FA skeleton (right)	superior cerebellar peduncle → SCP
+19	18x	Mean FA in cingulum ▶cingulate gyrus◀ on FA skeleton (right)	Mean FA in cingulum ★CG★ on FA skeleton (right)	cingulate gyrus → CG
+20	18x	Mean FA in ▶medial lemniscus◀ on FA skeleton (right)	Mean FA in ★ML★ on FA skeleton (right)	medial lemniscus → ML
+21	18x	Mean FA in ▶corticospinal tract◀ on FA skeleton (right)	Mean FA in ★CST★ on FA skeleton (right)	corticospinal tract → CST
+22	18x	▶antibody◀ self-test kit device	★AB★ self-test kit device	antibody → AB
+23	18x	Mean FA in body of ▶corpus callosum◀ on FA skeleton	Mean FA in body of ★CC★ on FA skeleton	corpus callosum → CC
+24	18x	T1 ▶surface◀ model files and additional structural segmentations	T1 ★CS★ model files and additional structural segmentations	surface → CS
+25	17x	LV mean ▶myocardial wall thickness◀ AHA 1	LV mean ★MWT★ AHA 1	myocardial wall thickness → MWT
+26	17x	LV ▶circumferential strain◀ AHA 1	LV ★CS★ AHA 1	circumferential strain → CS
+27	16x	Length of time at ▶current◀ address	Length of time at ★IM★ address	current → IM
+28	16x	Time to ▶complete◀ round	Time to ★CR★ round	complete → CR
+29	15x	▶reticulocyte◀ percentage	★RET★ percentage	reticulocyte → RET
+30	15x	▶impedance◀ device ID	★Z0★ device ID	impedance → Z0
+31	15x	Believed safe to perform ▶abdominal◀ MRI scan	Believed safe to perform ★AB★ MRI scan	abdominal → AB
+32	15x	Doctor diagnosed ▶tuberculosis◀	Doctor diagnosed ★TB★	tuberculosis → TB
+33	14x	▶carotid artery◀ ultrasound image (left)	★CA★ ultrasound image (left)	carotid artery → CA
+34	14x	Date F04 first reported (organic amnesic ▶syndrome◀, not induced by alcohol and other psychoactive substances)	Date F04 first reported (organic amnesic ★WS★, not induced by alcohol and other psychoactive substances)	syndrome → WS
+35	14x	Leg ▶fat mass◀ (right)	Leg ★FM★ (right)	fat mass → FM
+36	14x	Answered sexual ▶history◀ questions	Answered sexual ★HX★ questions	history → HX
+37	14x	Date J12 first reported (viral ▶pneumonia◀, not elsewhere classified)	Date J12 first reported (viral ★PN★, not elsewhere classified)	pneumonia → PN
+38	12x	▶inpatient◀ record origin	★IP★ record origin	inpatient → IP
+39	12x	Heel ▶ultrasound◀ method	Heel ★US★ method	ultrasound → US
+40	12x	Mean CBF in ▶putamen◀ (right)	Mean CBF in ★PU★ (right)	putamen → PU
+41	12x	Mean CBF in ▶caudate◀ (right)	Mean CBF in ★CD★ (right)	caudate → CD
+42	12x	Episodes containing "Administrative and legal status of ▶patient◀" data	Episodes containing "Administrative and legal status of ★IP★" data	patient → IP
+43	12x	▶apolipoprotein b◀	★APOB★	apolipoprotein b → APOB
+44	11x	▶chest pain◀ or discomfort	★CP★ or discomfort	chest pain → CP
+45	10x	Date O71 first reported (other ▶obstetric◀ trauma)	Date O71 first reported (other ★OB★ trauma)	obstetric → OB
+46	10x	▶interval◀ between previous point and current one in numeric path (trail #1)	★SI★ between previous point and current one in numeric path (trail #1)	interval → SI
+47	10x	Mean of mean (across space) in-plane ▶displacement◀ from rfMRI	Mean of mean (across space) in-plane ★MSD★ from rfMRI	displacement → MSD
+48	10x	Volume of Basal-▶nucleus◀ (left hemisphere)	Volume of Basal-★NU★ (left hemisphere)	nucleus → NU
+49	10x	▶red blood cell◀ (erythrocyte) count	★RBC★ (erythrocyte) count	red blood cell → RBC
+50	10x	Calibration ▶coefficients◀ - x offset	Calibration ★KOC★ - x offset	coefficients → KOC
+51	10x	▶lateral◀ centre-edge angle	★LA★ centre-edge angle	lateral → LA
+52	10x	3mm ▶asymmetry index◀ unreliable (left)	3mm ★AI★ unreliable (left)	asymmetry index → AI
+53	10x	Mean CBF in cerebrum in ▶white matter◀ and >50% cerebral partial volume	Mean CBF in cerebrum in ★WM★ and >50% cerebral partial volume	white matter → WM
+54	9x	Ever had laser ▶treatment◀ for glaucoma or high eye pressure	Ever had laser ★T3★ for glaucoma or high eye pressure	treatment → T3
+55	9x	Mean FA in ▶genu of corpus callosum◀ on FA skeleton	Mean FA in ★GCC★ on FA skeleton	genu of corpus callosum → GCC
+56	9x	Episodes containing "Method of ▶admission◀ to hospital" data (polymorphic)	Episodes containing "Method of ★T1★ to hospital" data (polymorphic)	admission → T1
+57	9x	Age ▶emphysema◀/chronic bronchitis diagnosed	Age ★EM★/chronic bronchitis diagnosed	emphysema → EM
+58	9x	▶vitamin d◀ 	★VD★ 	vitamin d → VD
+59	9x	Contributory (▶secondary◀) causes of death: ICD10	Contributory (★AA★) causes of death: ICD10	secondary → AA
+60	9x	Episodes containing "Date of ▶discharge◀ from hospital" data	Episodes containing "Date of ★ND★ from hospital" data	discharge → ND
+61	8x	▶central◀ systolic blood pressure during PWA - PVR	★CE★ systolic blood pressure during PWA - PVR	central → CE
+62	8x	Intra-ocular pressure (IOP) method (right)	★IOP★ method (right)	intra ocular pressure → IOP
+63	8x	▶blood pressure◀ device ID	★BP★ device ID	blood pressure → BP
+64	8x	Volume of ▶hippocampal◀-tail (left hemisphere)	Volume of ★HPC★-tail (left hemisphere)	hippocampal → HPC
+65	8x	▶standard deviation◀ of apparent translation in the Y axis as measured by eddy	★STD★ of apparent translation in the Y axis as measured by eddy	standard deviation → STD
+66	8x	▶acceleration◀	★ACC★	acceleration → ACC
+67	8x	Date A51 first reported (early ▶syphilis◀)	Date A51 first reported (early ★SY★)	syphilis → SY
+68	8x	Date I64 first reported (stroke, not specified as ▶haemorrhage◀ or infarction)	Date I64 first reported (stroke, not specified as ★HEM★ or infarction)	haemorrhage → HEM
+69	7x	▶phosphate◀	★HP★	phosphate → HP
+70	7x	When COVID19 vaccinations ▶administered◀	When COVID19 vaccinations ★PO★	administered → PO
+71	7x	▶aspartate aminotransferase◀	★AAT★	aspartate aminotransferase → AAT
+72	7x	▶oestradiol◀	★OE★	oestradiol → OE
+73	7x	LV ▶longitudinal strain◀ Segment 1	LV ★LS★ Segment 1	longitudinal strain → LS
+74	7x	▶total bilirubin◀	★TB★	total bilirubin → TB
+75	7x	Affymetrix ▶quality control◀ metric "Cluster.CR"	Affymetrix ★QC★ metric "Cluster.CR"	quality control → QC
+76	7x	▶vascular◀/heart problems diagnosed by doctor	★V1★/heart problems diagnosed by doctor	vascular → V1
+77	7x	▶polyunsaturated fatty acids◀	★PUFAS★	polyunsaturated fatty acids → PUFAS
+78	7x	▶gamma glutamyltransferase◀	★GGT★	gamma glutamyltransferase → GGT
+79	7x	Enhanced PRS for ▶alzheimer's disease◀ (AD)	Enhanced PRS for ★AD★	alzheimer's disease → AD
+80	7x	Attempted fluid ▶intelligence◀ (FI) test.	Attempted fluid ★IQ★ (FI) test.	intelligence → IQ
+81	7x	▶general◀ pain for 3+ months	★GA★ pain for 3+ months	general → GA
+82	6x	Area of G-cingul-Post-▶ventral◀ (left hemisphere)	Area of G-cingul-Post-★VP★ (left hemisphere)	ventral → VP
+83	6x	Coronal (LVOT) aortic annulus at end-diastole	Coronal (LVOT) aortic annulus at ★ED★	end diastole → ED
+84	6x	▶ascending aorta◀ maximum area	★AA★ maximum area	ascending aorta → AA
+85	6x	Coronal (LVOT) aortic annulus at end-systole	Coronal (LVOT) aortic annulus at ★ES★	end systole → ES
+86	6x	▶stroke volume◀ during PWA - PVR	★SV★ during PWA - PVR	stroke volume → SV
+87	6x	Forced expiratory volume in 1-second (FEV1)	★FEV1★	forced expiratory volume in 1 second → FEV1
+88	6x	Date L67 first reported (hair colour and hair shaft ▶abnormalities◀)	Date L67 first reported (hair colour and hair shaft ★CA★)	abnormalities → CA
+89	6x	Hearing difficulty/problems with ▶background◀ noise	Hearing difficulty/problems with ★BG★ noise	background → BG
+90	6x	FI10 : arithmetic ▶sequence◀ recognition	FI10 : arithmetic ★CS★ recognition	sequence → CS
+91	6x	Heel ▶quantitative ultrasound index◀ (QUI), manual entry	Heel ★QUI★, manual entry	quantitative ultrasound index → QUI
+92	6x	Date E00 first reported (congenital iodine-deficiency syndrome)	Date E00 first reported (congenital ★ID★ syndrome)	iodine deficiency → ID
+93	6x	Date I12 first reported (▶hypertensive◀ renal disease)	Date I12 first reported (★HTN★ renal disease)	hypertensive → HTN
+94	6x	Date K12 first reported (stomatitis and related ▶lesions◀)	Date K12 first reported (stomatitis and related ★LL★)	lesions → LL
+95	5x	Underlying (▶primary◀) cause of death: ICD10	Underlying (★AL★) cause of death: ICD10	primary → AL
+96	5x	▶docosahexaenoic acid◀	★DHA★	docosahexaenoic acid → DHA
+97	5x	Number of days (out of 10) with ▶abdominal pain◀	Number of days (out of 10) with ★AP★	abdominal pain → AP
+98	5x	▶astigmatism◀ angle (right)	★AST★ angle (right)	astigmatism → AST
+99	5x	▶sedentary◀ - Day hour average	★NS★ - Day hour average	sedentary → NS
+100	5x	Enhanced PRS for ▶parkinson's disease◀ (PD)	Enhanced PRS for ★PD★	parkinson's disease → PD
+101	5x	▶haemoglobin concentration◀	★HB★	haemoglobin concentration → HB
+102	5x	▶total volume◀ of peri-ventricular white matter hyperintensities	★TV★ of peri-ventricular white matter hyperintensities	total volume → TV
+103	5x	▶platelet crit◀	★PCT★	platelet crit → PCT
+104	5x	Recent inability to stop or ▶control◀ worrying	Recent inability to stop or ★CO★ worrying	control → CO
+105	5x	Mean sphered ▶cell volume◀	Mean sphered ★CV★	cell volume → CV
+106	5x	▶platelet count◀	★PLT★	platelet count → PLT
+107	5x	▶haematocrit◀ percentage	★HCT★ percentage	haematocrit → HCT
+108	5x	▶mean corpuscular haemoglobin◀	★MCH★	mean corpuscular haemoglobin → MCH
+109	4x	Date I40 first reported (acute ▶myocarditis◀)	Date I40 first reported (acute ★MC★)	myocarditis → MC
+110	4x	Hair/balding ▶pattern◀	Hair/balding ★DP★	pattern → DP
+111	4x	Date D80 first reported (▶immunodeficiency◀ with predominantly antibody defects)	Date D80 first reported (★ID★ with predominantly antibody defects)	immunodeficiency → ID
+112	4x	Mean CBF in ▶frontal lobe◀ in grey matter (right)	Mean CBF in ★FL★ in grey matter (right)	frontal lobe → FL
+113	4x	Date M08 first reported (▶juvenile arthritis◀)	Date M08 first reported (★JA★)	juvenile arthritis → JA
+114	4x	Date F54 first reported (psychological and behavioural ▶factors◀ associated with disorders or diseases classified elsewhere)	Date F54 first reported (psychological and behavioural ★AF★ associated with disorders or diseases classified elsewhere)	factors → AF
+115	4x	Date of ▶subarachnoid haemorrhage◀	Date of ★SAH★	subarachnoid haemorrhage → SAH
+116	4x	Date K36 first reported (other ▶appendicitis◀)	Date K36 first reported (other ★AP★)	appendicitis → AP
+117	4x	Date F93 first reported (▶emotional◀ disorders with onset specific to childhood)	Date F93 first reported (★EM★ disorders with onset specific to childhood)	emotional → EM
+118	4x	▶birth weight◀ known	★BW★ known	birth weight → BW
+119	4x	Date G45 first reported (transient cerebral ▶ischaemic◀ attacks and related syndromes)	Date G45 first reported (transient cerebral ★IS★ attacks and related syndromes)	ischaemic → IS
+120	4x	Date E45 first reported (retarded ▶development◀ following protein-energy malnutrition)	Date E45 first reported (retarded ★OD★ following protein-energy malnutrition)	development → OD
+121	4x	Date P55 first reported (▶haemolytic disease◀ of foetus and newborn)	Date P55 first reported (★HD★ of foetus and newborn)	haemolytic disease → HD
+122	4x	Date I05 first reported (rheumatic ▶mitral valve◀ diseases)	Date I05 first reported (rheumatic ★MV★ diseases)	mitral valve → MV
+123	4x	Dependency of self-esteem on body shape or weight when at this low weight	Dependency of ★SE★ on body shape or weight when at this low weight	self esteem → SE
+124	4x	▶headache◀ in past six months	★HA★ in past six months	headache → HA
+125	4x	Date I06 first reported (rheumatic ▶aortic valve◀ diseases)	Date I06 first reported (rheumatic ★AOV★ diseases)	aortic valve → AOV
+126	4x	Date L72 first reported (▶follicular◀ cysts of skin and subcutaneous tissue)	Date L72 first reported (★FO★ cysts of skin and subcutaneous tissue)	follicular → FO
+127	4x	Date G54 first reported (▶nerve root◀ and plexus disorders)	Date G54 first reported (★NR★ and plexus disorders)	nerve root → NR
+128	4x	Date G25 first reported (other extrapyramidal and ▶movement disorders◀)	Date G25 first reported (other extrapyramidal and ★MD★)	movement disorders → MD
+129	4x	Date Q97 first reported (other ▶sex chromosome abnormalities◀, female phenotype, not elsewhere classified)	Date Q97 first reported (other ★SCA★, female phenotype, not elsewhere classified)	sex chromosome abnormalities → SCA
+130	4x	Size of ▶red wine◀ glass drunk	Size of ★RW★ glass drunk	red wine → RW
+131	4x	Date A60 first reported (anogenital herpesviral [▶herpes simplex◀] infections)	Date A60 first reported (anogenital herpesviral [★HSV★] infections)	herpes simplex → HSV
+132	4x	Date N15 first reported (other renal tubulo-interstitial diseases)	Date N15 first reported (other renal ★TI★ diseases)	tubulo interstitial → TI
+133	4x	▶disc diameter◀ after inverse rank normal transformation (left)	★DD★ after inverse rank normal transformation (left)	disc diameter → DD
+134	4x	Date I83 first reported (▶varicose veins◀ of lower extremities)	Date I83 first reported (★VV★ of lower extremities)	varicose veins → VV
+135	4x	Date G56 first reported (mononeuropathies of ▶upper limb◀)	Date G56 first reported (mononeuropathies of ★UL★)	upper limb → UL
+136	4x	Date Q41 first reported (congenital absence, ▶atresia◀ and stenosis of small intestine)	Date Q41 first reported (congenital absence, ★AT★ and stenosis of small intestine)	atresia → AT
+137	4x	▶nitrogen dioxide◀ air pollution; 2010	★NO2★ air pollution; 2010	nitrogen dioxide → NO2
+138	4x	Area of S-parieto-occipital (left hemisphere)	Area of S-★PO★ (left hemisphere)	parieto occipital → PO
+139	3x	Enhanced PRS for ▶ulcerative colitis◀ (UC)	Enhanced PRS for ★U.C.★ (UC)	ulcerative colitis → U.C.
+140	3x	▶left ventricular outflow tract◀ images - DICOM	★LVOT★ images - DICOM	left ventricular outflow tract → LVOT
+141	3x	Doctor diagnosed ▶fibrosing alveolitis◀/unspecified alveolitis	Doctor diagnosed ★FA★/unspecified alveolitis	fibrosing alveolitis → FA
+142	3x	Intake of ▶artificial sweetener◀ added to coffee	Intake of ★AS★ added to coffee	artificial sweetener → AS
+143	3x	Single episode of probable ▶major depression◀	Single episode of probable ★MDD★	major depression → MDD
+144	3x	▶body mass index◀ (BMI)	★BMI★	body mass index → BMI
+145	3x	Diagnosed with ▶coeliac disease◀ or gluten sensitivity	Diagnosed with ★CD★ or gluten sensitivity	coeliac disease → CD
 146	3x	Doctor diagnosed alpha-1 antitrypsin deficiency	Doctor diagnosed ★AAD★	alpha 1 antitrypsin deficiency → AAD
-147	3x	▶systolic blood pressure◀, manual reading	★SBP★, manual reading	systolic blood pressure → SBP
-148	3x	▶long axis◀ heart images - DICOM	★LA★ heart images - DICOM	long axis → LA
-149	3x	Wears glasses or ▶contact lenses◀	Wears glasses or ★CLS★	contact lenses → CLS
-150	3x	Liking for ▶skimmed milk◀	Liking for ★SM★	skimmed milk → SM
-151	3x	Ever used hormone-replacement therapy (HRT)	Ever used ★HRT★	hormone replacement therapy → HRT
-152	3x	Doctor diagnosed ▶lung cancer◀ (not mesothelioma)	Doctor diagnosed ★LC★ (not mesothelioma)	lung cancer → LC
-153	3x	▶short axis◀ heart images - DICOM	★SA★ heart images - DICOM	short axis → SA
-154	3x	▶experimental◀ shMOLLI sequence images - DICOM	★EXP★ shMOLLI CS images - DICOM	experimental → EXP
-155	3x	▶date of birth◀	★DOB★	date of birth → DOB
-156	2x	Date H69 first reported (other disorders of ▶eustachian tube◀)	Date H69 first reported (other DD of ★ET★)	eustachian tube → ET
-157	2x	▶high fat◀ cheese	★HF★ cheese	high fat → HF
-158	2x	Date K71 first reported (toxic ▶liver disease◀)	Date K71 first reported (toxic ★LD★)	liver disease → LD
-159	2x	Date J92 first reported (▶pleural plaque◀)	Date J92 first reported (★PP★)	pleural plaque → PP
-160	2x	Date N22 first reported (calculus of ▶urinary tract◀ in diseases classified elsewhere)	Date N22 first reported (calculus of ★UTI★ in MD classified elsewhere)	urinary tract → UTI
-161	2x	Date Q96 first reported (▶turner's syndrome◀)	Date Q96 first reported (★TS★)	turner's syndrome → TS
-162	2x	Date G00 first reported (▶bacterial meningitis◀, not elsewhere classified)	Date G00 first reported (★BM★, NEC)	bacterial meningitis → BM
-163	2x	Date F31 first reported (▶bipolar affective disorder◀)	Date F31 first reported (★BPAD★)	bipolar affective disorder → BPAD
-164	2x	Volume of grey matter in ▶precentral gyrus◀ (left)	Volume of GM in ★PCG★ (L)	precentral gyrus → PCG
-165	2x	Enhanced PRS for ▶estimated glomerular filtration rate◀ (creatinine based) (EGCR)	Enhanced PRS for ★EGFR★ (CN based) (EGCR)	estimated glomerular filtration rate → EGFR
-166	2x	Date A91 first reported (▶dengue haemorrhagic fever◀)	Date A91 first reported (★DHF★)	dengue haemorrhagic fever → DHF
-167	2x	Date K44 first reported (▶diaphragmatic hernia◀)	Date K44 first reported (★DH★)	diaphragmatic hernia → DH
-168	2x	Date K41 first reported (▶femoral hernia◀)	Date K41 first reported (★FH★)	femoral hernia → FH
-169	2x	2mgG unique antigen for Herpes Simplex virus-2	2mgG unique AG for ★HSV-2★	herpes simplex virus 2 → HSV-2
-170	2x	Date O82 first reported (single delivery by ▶caesarean section◀)	Date O82 first reported (single delivery by ★C/S★)	caesarean section → C/S
-171	2x	COVID-19 symptoms: Fever 38 ▶degrees c◀ or greater	COVID-19 PS: Fever 38 ★T2★ or greater	degrees c → T2
-172	2x	Date G10 first reported (▶huntington's disease◀)	Date G10 first reported (★HD★)	huntington's disease → HD
-173	2x	Date L28 first reported (▶lichen simplex chronicus◀ and prurigo)	Date L28 first reported (★LSC★ and prurigo)	lichen simplex chronicus → LSC
-174	2x	Volume of grey matter in ▶insular cortex◀ (left)	Volume of GM in ★IC★ (L)	insular cortex → IC
-175	2x	Abdominal discomfort/pain for ▶6 months◀ or longer	AB discomfort/pain for ★T6★ or longer	6 months → T6
-176	2x	Total ▶esterified cholesterol◀	Total ★EC★	esterified cholesterol → EC
-177	2x	Date D57 first reported (sickle-cell disorders)	Date D57 first reported (★SC★ DD)	sickle cell → SC
-178	2x	Volume of Lateral-nucleus (left hemisphere)	Volume of ★LA★ (LH)	lateral nucleus → LA
-179	2x	▶lv end systolic volume◀	★LVESV★	lv end systolic volume → LVESV
-180	2x	Date H55 first reported (nystagmus and other irregular ▶eye movements◀)	Date H55 first reported (NY and other irregular ★SEM★)	eye movements → SEM
-181	2x	Date N99 first reported (postprocedural disorders of genito-urinary system, not elsewhere classified)	Date N99 first reported (postprocedural DD of ★GUS★, NEC)	genito urinary system → GUS
-182	2x	Date M18 first reported (arthrosis of first ▶carpometacarpal joint◀)	Date M18 first reported (arthrosis of first ★CMJ★)	carpometacarpal joint → CMJ
-183	2x	Date E75 first reported (disorders of ▶sphingolipid◀ metabolism and other lipid storage disorders)	Date E75 first reported (DD of ★SL★ metabolism and other lipid storage DD)	sphingolipid → SL
-184	2x	Date B95 first reported (streptococcus and ▶staphylococcus◀ as the cause of diseases classified to other chapters)	Date B95 first reported (★S.★ and ★S.★ as the cause of MD classified to other chapters)	staphylococcus → S.
-185	2x	▶tyrosine◀	★TY★	tyrosine → TY
-186	2x	Date O80 first reported (single ▶spontaneous delivery◀)	Date O80 first reported (single ★SD★)	spontaneous delivery → SD
-187	2x	Volume of grey matter in ▶planum temporale◀ (left)	Volume of GM in ★PT★ (L)	planum temporale → PT
-188	2x	Date D72 first reported (other disorders of ▶white blood cells◀)	Date D72 first reported (other DD of ★WBCS★)	white blood cells → WBCS
-189	2x	Date of ▶end stage renal disease◀ report	Date of ★ESRD★ report	end stage renal disease → ESRD
-190	2x	Liking for ▶white rice◀	Liking for ★WR★	white rice → WR
-191	2x	Date P92 first reported (▶feeding◀ problems of newborn)	Date P92 first reported (★FF★ problems of NB)	feeding → FF
-192	2x	Age at first ▶live birth◀	Age at first ★LB★	live birth → LB
-193	2x	Date D60 first reported (acquired ▶pure red cell aplasia◀ [erythroblastopenia])	Date D60 first reported (acquired ★PRCA★ [erythroblastopenia])	pure red cell aplasia → PRCA
-194	2x	▶right ventricular◀ end systolic volume	★RV★ ESV	right ventricular → RV
-195	2x	Date J81 first reported (▶pulmonary oedema◀)	Date J81 first reported (★PE★)	pulmonary oedema → PE
-196	2x	Reason for skipping ▶grip strength◀ (right)	Reason for skipping ★GS★ (R)	grip strength → GS
-197	2x	Date E51 first reported (▶thiamine deficiency◀)	Date E51 first reported (★TD★)	thiamine deficiency → TD
-198	2x	Volume of grey matter in Juxtapositional Lobule Cortex (formerly ▶supplementary motor cortex◀) (left)	Volume of GM in Juxtapositional Lobule Cortex (formerly ★SMA★) (L)	supplementary motor cortex → SMA
-199	2x	Date G91 first reported (▶hydrocephalus◀)	Date G91 first reported (★HC★)	hydrocephalus → HC
-200	2x	Date I44 first reported (atrioventricular and left bundle-branch block)	Date I44 first reported (AV and ★LBBB★)	left bundle branch block → LBBB
-201	2x	Date K21 first reported (gastro-oesophageal reflux disease)	Date K21 first reported (★GERD★)	gastro oesophageal reflux disease → GERD
+147	3x	▶date of birth◀	★DOB★	date of birth → DOB
+148	3x	Ever taken ▶oral contraceptive pill◀	Ever taken ★OCP★	oral contraceptive pill → OCP
+149	3x	Length of ▶menstrual cycle◀	Length of ★MC★	menstrual cycle → MC
+150	3x	▶long axis◀ heart images - DICOM	★LA★ heart images - DICOM	long axis → LA
+151	3x	Incidental finding report made during Heart MRI scan ▶process◀	Incidental finding report made during Heart MRI scan ★CP★	process → CP
+152	3x	▶descending aorta◀ maximum area	★DAO★ maximum area	descending aorta → DAO
+153	3x	▶experimental◀ shMOLLI sequence images - DICOM	★EXP★ shMOLLI sequence images - DICOM	experimental → EXP
+154	3x	Neutrophill count freeze-thaw cycles	Neutrophill count ★FT★ cycles	freeze thaw → FT
+155	3x	Enhanced PRS for ▶atrial fibrillation◀ (AF)	Enhanced PRS for ★AFIB★ (AF)	atrial fibrillation → AFIB
+156	3x	Ever used hormone-replacement therapy (HRT)	Ever used ★HRT★	hormone replacement therapy → HRT
+157	2x	Date N31 first reported (▶neuromuscular◀ dysfunction of bladder, not elsewhere classified)	Date N31 first reported (★NM★ dysfunction of bladder, not elsewhere classified)	neuromuscular → NM
+158	2x	Date I51 first reported (complications and ill-defined descriptions of ▶heart disease◀)	Date I51 first reported (complications and ill-defined descriptions of ★HD★)	heart disease → HD
+159	2x	Date I72 first reported (other ▶aneurysm◀)	Date I72 first reported (other ★AN★)	aneurysm → AN
+160	2x	Volume of Central-nucleus (left hemisphere)	Volume of ★CN★ (left hemisphere)	central nucleus → CN
+161	2x	Difficulty coping with rejection or ▶negative◀ responses	Difficulty coping with rejection or ★N1★ responses	negative → N1
+162	2x	▶total macular volume◀ (left)	★TMV★ (left)	total macular volume → TMV
+163	2x	▶lv end systolic volume◀	★LVESV★	lv end systolic volume → LVESV
+164	2x	Liking for ▶whole milk◀	Liking for ★WM★	whole milk → WM
+165	2x	Date H60 first reported (▶otitis externa◀)	Date H60 first reported (★OE★)	otitis externa → OE
+166	2x	Home location at assessment - Middle layer Super Output Area/▶intermediate zone◀ (2001 census)	Home location at assessment - Middle layer Super Output Area/★IZ★ (2001 census)	intermediate zone → IZ
+167	2x	Date A95 first reported (▶yellow fever◀)	Date A95 first reported (★YF★)	yellow fever → YF
+168	2x	Date O42 first reported (▶premature rupture of membranes◀)	Date O42 first reported (★PROM★)	premature rupture of membranes → PROM
+169	2x	Date F72 first reported (▶severe mental retardation◀)	Date F72 first reported (★SMR★)	severe mental retardation → SMR
+170	2x	Date D50 first reported (▶iron deficiency anaemia◀)	Date D50 first reported (★IDA★)	iron deficiency anaemia → IDA
+171	2x	Date I44 first reported (▶atrioventricular◀ and left bundle-branch block)	Date I44 first reported (★AV★ and left bundle-branch block)	atrioventricular → AV
+172	2x	Date I62 first reported (other nontraumatic ▶intracranial haemorrhage◀)	Date I62 first reported (other nontraumatic ★ICH★)	intracranial haemorrhage → ICH
+173	2x	Date F50 first reported (▶eating disorders◀)	Date F50 first reported (★EDS★)	eating disorders → EDS
+174	2x	Date J96 first reported (▶respiratory failure◀, not elsewhere classified)	Date J96 first reported (★RF★, not elsewhere classified)	respiratory failure → RF
+175	2x	Date D60 first reported (acquired ▶pure red cell aplasia◀ [erythroblastopenia])	Date D60 first reported (acquired ★PRCA★ [erythroblastopenia])	pure red cell aplasia → PRCA
+176	2x	Date B36 first reported (other ▶superficial◀ mycoses)	Date B36 first reported (other ★SF★ mycoses)	superficial → SF
+177	2x	Date M18 first reported (arthrosis of first ▶carpometacarpal joint◀)	Date M18 first reported (arthrosis of first ★CMJ★)	carpometacarpal joint → CMJ
+178	2x	Date A34 first reported (▶obstetrical◀ tetanus)	Date A34 first reported (★OB★ tetanus)	obstetrical → OB
+179	2x	When online family history  questionnaire started	When online family ★DHQ★ started	history questionnaire → DHQ
+180	2x	Date B51 first reported (▶plasmodium vivax◀ malaria)	Date B51 first reported (★PV★ malaria)	plasmodium vivax → PV
+181	2x	Mother's ▶day of birth◀	Mother's ★P0★	day of birth → P0
+182	2x	Grading of a superior ▶femoral◀ osteophyte	Grading of a superior ★FA★ osteophyte	femoral → FA
+183	2x	Date L63 first reported (▶alopecia areata◀)	Date L63 first reported (★AA★)	alopecia areata → AA
+184	2x	Date F62 first reported (enduring personality changes, not attributable to ▶brain damage◀ and disease)	Date F62 first reported (enduring personality changes, not attributable to ★BD★ and disease)	brain damage → BD
+185	2x	Date K40 first reported (▶inguinal hernia◀)	Date K40 first reported (★IH★)	inguinal hernia → IH
+186	2x	Date I80 first reported (phlebitis and ▶thrombophlebitis◀)	Date I80 first reported (phlebitis and ★TP★)	thrombophlebitis → TP
+187	2x	Volume of Lateral-Ventricle (left hemisphere)	Volume of ★LV★ (left hemisphere)	lateral ventricle → LV
+188	2x	▶bilateral◀ oophorectomy (both ovaries removed)	★BL★ oophorectomy (both ovaries removed)	bilateral → BL
+189	2x	Date F91 first reported (▶conduct disorders◀)	Date F91 first reported (★CD★)	conduct disorders → CD
+190	2x	Date K28 first reported (▶gastrojejunal◀ ulcer)	Date K28 first reported (★GJ★ ulcer)	gastrojejunal → GJ
+191	2x	Date B18 first reported (▶chronic viral hepatitis◀)	Date B18 first reported (★CVH★)	chronic viral hepatitis → CVH
+192	2x	▶arterial stiffness◀ device ID	★AS★ device ID	arterial stiffness → AS
+193	2x	Episodes containing "PCT where ▶patients◀ GP was registered" data	Episodes containing "PCT where ★PD★ GP was registered" data	patients → PD
+194	2x	Date D83 first reported (▶common variable immunodeficiency◀)	Date D83 first reported (★CVID★)	common variable immunodeficiency → CVID
+195	2x	▶peak expiratory flow◀ (PEF)	★PEFR★ (PEF)	peak expiratory flow → PEFR
+196	2x	Date L89 first reported (▶decubitus ulcer◀)	Date L89 first reported (★DU★)	decubitus ulcer → DU
+197	2x	Date K26 first reported (▶duodenal ulcer◀)	Date K26 first reported (★DU★)	duodenal ulcer → DU
+198	2x	Date G92 first reported (▶toxic encephalopathy◀)	Date G92 first reported (★TE★)	toxic encephalopathy → TE
+199	2x	Date B17 first reported (other ▶acute viral hepatitis◀)	Date B17 first reported (other ★AVH★)	acute viral hepatitis → AVH
+200	2x	▶corneal hysteresis◀ (right)	★CH★ (right)	corneal hysteresis → CH
+201	2x	Date Q56 first reported (▶indeterminate◀ sex and pseudohermaphroditism)	Date Q56 first reported (★IND★ sex and pseudohermaphroditism)	indeterminate → IND
 202	2x	Date L93 first reported (▶lupus erythematosus◀)	Date L93 first reported (★LE★)	lupus erythematosus → LE
-203	2x	▶lv end diastolic volume◀	★LVEDV★	lv end diastolic volume → LVEDV
-204	2x	Ever had ▶breast cancer screening◀ / mammogram	Ever had ★BCS★ / mammogram	breast cancer screening → BCS
-205	2x	▶thursday◀ average acceleration	★TH★ AV ACC	thursday → TH
-206	2x	Date K73 first reported (▶chronic hepatitis◀, not elsewhere classified)	Date K73 first reported (★CH★, NEC)	chronic hepatitis → CH
-207	2x	Date N17 first reported (▶acute renal failure◀)	Date N17 first reported (★ARF★)	acute renal failure → ARF
-208	2x	Date K74 first reported (fibrosis and ▶cirrhosis◀ of liver)	Date K74 first reported (fibrosis and ★CI★ of liver)	cirrhosis → CI
-209	2x	Date K13 first reported (other diseases of lip and ▶oral mucosa◀)	Date K13 first reported (other MD of lip and ★OM★)	oral mucosa → OM
-210	2x	Date E71 first reported (disorders of branched-chain amino-acid metabolism and fatty-acid metabolism)	Date E71 first reported (DD of ★BCAA★ metabolism and FA metabolism)	branched chain amino acid → BCAA
-211	2x	Standard PRS for ▶epithelial ovarian cancer◀ (EOC)	ST PRS for ★EOC★	epithelial ovarian cancer → EOC
-212	2x	Date of ▶motor neurone disease◀ report	Date of ★MND★ report	motor neurone disease → MND
-213	2x	Date E76 first reported (disorders of ▶glycosaminoglycan◀ metabolism)	Date E76 first reported (DD of ★GAG★ metabolism)	glycosaminoglycan → GAG
-214	2x	Episodes containing "Mother age on ▶date of delivery◀" data	Episodes containing "Mother age on ★EDD★" data	date of delivery → EDD
-215	2x	Date L94 first reported (other localised ▶connective tissue disorders◀)	Date L94 first reported (other localised ★CTD★)	connective tissue disorders → CTD
-216	2x	Date F61 first reported (mixed and ▶other personality disorders◀)	Date F61 first reported (mixed and ★OPD★)	other personality disorders → OPD
-217	2x	Date G52 first reported (disorders of other ▶cranial nerves◀)	Date G52 first reported (DD of other ★CNS★)	cranial nerves → CNS
-218	2x	Date A37 first reported (▶whooping cough◀)	Date A37 first reported (★WC★)	whooping cough → WC
-219	2x	Date I62 first reported (other nontraumatic ▶intracranial haemorrhage◀)	Date I62 first reported (other nontraumatic ★ICH★)	intracranial haemorrhage → ICH
-220	2x	Date J67 first reported (▶hypersensitivity pneumonitis◀ due to organic dust)	Date J67 first reported (★HP★ due to organic dust)	hypersensitivity pneumonitis → HP
-221	2x	Date I11 first reported (▶hypertensive heart disease◀)	Date I11 first reported (★HHD★)	hypertensive heart disease → HHD
-222	2x	Date Q42 first reported (congenital absence, atresia and stenosis of ▶large intestine◀)	Date Q42 first reported (congenital absence, AT and SS of ★LI★)	large intestine → LI
-223	2x	Date K57 first reported (▶diverticular disease◀ of intestine)	Date K57 first reported (★DD★ of intestine)	diverticular disease → DD
-224	2x	Date O72 first reported (▶postpartum haemorrhage◀)	Date O72 first reported (★PPH★)	postpartum haemorrhage → PPH
-225	2x	Date J33 first reported (▶nasal polyp◀)	Date J33 first reported (★NP★)	nasal polyp → NP
-226	2x	Date M88 first reported (▶paget's disease of bone◀ [osteitis deformans])	Date M88 first reported (★PDB★ [osteitis deformans])	paget's disease of bone → PDB
-227	2x	Medication for ▶pain relief◀, constipation, heartburn	Medication for ★PR★, constipation, heartburn	pain relief → PR
-228	2x	Date K70 first reported (▶alcoholic liver disease◀)	Date K70 first reported (★ALD★)	alcoholic liver disease → ALD
-229	2x	Date D50 first reported (▶iron deficiency anaemia◀)	Date D50 first reported (★IDA★)	iron deficiency anaemia → IDA
-230	2x	Date G80 first reported (▶infantile cerebral palsy◀)	Date G80 first reported (★ICP★)	infantile cerebral palsy → ICP
-231	2x	▶saturday◀ average acceleration	★SA★ AV ACC	saturday → SA
-232	2x	Date L20 first reported (▶atopic dermatitis◀)	Date L20 first reported (★AD★)	atopic dermatitis → AD
-233	2x	Date N21 first reported (calculus of ▶lower urinary tract◀)	Date N21 first reported (calculus of ★LUT★)	lower urinary tract → LUT
-234	2x	Date F42 first reported (obsessive-compulsive disorder)	Date F42 first reported (★OCD★)	obsessive compulsive disorder → OCD
-235	2x	Underlying (primary) ▶cause of death◀: ICD10	Underlying (AL) ★COD★: ICD10	cause of death → COD
-236	2x	Volume of grey matter in Inferior Frontal Gyrus, ▶pars triangularis◀ (left)	Volume of GM in IFG, ★PTR★ (L)	pars triangularis → PTR
-237	2x	Date L91 first reported (▶hypertrophic◀ disorders of skin)	Date L91 first reported (★HCM★ DD of skin)	hypertrophic → HCM
-238	2x	▶vitamin e◀ 	★VE★ 	vitamin e → VE
-239	2x	Date B36 first reported (other ▶superficial◀ mycoses)	Date B36 first reported (other ★SF★ mycoses)	superficial → SF
-240	2x	When symbol digit ▶substitution◀ test completed	When symbol digit ★G-A★ test completed	substitution → G-A
-241	2x	Date B16 first reported (▶acute hepatitis b◀)	Date B16 first reported (★AHB★)	acute hepatitis b → AHB
-242	2x	Date G14 first reported (▶postpolio syndrome◀)	Date G14 first reported (★PPS★)	postpolio syndrome → PPS
-243	2x	Date Q32 first reported (congenital malformations of ▶trachea◀ and bronchus)	Date Q32 first reported (CM of ★TR★ and bronchus)	trachea → TR
-244	2x	Mean ▶absolute deviation◀ of ascending aorta area	Mean ★MAD★ of AA area	absolute deviation → MAD
-245	2x	Recent feelings of tiredness or ▶low energy◀	Recent feelings of tiredness or ★LE★	low energy → LE
-246	2x	▶identifier◀ for blood pressure device	★ID★ for BP device	identifier → ID
-247	2x	3-Hydroxybutyrate	★3HB★	3 hydroxybutyrate → 3HB
-248	2x	▶vitamin c◀ 	★VC★ 	vitamin c → VC
-249	2x	Date L51 first reported (▶erythema multiforme◀)	Date L51 first reported (★EM★)	erythema multiforme → EM
-250	2x	Date B95 first reported (▶streptococcus◀ and staphylococcus as the cause of diseases classified to other chapters)	Date B95 first reported (★S.★ and ★S.★ as the cause of MD classified to other chapters)	streptococcus → S.
-251	2x	Number of ▶antibiotics◀ taken in last 3 months	Number of ★AB★ taken in last T3	antibiotics → AB
-252	2x	Date A63 first reported (other predominantly ▶sexually transmitted diseases◀, not elsewhere classified)	Date A63 first reported (other predominantly ★STD★, NEC)	sexually transmitted diseases → STD
-253	2x	Date H55 first reported (▶nystagmus◀ and other irregular eye movements)	Date H55 first reported (★NY★ and other irregular SEM)	nystagmus → NY
-254	2x	COVID-19 symptoms: Nausea/vomiting	COVID-19 PS: ★N/V★	nausea vomiting → N/V
-255	2x	Date E05 first reported (thyrotoxicosis [▶hyperthyroidism◀])	Date E05 first reported (thyrotoxicosis [★HT★])	hyperthyroidism → HT
-256	2x	Standard PRS for ▶coronary artery disease◀ (CAD)	ST PRS for ★CAD★	coronary artery disease → CAD
-257	2x	▶total phospholipids◀ in Lipoprotein Particles	★TPL★ in LP	total phospholipids → TPL
-258	2x	Date N83 first reported (noninflammatory disorders of ovary, ▶fallopian tube◀ and broad ligament)	Date N83 first reported (noninflammatory DD of ovary, ★FT★ and broad AL)	fallopian tube → FT
-259	2x	Date J14 first reported (pneumonia due to ▶haemophilus influenzae◀)	Date J14 first reported (PN due to ★HIB★)	haemophilus influenzae → HIB
-260	2x	Date G51 first reported (▶facial nerve◀ disorders)	Date G51 first reported (★FN★ DD)	facial nerve → FN
-261	2x	Date I89 first reported (other non-infective disorders of lymphatic vessels and ▶lymph nodes◀)	Date I89 first reported (other non-L3 DD of lymphatic vessels and ★LN★)	lymph nodes → LN
-262	2x	Date I95 first reported (▶hypotension◀)	Date I95 first reported (★SH★)	hypotension → SH
-263	2x	Date J36 first reported (▶peritonsillar abscess◀)	Date J36 first reported (★PTA★)	peritonsillar abscess → PTA
-264	2x	Standard PRS for ▶type 1 diabetes◀ (T1D)	ST PRS for ★T1D★	type 1 diabetes → T1D
-265	2x	Date N04 first reported (▶nephrotic syndrome◀)	Date N04 first reported (★NS★)	nephrotic syndrome → NS
-266	2x	Date E86 first reported (volume ▶depletion◀)	Date E86 first reported (volume ★SD★)	depletion → SD
-267	2x	▶frequency of seeing◀ friends and family in person	★FOS★ friends and family in person	frequency of seeing → FOS
-268	2x	Date A64 first reported (unspecified ▶sexually transmitted disease◀)	Date A64 first reported (unspecified ★STD★)	sexually transmitted disease → STD
-269	2x	Sexual ▶interference◀ by partner or ex-partner without consent as an adult	Sexual ★INT★ by partner or ex-partner without consent as an adult	interference → INT
-270	2x	Date K58 first reported (▶irritable bowel syndrome◀)	Date K58 first reported (★IBS★)	irritable bowel syndrome → IBS
-271	2x	Date E85 first reported (▶amyloidosis◀)	Date E85 first reported (★AL★)	amyloidosis → AL
-272	2x	Date L95 first reported (▶vasculitis◀ limited to skin, not elsewhere classified)	Date L95 first reported (★CV★ LD to skin, NEC)	vasculitis → CV
-273	2x	Date P04 first reported (foetus and newborn affected by noxious influences transmitted via placenta or ▶breast milk◀)	Date P04 first reported (foetus and NB affected by noxious influences transmitted via placenta or ★BM★)	breast milk → BM
-274	2x	Date J15 first reported (▶bacterial pneumonia◀, not elsewhere classified)	Date J15 first reported (★BP★, NEC)	bacterial pneumonia → BP
-275	2x	Date K25 first reported (▶gastric ulcer◀)	Date K25 first reported (★G-U★)	gastric ulcer → G-U
-276	2x	Date I46 first reported (▶cardiac arrest◀)	Date I46 first reported (★CA★)	cardiac arrest → CA
-277	2x	Date E24 first reported (▶cushing's syndrome◀)	Date E24 first reported (★CS★)	cushing's syndrome → CS
-278	2x	▶corneal resistance factor◀ (right)	★CRF★ (R)	corneal resistance factor → CRF
-279	2x	Episodes containing "PCT where ▶patients◀ GP was registered" data	Episodes containing "PCT where ★PD★ GP was registered" data	patients → PD
-280	2x	Date B41 first reported (▶paracoccidioidomycosis◀)	Date B41 first reported (★PCM★)	paracoccidioidomycosis → PCM
-281	2x	Date M45 first reported (▶ankylosing spondylitis◀)	Date M45 first reported (★ASP★)	ankylosing spondylitis → ASP
-282	2x	Date I37 first reported (▶pulmonary valve◀ disorders)	Date I37 first reported (★PV★ DD)	pulmonary valve → PV
-283	2x	Date A70 first reported (▶chlamydia◀ psittaci infection)	Date A70 first reported (★CT★ psittaci MI)	chlamydia → CT
-284	2x	Date M96 first reported (postprocedural ▶musculoskeletal disorders◀, not elsewhere classified)	Date M96 first reported (postprocedural ★MSDS★, NEC)	musculoskeletal disorders → MSDS
-285	2x	Date Q61 first reported (cystic ▶kidney disease◀)	Date Q61 first reported (cystic ★KD★)	kidney disease → KD
-286	2x	Liking for ▶white bread◀	Liking for ★WB★	white bread → WB
-287	2x	Time spent watching ▶television◀ (TV)	Time spent watching ★TV★	television → TV
-288	2x	Date E55 first reported (▶vitamin d deficiency◀)	Date E55 first reported (★VDD★)	vitamin d deficiency → VDD
-289	2x	Date A54 first reported (▶gonococcal◀ infection)	Date A54 first reported (★GC★ MI)	gonococcal → GC
-290	2x	▶diastolic blood pressure◀, manual reading	★DBP★, manual reading	diastolic blood pressure → DBP
-291	2x	Date J39 first reported (other diseases of ▶upper respiratory tract◀)	Date J39 first reported (other MD of ★URT★)	upper respiratory tract → URT
-292	2x	▶end systolic pressure◀ during PWA - PVR	★ESP★ during PWA - PVR	end systolic pressure → ESP
-293	2x	Genotype ▶copy number◀ variants, log2ratios	TT ★CN★ variants, log2ratios	copy number → CN
-294	2x	Ever had same-sex intercourse	Ever had ★SS★ IC	same sex → SS
-295	2x	Date G12 first reported (▶spinal muscular atrophy◀ and related syndromes)	Date G12 first reported (★SMA★ and related syndromes)	spinal muscular atrophy → SMA
-296	2x	Date N18 first reported (▶chronic renal failure◀)	Date N18 first reported (★CRF★)	chronic renal failure → CRF
-297	2x	Date M05 first reported (▶seropositive◀ rheumatoid arthritis)	Date M05 first reported (★SP★ RHA)	seropositive → SP
-298	2x	Volume of grey matter in Occipital ▶fusiform gyrus◀ (left)	Volume of GM in Occipital ★FG★ (L)	fusiform gyrus → FG
-299	2x	Frequency of ▶sleep walking◀	F1 of ★SW★	sleep walking → SW
-300	2x	Date Q81 first reported (▶epidermolysis bullosa◀)	Date Q81 first reported (★EB★)	epidermolysis bullosa → EB
-301	2x	Date J22 first reported (unspecified ▶acute lower respiratory infection◀)	Date J22 first reported (unspecified ★ALRI★)	acute lower respiratory infection → ALRI
-302	2x	Date I68 first reported (▶cerebrovascular disorders◀ in diseases classified elsewhere)	Date I68 first reported (★CVD★ in MD classified elsewhere)	cerebrovascular disorders → CVD
-303	2x	Standard PRS for ▶resting heart rate◀ (RHR)	ST PRS for ★RHR★	resting heart rate → RHR
-304	2x	Date E89 first reported (postprocedural ▶endocrine and metabolic◀ disorders, not elsewhere classified)	Date E89 first reported (postprocedural ★E&M★ DD, NEC)	endocrine and metabolic → E&M
-305	2x	Date O46 first reported (▶antepartum haemorrhage◀, not elsewhere classified)	Date O46 first reported (★APH★, NEC)	antepartum haemorrhage → APH
-306	2x	Date K28 first reported (▶gastrojejunal◀ ulcer)	Date K28 first reported (★GJ★ ulcer)	gastrojejunal → GJ
-307	2x	Date O23 first reported (infections of genito-urinary tract in pregnancy)	Date O23 first reported (infections of ★G-U★ tract in TP)	genito urinary → G-U
-308	2x	Date A50 first reported (▶congenital syphilis◀)	Date A50 first reported (★CS★)	congenital syphilis → CS
-309	2x	▶sensitive◀ stomach	★CS★ ST	sensitive → CS
-310	2x	Date F60 first reported (specific ▶personality disorders◀)	Date F60 first reported (specific ★PD★)	personality disorders → PD
-311	2x	Date L42 first reported (▶pityriasis rosea◀)	Date L42 first reported (★PR★)	pityriasis rosea → PR
-312	2x	Date F94 first reported (disorders of ▶social functioning◀ with onset specific to childhood and adolescence)	Date F94 first reported (DD of ★SF★ with onset specific to childhood and adolescence)	social functioning → SF
-313	2x	Date J96 first reported (▶respiratory failure◀, not elsewhere classified)	Date J96 first reported (★RF★, NEC)	respiratory failure → RF
-314	2x	Volume of grey matter in ▶superior parietal lobule◀ (left)	Volume of GM in ★SPL★ (L)	superior parietal lobule → SPL
-315	2x	Femur ▶total area◀ (left)	Femur ★TA★ (L)	total area → TA
-316	2x	Date F90 first reported (▶hyperkinetic◀ disorders)	Date F90 first reported (★HK★ DD)	hyperkinetic → HK
-317	2x	Standard PRS for ▶low density lipoprotein cholesterol◀ (LDL_SF)	ST PRS for ★LDL-C★ (LDL_SF)	low density lipoprotein cholesterol → LDL-C
-318	2x	Date L25 first reported (unspecified ▶contact dermatitis◀)	Date L25 first reported (unspecified ★CD★)	contact dermatitis → CD
-319	2x	Volume of grey matter in ▶superior frontal gyrus◀ (left)	Volume of GM in ★SFG★ (L)	superior frontal gyrus → SFG
-320	2x	Mean CBF in ▶vertebrobasilar◀ Arteries vascular territories in grey matter	Mean CBF in ★VB★ AA V1 territories in GM	vertebrobasilar → VB
-321	2x	Date K26 first reported (▶duodenal ulcer◀)	Date K26 first reported (★DU★)	duodenal ulcer → DU
-322	2x	Date E12 first reported (malnutrition-related diabetes mellitus)	Date E12 first reported (★MRDM★)	malnutrition related diabetes mellitus → MRDM
-323	2x	Date Q41 first reported (congenital absence, atresia and stenosis of ▶small intestine◀)	Date Q41 first reported (congenital absence, AT and SS of ★SI★)	small intestine → SI
-324	2x	Date B27 first reported (▶infectious mononucleosis◀)	Date B27 first reported (★IM★)	infectious mononucleosis → IM
-325	2x	Date I48 first reported (atrial fibrillation and ▶flutter◀)	Date I48 first reported (AFIB and ★FL★)	flutter → FL
-326	2x	▶arterial stiffness◀ device ID	★AS★ device ID	arterial stiffness → AS
-327	2x	Date B17 first reported (other ▶acute viral hepatitis◀)	Date B17 first reported (other ★AVH★)	acute viral hepatitis → AVH
-328	2x	Date I81 first reported (▶portal vein thrombosis◀)	Date I81 first reported (★PVT★)	portal vein thrombosis → PVT
-329	2x	Victim of ▶sexual assault◀	Victim of ★SA★	sexual assault → SA
-330	1x	▶moderate exercise◀ in past month	★ME★ in past month	moderate exercise → ME
-331	1x	Type of progestan-only ▶oral contraceptive◀ used (pilot)	Type of progestan-only ★OC★ used (pilot)	oral contraceptive → OC
-332	1x	▶subcutaneous fat◀ volume	★SCF★ volume	subcutaneous fat → SCF
-333	1x	▶target heart rate◀ achieved	★THR★ achieved	target heart rate → THR
-334	1x	LV longitudinal strain ▶segment 4◀	LV LS ★S4★	segment 4 → S4
-335	1x	RV ▶end diastolic volume◀	RV ★EDV★	end diastolic volume → EDV
-336	1x	▶hip circumference◀	★HC★	hip circumference → HC
-337	1x	Born by ▶caesarian section◀	Born by ★C/S★	caesarian section → C/S
-338	1x	Pulse wave ▶peak to peak◀ time	PW ★PP★ time	peak to peak → PP
-339	1x	▶saturated fat◀	★SF★	saturated fat → SF
-340	1x	▶right ventricular ejection fraction◀	★RVEF★	right ventricular ejection fraction → RVEF
-341	1x	▶total lean mass◀	★TLM★	total lean mass → TLM
-342	1x	LV longitudinal strain ▶segment 5◀	LV LS ★S5★	segment 5 → S5
+203	2x	Date E11 first reported (non-insulin-dependent diabetes mellitus)	Date E11 first reported (★NIDDM★)	non insulin dependent diabetes mellitus → NIDDM
+204	2x	Date I67 first reported (other ▶cerebrovascular diseases◀)	Date I67 first reported (other ★CVD★)	cerebrovascular diseases → CVD
+205	2x	Ever had ▶breast cancer screening◀ / mammogram	Ever had ★BCS★ / mammogram	breast cancer screening → BCS
+206	2x	Date J32 first reported (▶chronic sinusitis◀)	Date J32 first reported (★CS★)	chronic sinusitis → CS
+207	2x	Date A58 first reported (▶granuloma◀ inguinale)	Date A58 first reported (★GR★ inguinale)	granuloma → GR
+208	2x	▶caffeine◀ drink within last hour	★CA★ drink within last hour	caffeine → CA
+209	2x	Date L20 first reported (▶atopic dermatitis◀)	Date L20 first reported (★AD★)	atopic dermatitis → AD
+210	2x	Date N06 first reported (isolated ▶proteinuria◀ with specified morphological lesion)	Date N06 first reported (isolated ★PU★ with specified morphological lesion)	proteinuria → PU
+211	2x	Date Q81 first reported (▶epidermolysis bullosa◀)	Date Q81 first reported (★EB★)	epidermolysis bullosa → EB
+212	2x	When Health and Well-being Questionnaire started	When Health and ★WBQ★ started	well being questionnaire → WBQ
+213	2x	▶glycoprotein◀ Acetyls	★VP7★ Acetyls	glycoprotein → VP7
+214	2x	H. pylori Definition I seropositivity for ▶helicobacter pylori◀	H. pylori Definition I seropositivity for ★H.P.★	helicobacter pylori → H.P.
+215	2x	▶phenylalanine◀	★PHE★	phenylalanine → PHE
+216	2x	▶left atrial◀ biplanar max volume	★LA★ biplanar max volume	left atrial → LA
+217	2x	▶total phospholipids◀ in Lipoprotein Particles	★TPL★ in Lipoprotein Particles	total phospholipids → TPL
+218	2x	Date I71 first reported (▶aortic aneurysm◀ and dissection)	Date I71 first reported (★AA★ and dissection)	aortic aneurysm → AA
+219	2x	Date G53 first reported (▶cranial nerve◀ disorders in diseases classified elsewhere)	Date G53 first reported (★CN★ disorders in diseases classified elsewhere)	cranial nerve → CN
+220	2x	Date I81 first reported (▶portal vein thrombosis◀)	Date I81 first reported (★PVT★)	portal vein thrombosis → PVT
+221	2x	Date B02 first reported (zoster [▶herpes zoster◀])	Date B02 first reported (zoster [★HZ★])	herpes zoster → HZ
+222	2x	Date P14 first reported (birth injury to ▶peripheral nervous system◀)	Date P14 first reported (birth injury to ★PNS★)	peripheral nervous system → PNS
+223	2x	Date A09 first reported (diarrhoea and gastro-enteritis of presumed infectious origin)	Date A09 first reported (diarrhoea and ★GE★ of presumed infectious origin)	gastro enteritis → GE
+224	2x	▶histidine◀	★HI★	histidine → HI
+225	2x	Date G70 first reported (▶myasthenia gravis◀ and other myoneural disorders)	Date G70 first reported (★MG★ and other myoneural disorders)	myasthenia gravis → MG
+226	2x	▶response◀ delay interval	★NR★ delay interval	response → NR
+227	2x	Date M30 first reported (▶polyarteritis nodosa◀ and related conditions)	Date M30 first reported (★PN★ and related conditions)	polyarteritis nodosa → PN
+228	2x	Date F60 first reported (specific ▶personality disorders◀)	Date F60 first reported (specific ★PD★)	personality disorders → PD
+229	2x	▶hand grip strength◀ (left)	★HGS★ (left)	hand grip strength → HGS
+230	2x	Date E04 first reported (other non-toxic goitre)	Date E04 first reported (other ★NTG★)	non toxic goitre → NTG
+231	2x	▶acetate◀	★AC★	acetate → AC
+232	2x	Date E03 first reported (other ▶hypothyroidism◀)	Date E03 first reported (other ★HT★)	hypothyroidism → HT
+233	2x	Date L24 first reported (▶irritant contact dermatitis◀)	Date L24 first reported (★ICD★)	irritant contact dermatitis → ICD
+234	2x	Date A02 first reported (other ▶salmonella◀ infections)	Date A02 first reported (other ★S.★ infections)	salmonella → S.
+235	2x	Date M34 first reported (▶systemic sclerosis◀)	Date M34 first reported (★SSC★)	systemic sclerosis → SSC
+236	2x	More frequent ▶bowel movements◀ when abdominal discomfort/pain started	More frequent ★BMS★ when abdominal discomfort/pain started	bowel movements → BMS
+237	2x	Date of ▶end stage renal disease◀ report	Date of ★ESRD★ report	end stage renal disease → ESRD
+238	2x	Date J06 first reported (acute ▶upper respiratory infections◀ of multiple and unspecified sites)	Date J06 first reported (acute ★URIS★ of multiple and unspecified sites)	upper respiratory infections → URIS
+239	2x	▶stomach◀/abdominal pain for 3+ months	★ST★/abdominal pain for 3+ months	stomach → ST
+240	2x	▶sensitive◀ stomach	★CS★ stomach	sensitive → CS
+241	2x	Date of ▶multiple system atrophy◀ report	Date of ★MSA★ report	multiple system atrophy → MSA
+242	2x	Medication for ▶pain relief◀, constipation, heartburn	Medication for ★PR★, constipation, heartburn	pain relief → PR
+243	2x	Date E73 first reported (▶lactose intolerance◀)	Date E73 first reported (★LI★)	lactose intolerance → LI
+244	2x	Date J46 first reported (▶status asthmaticus◀)	Date J46 first reported (★SA★)	status asthmaticus → SA
+245	2x	Date H71 first reported (cholesteatoma of ▶middle ear◀)	Date H71 first reported (cholesteatoma of ★ME★)	middle ear → ME
+246	2x	▶magnesium◀ 	★MG★ 	magnesium → MG
+247	2x	Speech-reception-threshold (SRT) estimate (left)	★SRT★ estimate (left)	speech reception threshold → SRT
+248	2x	▶bipolar disorder◀ status	★BPD★ status	bipolar disorder → BPD
+249	2x	Date D66 first reported (hereditary ▶factor viii◀ deficiency)	Date D66 first reported (hereditary ★F8★ deficiency)	factor viii → F8
+250	2x	Episodes containing "Mother age on ▶date of delivery◀" data	Episodes containing "Mother age on ★EDD★" data	date of delivery → EDD
+251	2x	Date A37 first reported (▶whooping cough◀)	Date A37 first reported (★WC★)	whooping cough → WC
+252	2x	Date B15 first reported (▶acute hepatitis◀ a)	Date B15 first reported (★AH★ a)	acute hepatitis → AH
+253	2x	Date E12 first reported (malnutrition-related diabetes mellitus)	Date E12 first reported (★MRDM★)	malnutrition related diabetes mellitus → MRDM
+254	2x	Date F52 first reported (▶sexual dysfunction◀, not caused by organic disorder or disease)	Date F52 first reported (★SD★, not caused by organic disorder or disease)	sexual dysfunction → SD
+255	2x	Date Q96 first reported (▶turner's syndrome◀)	Date Q96 first reported (★TS★)	turner's syndrome → TS
+256	2x	Date L83 first reported (▶acanthosis nigricans◀)	Date L83 first reported (★AN★)	acanthosis nigricans → AN
+257	2x	Date L21 first reported (▶seborrhoeic dermatitis◀)	Date L21 first reported (★SD★)	seborrhoeic dermatitis → SD
+258	2x	▶vitamin e◀ 	★VE★ 	vitamin e → VE
+259	2x	Date P50 first reported (foetal ▶blood loss◀)	Date P50 first reported (foetal ★BL★)	blood loss → BL
+260	2x	Date L23 first reported (▶allergic contact dermatitis◀)	Date L23 first reported (★ACD★)	allergic contact dermatitis → ACD
+261	2x	Date Q03 first reported (▶congenital hydrocephalus◀)	Date Q03 first reported (★CH★)	congenital hydrocephalus → CH
+262	2x	Date E15 first reported (▶nondiabetic◀ hypoglycaemic coma)	Date E15 first reported (★ND★ hypoglycaemic coma)	nondiabetic → ND
+263	2x	Femur ▶total area◀ (left)	Femur ★TA★ (left)	total area → TA
+264	2x	Date M45 first reported (▶ankylosing spondylitis◀)	Date M45 first reported (★ASP★)	ankylosing spondylitis → ASP
+265	2x	Date A38 first reported (▶scarlet fever◀)	Date A38 first reported (★SF★)	scarlet fever → SF
+266	2x	Date N80 first reported (▶endometriosis◀)	Date N80 first reported (★EM★)	endometriosis → EM
+267	2x	Date D59 first reported (▶acquired haemolytic anaemia◀)	Date D59 first reported (★AHA★)	acquired haemolytic anaemia → AHA
+268	2x	Date G00 first reported (▶bacterial meningitis◀, not elsewhere classified)	Date G00 first reported (★BM★, not elsewhere classified)	bacterial meningitis → BM
+269	2x	Enhanced PRS for ▶estimated glomerular filtration rate◀ (creatinine based) (EGCR)	Enhanced PRS for ★EGFR★ (creatinine based) (EGCR)	estimated glomerular filtration rate → EGFR
+270	2x	Date I11 first reported (▶hypertensive heart disease◀)	Date I11 first reported (★HHD★)	hypertensive heart disease → HHD
+271	2x	Date N40 first reported (▶hyperplasia◀ of prostate)	Date N40 first reported (★PH★ of prostate)	hyperplasia → PH
+272	2x	▶high fat◀ cheese	★HF★ cheese	high fat → HF
+273	2x	Date F84 first reported (▶pervasive developmental disorders◀)	Date F84 first reported (★PDDS★)	pervasive developmental disorders → PDDS
+274	2x	Date K73 first reported (▶chronic hepatitis◀, not elsewhere classified)	Date K73 first reported (★CH★, not elsewhere classified)	chronic hepatitis → CH
+275	2x	Date H72 first reported (perforation of ▶tympanic membrane◀)	Date H72 first reported (perforation of ★TM★)	tympanic membrane → TM
+276	2x	Home area population ▶density◀ - urban or rural	Home area population ★D.★ - urban or rural	density → D.
+277	2x	Volume of ▶ventricular cerebrospinal fluid◀ (normalised for head size)	Volume of ★V-CSF★ (normalised for head size)	ventricular cerebrospinal fluid → V-CSF
+278	2x	Date E05 first reported (thyrotoxicosis [▶hyperthyroidism◀])	Date E05 first reported (thyrotoxicosis [★HT★])	hyperthyroidism → HT
+279	2x	Date G80 first reported (▶infantile cerebral palsy◀)	Date G80 first reported (★ICP★)	infantile cerebral palsy → ICP
+280	2x	Date J22 first reported (unspecified ▶acute lower respiratory infection◀)	Date J22 first reported (unspecified ★ALRI★)	acute lower respiratory infection → ALRI
+281	2x	Sexual ▶interference◀ by partner or ex-partner without consent as an adult	Sexual ★INT★ by partner or ex-partner without consent as an adult	interference → INT
+282	2x	Date F24 first reported (induced ▶delusional disorder◀)	Date F24 first reported (induced ★DD★)	delusional disorder → DD
+283	2x	Date Q61 first reported (cystic ▶kidney disease◀)	Date Q61 first reported (cystic ★KD★)	kidney disease → KD
+284	2x	Liking for ▶orange juice◀	Liking for ★OJ★	orange juice → OJ
+285	2x	Date K64 first reported (haemorrhoids and perianal ▶venous thrombosis◀)	Date K64 first reported (haemorrhoids and perianal ★VT★)	venous thrombosis → VT
+286	2x	Date I21 first reported (▶acute myocardial infarction◀)	Date I21 first reported (★AMI★)	acute myocardial infarction → AMI
+287	2x	Date J15 first reported (▶bacterial pneumonia◀, not elsewhere classified)	Date J15 first reported (★BP★, not elsewhere classified)	bacterial pneumonia → BP
+288	2x	Mean ▶absolute deviation◀ of ascending aorta area	Mean ★MAD★ of ascending aorta area	absolute deviation → MAD
+289	2x	HPV 16 Definition I seropositivity for Human Papillomavirus type-16	HPV 16 Definition I seropositivity for ★HPV-16★	human papillomavirus type 16 → HPV-16
+290	2x	Date O82 first reported (single delivery by ▶caesarean section◀)	Date O82 first reported (single delivery by ★C/S★)	caesarean section → C/S
+291	2x	Date B08 first reported (other viral infections characterised by skin and ▶mucous membrane◀ lesions, not elsewhere classified)	Date B08 first reported (other viral infections characterised by skin and ★MM★ lesions, not elsewhere classified)	mucous membrane → MM
+292	2x	▶variation◀ in diet	★R2★ in diet	variation → R2
+293	2x	Date L91 first reported (▶hypertrophic◀ disorders of skin)	Date L91 first reported (★HCM★ disorders of skin)	hypertrophic → HCM
+294	2x	Date A64 first reported (unspecified ▶sexually transmitted disease◀)	Date A64 first reported (unspecified ★STD★)	sexually transmitted disease → STD
+295	2x	Time spent watching ▶television◀ (TV)	Time spent watching ★TV★	television → TV
+296	2x	Date P26 first reported (▶pulmonary haemorrhage◀ originating in the perinatal period)	Date P26 first reported (★PH★ originating in the perinatal period)	pulmonary haemorrhage → PH
+297	2x	Date P77 first reported (▶necrotising enterocolitis◀ of foetus and newborn)	Date P77 first reported (★NEC★ of foetus and newborn)	necrotising enterocolitis → NEC
+298	2x	▶right ventricular◀ end systolic volume	★RV★ end systolic volume	right ventricular → RV
+299	2x	Date N04 first reported (▶nephrotic syndrome◀)	Date N04 first reported (★NS★)	nephrotic syndrome → NS
+300	2x	Date of ▶frontotemporal dementia◀ report	Date of ★FTD★ report	frontotemporal dementia → FTD
+301	2x	Date P22 first reported (▶respiratory distress◀ of newborn)	Date P22 first reported (★RD★ of newborn)	respiratory distress → RD
+302	1x	Episodic data for specific ▶arrhythmia◀ (result file xml)	Episodic data for specific ★AR★ (result file xml)	arrhythmia → AR
+303	1x	Long-term/recurrent antibiotics as child or teenager	★LT★/recurrent antibiotics as child or teenager	long term → LT
+304	1x	Enhanced PRS for ▶intraocular pressure◀ (IOP)	Enhanced PRS for ★IOP★	intraocular pressure → IOP
+305	1x	▶lung volume◀	★LV★	lung volume → LV
+306	1x	Enhanced PRS for ▶type 2 diabetes◀ (T2D)	Enhanced PRS for ★T2D★	type 2 diabetes → T2D
+307	1x	Pain or cramps in lower ▶abdomen◀ in past six months	Pain or cramps in lower ★AB★ in past six months	abdomen → AB
+308	1x	▶riboflavin◀ 	★RB★ 	riboflavin → RB
+309	1x	▶liver volume◀	★LV★	liver volume → LV
+310	1x	Non-haem iron 	★NHI★ 	non haem iron → NHI
+311	1x	▶low protein◀	★LP★	low protein → LP
+312	1x	Ever had ▶complex regional pain syndrome◀ (also known as CRPS)	Ever had ★CRPS★ (also known as ★CRPS★)	complex regional pain syndrome → CRPS
+313	1x	Ongoing addiction or dependence to over-the-counter medication	Ongoing addiction or dependence to ★OTC★ medication	over the counter → OTC
+314	1x	Volume of Optic-Chiasm (whole brain)	Volume of ★OX★ (whole brain)	optic chiasm → OX
+315	1x	Blood relatives have had ▶restless leg syndrome◀	Blood relatives have had ★RLS★	restless leg syndrome → RLS
+316	1x	▶drinking water◀ intake	★DW★ intake	drinking water → DW
+317	1x	KSHV seropositivity for Kaposi's Sarcoma-Associated Herpesvirus	★KSHV★ seropositivity for ★KSHV★	kaposi's sarcoma associated herpesvirus → KSHV
+318	1x	L1-L4 TBS (▶trabecular bone◀ score)	L1-L4 ★TB★S (★TB★ score)	trabecular bone → TB
+319	1x	When ▶trail making test◀ completed	When ★TMT★ completed	trail making test → TMT
+320	1x	Ever had ▶post herpetic neuralgia◀ (pain after shingles)	Ever had ★PHN★ (pain after shingles)	post herpetic neuralgia → PHN
+321	1x	▶left ventricle◀ quality score	★LV★ quality score	left ventricle → LV
+322	1x	Minimum ▶joint space width◀ (mJSW)	Minimum ★JSW★ (m★JSW★)	joint space width → JSW
+323	1x	▶sucrose◀ 	★SU★ 	sucrose → SU
+324	1x	Number of automated ▶diagnostic◀ comments recorded during 12-lead ECG	Number of automated ★DX★ comments recorded during 12-lead ECG	diagnostic → DX
+325	1x	Enhanced PRS for age-related macular degeneration (AMD)	Enhanced PRS for ★AMD★	age related macular degeneration → AMD
+326	1x	Workplace had a lot of ▶cigarette smoke◀ from other people smoking	Workplace had a lot of ★CS★ from other people smoking	cigarette smoke → CS
+327	1x	Number of ▶antibiotics◀ taken in last 3 months	Number of ★AB★ taken in last 3 months	antibiotics → AB
+328	1x	▶pulse wave velocity◀ (manual entry)	★PWV★ (manual entry)	pulse wave velocity → PWV
+329	1x	Episodes containing "▶postnatal◀ stay" data	Episodes containing "★PN★ stay" data	postnatal → PN
+330	1x	▶left ventricular end systolic volume◀	★LVESV★	left ventricular end systolic volume → LVESV
+331	1x	▶left ventricular stroke volume◀	★LV-SV★	left ventricular stroke volume → LV-SV
+332	1x	Corneal ▶refractive index◀	Corneal ★RI★	refractive index → RI
+333	1x	Pace-maker	★PM★	pace maker → PM
+334	1x	▶right ventricular ejection fraction◀	★RVEF★	right ventricular ejection fraction → RVEF
+335	1x	▶prospective memory◀ result	★PROM★ result	prospective memory → PROM
+336	1x	▶temperature maximum◀	★TMAX★	temperature maximum → TMAX
+337	1x	Which eye(s) affected by ▶hypermetropia◀ (long sight)	Which eye(s) affected by ★HY★ (long sight)	hypermetropia → HY
+338	1x	Number of ▶live births◀	Number of ★LB★	live births → LB
+339	1x	▶nitrogen oxides◀ air pollution; 2010	★NOX★ air pollution; 2010	nitrogen oxides → NOX
+340	1x	▶both eyes◀ present	★OU★ present	both eyes → OU
+341	1x	▶grapefruit juice◀ intake	★GFJ★ intake	grapefruit juice → GFJ
+342	1x	▶recommended◀ genomic analysis exclusions	★REC★ genomic analysis exclusions	recommended → REC
 343	1x	▶polyunsaturated fat◀	★PUFA★	polyunsaturated fat → PUFA
-344	1x	▶body surface area◀	★BSA★	body surface area → BSA
-345	1x	Total lean ▶tissue volume◀	Total lean ★VT★	tissue volume → VT
-346	1x	▶sucrose◀ 	★SU★ 	sucrose → SU
-347	1x	Total abdominal ▶adipose tissue◀ index	Total AB ★AT★ index	adipose tissue → AT
-348	1x	▶fluoxetine◀ has helped feel better	★FL★ has helped feel better	fluoxetine → FL
-349	1x	▶bipolar◀ and major depression status	★BP★ and MDD status	bipolar → BP
-350	1x	Pulse wave ▶arterial stiffness index◀	PW ★ASI★	arterial stiffness index → ASI
-351	1x	How long before ▶bedtime◀ use a device such as a computer, mobile phone, etc.	How long before ★BT★ use a device such as a computer, mobile phone, etc.	bedtime → BT
-352	1x	Episodes containing "▶date of admission◀ to hospital" data	Episodes containing "★DOA★ to hospital" data	date of admission → DOA
-353	1x	Predicted ▶dice similarity coefficient◀	Predicted ★DSC★	dice similarity coefficient → DSC
-354	1x	▶pulse wave velocity◀ (manual entry)	★PWV★ (manual entry)	pulse wave velocity → PWV
-355	1x	▶ventricular rate◀	★VR★	ventricular rate → VR
-356	1x	Other ▶antidepressants◀ have helped feel better	Other ★AD★ have helped feel better	antidepressants → AD
-357	1x	▶waist circumference◀	★WC★	waist circumference → WC
-358	1x	▶amitriptyline◀ has helped feel better	★AMI★ has helped feel better	amitriptyline → AMI
-359	1x	Image ▶quality indicator◀	Image ★QI★	quality indicator → QI
-360	1x	Ever had chronic Fatigue Syndrome or ▶myalgic encephalomyelitis◀ (M.E.)	Ever had CFS or ★ME★ (M.E.)	myalgic encephalomyelitis → ME
-361	1x	Started ▶insulin◀ within one year diagnosis of diabetes	Started ★IN★ within one year DX of diabetes	insulin → IN
-362	1x	▶trans fatty acids◀	★T-FA★	trans fatty acids → T-FA
-363	1x	▶riboflavin◀ 	★RB★ 	riboflavin → RB
-364	1x	When ▶trail making test◀ completed	When ★TMT★ completed	trail making test → TMT
-365	1x	Maximum ▶workload◀ during fitness test	Maximum ★WL★ during fitness test	workload → WL
-366	1x	Number of ▶live births◀	Number of ★LB★	live births → LB
-367	1x	V02max per kg ▶bodyweight◀ estimated from the exercise test	V02max per kg ★BW★ estimated from the EXT	bodyweight → BW
-368	1x	▶drinking water◀ intake	★DW★ intake	drinking water → DW
-369	1x	▶energy density◀ 	★ED★ 	energy density → ED
-370	1x	Liking for ▶extra virgin olive oil◀	Liking for ★EVOO★	extra virgin olive oil → EVOO
-371	1x	▶repeated◀ disturbing thoughts of stressful experience in past month	★RE★ disturbing thoughts of stressful experience in past month	repeated → RE
-372	1x	▶temperature maximum◀	★TMAX★	temperature maximum → TMAX
-373	1x	▶chloride◀ 	★CL★ 	chloride → CL
-374	1x	Time spent doing ▶light physical activity◀	Time spent doing ★LPA★	light physical activity → LPA
-375	1x	▶total nitrogen◀ 	★TN★ 	total nitrogen → TN
-376	1x	▶total fat mass◀	★TFM★	total fat mass → TFM
-377	1x	▶right atrium◀ quality score	★RA★ SQ score	right atrium → RA
-378	1x	Which eye(s) affected by ▶hypermetropia◀ (long sight)	Which eye(s) affected by ★HY★ (long sight)	hypermetropia → HY
-379	1x	Episodic data for specific ▶arrhythmia◀ (result file xml)	Episodic data for specific ★AR★ (result file xml)	arrhythmia → AR
-380	1x	Vitamin A ▶retinol equivalents◀ 	VA ★RE★ 	retinol equivalents → RE
-381	1x	Total ▶adipose tissue volume◀	Total ★ATV★	adipose tissue volume → ATV
-382	1x	▶left ventricular stroke volume◀	★LV-SV★	left ventricular stroke volume → LV-SV
-383	1x	Episodes containing "▶waiting time◀ for hospital admission" data	Episodes containing "★WT★ for HA" data	waiting time → WT
-384	1x	▶both eyes◀ present	★OU★ present	both eyes → OU
-385	1x	Abdominal ▶subcutaneous adipose tissue◀ volume (ASAT)	AB ★SCAT★ volume (ASAT)	subcutaneous adipose tissue → SCAT
+344	1x	▶moderate exercise◀ in past month	★ME★ in past month	moderate exercise → ME
+345	1x	Use in phasing ▶chromosomes◀ 1-22	Use in phasing ★CHR★ 1-22	chromosomes → CHR
+346	1x	▶green tea◀ intake	★GT★ intake	green tea → GT
+347	1x	Persistent or recurrent tiredness, weariness or fatigue that has lasted for at least ▶6 months◀	Persistent or recurrent tiredness, weariness or fatigue that has lasted for at least ★T6★	6 months → T6
+348	1x	▶vitamin a◀ retinol equivalents 	★VA★ retinol equivalents 	vitamin a → VA
+349	1x	▶total peripheral resistance◀ during PWA - PVR	★TPR★ during PWA - PVR	total peripheral resistance → TPR
+350	1x	▶trans fatty acids◀	★T-FA★	trans fatty acids → T-FA
+351	1x	▶microsatellites◀ - 150k release	★MS★ - 150k release	microsatellites → MS
+352	1x	▶energy density◀ 	★ED★ 	energy density → ED
+353	1x	▶left ventricular end diastolic volume◀	★LVEDV★	left ventricular end diastolic volume → LVEDV
+354	1x	Total thigh fat-free muscle volume	Total thigh ★FF★ muscle volume	fat free → FF
+355	1x	Ever had ▶fibromyalgia syndrome◀	Ever had ★FMS★	fibromyalgia syndrome → FMS
+356	1x	Total ▶adipose tissue volume◀	Total ★ATV★	adipose tissue volume → ATV
+357	1x	Type of progestan-only ▶oral contraceptive◀ used (pilot)	Type of progestan-only ★OC★ used (pilot)	oral contraceptive → OC
+358	1x	Time spent doing ▶light physical activity◀	Time spent doing ★LPA★	light physical activity → LPA
+359	1x	HHV-7 seropositivity for Human Herpesvirus-7	★HHV-7★ seropositivity for ★HHV-7★	human herpesvirus 7 → HHV-7
+360	1x	▶manganese◀ 	★MN★ 	manganese → MN
+361	1x	Episodes containing "▶date of admission◀ to hospital" data	Episodes containing "★DOA★ to hospital" data	date of admission → DOA
+362	1x	Age started smoking in ▶former smokers◀	Age started smoking in ★FS★	former smokers → FS
+363	1x	▶antibiotic◀ codes for last 3 months	★AB★ codes for last 3 months	antibiotic → AB
+364	1x	▶fracture◀ resulting from simple fall	★FX★ resulting from simple fall	fracture → FX
+365	1x	Enhanced PRS for ▶type 1 diabetes◀ (T1D)	Enhanced PRS for ★T1D★	type 1 diabetes → T1D
+366	1x	Description of ▶cause of death◀	Description of ★COD★	cause of death → COD
+367	1x	Workplace had a lot of ▶diesel exhaust◀	Workplace had a lot of ★DE★	diesel exhaust → DE
+368	1x	Age deep-vein thrombosis (DVT, blood clot in leg) diagnosed	Age ★DVT★ (★DVT★, blood clot in leg) diagnosed	deep vein thrombosis → DVT
+369	1x	▶right ventricle◀ quality score	★RV★ quality score	right ventricle → RV
+370	1x	▶amitriptyline◀ has helped feel better	★AMI★ has helped feel better	amitriptyline → AMI
+371	1x	CMV seropositivity for ▶human cytomegalovirus◀	CMV seropositivity for ★HCMV★	human cytomegalovirus → HCMV
+372	1x	Plasma ▶neurofilament light◀	Plasma ★NFL★	neurofilament light → NFL
+373	1x	Volume of ▶midbrain◀ (whole brain)	Volume of ★MB★ (whole brain)	midbrain → MB
+374	1x	▶total fat mass◀	★TFM★	total fat mass → TFM
+375	1x	Year immigrated to UK (▶united kingdom◀)	Year immigrated to ★UK★	united kingdom → UK
+376	1x	Trouble sleeping in past month as need to use the ▶bathroom◀	Trouble sleeping in past month as need to use the ★BR★	bathroom → BR
+377	1x	Enhanced PRS for ▶breast cancer◀ (BC)	Enhanced PRS for ★BCA★ (BC)	breast cancer → BCA
+378	1x	Beta-carotene 	★BC★ 	beta carotene → BC
+379	1x	▶hand grip◀ dynamometer device ID	★HG★ dynamometer device ID	hand grip → HG
+380	1x	▶phosphorus◀ 	★SP★ 	phosphorus → SP
+381	1x	HSV-2 seropositivity for Herpes Simplex virus-2	★HSV-2★ seropositivity for ★HSV-2★	herpes simplex virus 2 → HSV-2
+382	1x	Incidental finding report made during ▶ultrasound scan◀ process	Incidental finding report made during ★US★ process	ultrasound scan → US
+383	1x	▶left ventricular mass◀	★LVM★	left ventricular mass → LVM
+384	1x	HPV 18 seropositivity for Human Papillomavirus type-18	HPV 18 seropositivity for ★HPV-18★	human papillomavirus type 18 → HPV-18
+385	1x	Ever had ▶carpal tunnel syndrome◀	Ever had ★CTS★	carpal tunnel syndrome → CTS
